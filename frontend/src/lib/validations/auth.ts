@@ -1,6 +1,22 @@
 import { z } from 'zod'
 
 export const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
+  email: z.string().email('Ingresa un correo válido'),
+  password: z.string().min(8, 'Mínimo 8 caracteres'),
 })
+
+export const registerSchema = z
+  .object({
+    firstName: z.string().min(1, 'El nombre es obligatorio'),
+    lastName: z.string().min(1, 'El apellido es obligatorio'),
+    email: z.string().email('Ingresa un correo válido'),
+    password: z.string().min(8, 'Mínimo 8 caracteres'),
+    confirmPassword: z.string().min(1, 'Confirma tu contraseña'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Las contraseñas no coinciden',
+    path: ['confirmPassword'],
+  })
+
+export type LoginInput = z.infer<typeof loginSchema>
+export type RegisterInput = z.infer<typeof registerSchema>

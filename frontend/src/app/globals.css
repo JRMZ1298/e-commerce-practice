@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-size: 62.5%;
+  }
+
+  body {
+    font-size: 1.6rem;
+    background-color: #f2f0eb;
+    color: rgba(0, 0, 0, 0.87);
+    letter-spacing: -0.01em;
+  }
+
+  * {
+    letter-spacing: inherit;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-pill bg-brand-accent px-4 py-[7px] text-[1.4rem] font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-95;
+    letter-spacing: -0.01em;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center rounded-pill border border-brand-accent bg-transparent px-4 py-[7px] text-[1.4rem] font-semibold text-brand-accent transition-all duration-200 hover:bg-brand-accent hover:text-white active:scale-95;
+    letter-spacing: -0.01em;
+  }
+
+  .btn-dark-outline {
+    @apply inline-flex items-center justify-center rounded-pill border border-[rgba(0,0,0,0.87)] bg-transparent px-4 py-[7px] text-[1.4rem] font-semibold text-[rgba(0,0,0,0.87)] transition-all duration-200 hover:bg-[rgba(0,0,0,0.87)] hover:text-white active:scale-95;
+    letter-spacing: -0.01em;
+  }
+
+  .btn-black {
+    @apply inline-flex items-center justify-center rounded-pill border border-black bg-black px-4 py-[7px] text-[1.4rem] font-semibold text-white transition-all duration-200 active:scale-95;
+    letter-spacing: -0.01em;
+  }
+
+  .btn-white-on-green {
+    @apply inline-flex items-center justify-center rounded-pill border border-white bg-white px-4 py-[7px] text-[1.4rem] font-semibold text-brand-accent transition-all duration-200 active:scale-95;
+    letter-spacing: -0.01em;
+  }
+
+  .btn-outline-on-dark {
+    @apply inline-flex items-center justify-center rounded-pill border border-white bg-transparent px-4 py-[7px] text-[1.4rem] font-semibold text-white transition-all duration-200 hover:bg-white hover:text-brand-house active:scale-95;
+    letter-spacing: -0.01em;
+  }
+
+  .btn-frap {
+    @apply fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-brand-accent text-white shadow-frap transition-all duration-200 active:scale-95;
+    box-shadow: 0 0 6px rgba(0,0,0,0.24), 0 8px 12px rgba(0,0,0,0.14);
+  }
+
+  .btn-frap:active {
+    box-shadow: 0 0 6px rgba(0,0,0,0.24), 0 8px 12px rgba(0,0,0,0);
+  }
+
+  .input-field {
+    @apply w-full rounded-xl border border-[#d6dbde] bg-white px-3 py-3 text-[1.6rem] text-[rgba(0,0,0,0.87)] placeholder:text-[rgba(0,0,0,0.58)] focus:border-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-accent/20;
+    letter-spacing: -0.01em;
+  }
+
+  .input-field-floating {
+    @apply relative;
+  }
+
+  .input-field-floating input,
+  .input-field-floating select {
+    @apply w-full rounded-xl border border-[#d6dbde] bg-white px-3 pb-3 pt-6 text-[1.6rem] text-[rgba(0,0,0,0.87)] focus:border-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-accent/20;
+    letter-spacing: -0.01em;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .input-field-floating input:focus,
+  .input-field-floating select:focus {
+    @apply border-brand-accent/80;
+    box-shadow: 0 0 0 3px rgba(0, 117, 74, 0.2); /* Green Accent 20% opacity */
+  }
+
+  .input-field-floating input:valid,
+  .input-field-floating select:valid {
+    @apply border-[#d4e9e2]; /* Green Light */
+  }
+
+  .input-field-floating input:invalid,
+  .input-field-floating select:invalid {
+    @apply border-[#f8d7da]; /* Light red tint for invalid */
+  }
+
+  .input-field-floating label {
+    @apply pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[1.6rem] text-[rgba(0,0,0,0.58)] transition-all duration-200;
+  }
+
+  .input-field-floating input:focus + label,
+  .input-field-floating input:not(:placeholder-shown) + label,
+  .input-field-floating select:focus + label,
+  .input-field-floating select:not([value=""]) + label {
+    @apply -translate-y-[2.2rem] text-[1.3rem] text-[rgba(0,0,0,0.87)];
+  }
+
+  .input-field-floating input:focus:valid + label,
+  .input-field-floating select:focus:valid + label {
+    @apply text-brand-accent;
+  }
+
+  .input-field-floating input:focus:invalid + label,
+  .input-field-floating select:focus:invalid + label {
+    @apply text-red-500;
+  }
+
+  .input-field-floating .error-message {
+    @apply mt-1 text-[1.2rem] text-red-500;
+  }
+
+  .card-starbucks {
+    @apply rounded-card bg-white shadow-card;
+  }
+
+  .section-padding {
+    @apply px-4 py-9 sm:px-6 lg:px-10;
+  }
+
+  /* Form-specific enhancements */
+  .form-section {
+    @applying space-y-6;
+  }
+
+  .form-title {
+    @applying text-[2.4rem] font-semibold text-brand-green sm:text-[3.6rem];
+  }
+
+  .form-subtitle {
+    @applying mt-1 text-[1.4rem] text-foreground-muted;
+  }
+
+  .form-footer {
+    @applying mt-6 text-center text-[1.4rem] text-foreground-muted;
+  }
+
+  .form-footer-link {
+    @applying font-semibold text-brand-accent hover:underline;
+  }
+}
