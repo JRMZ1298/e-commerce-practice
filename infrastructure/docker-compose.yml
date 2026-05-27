@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   postgres:
     image: postgres:16-alpine
@@ -26,25 +24,32 @@ services:
       DB_PASSWORD: ${DB_PASSWORD:-postgres}
       REDIS_HOST: redis
       REDIS_PASSWORD: ${REDIS_PASSWORD:-redispass}
-      JWT_SECRET: ${JWT_SECRET}
-      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
-      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      JWT_SECRET: ${JWT_SECRET:-dev-jwt-secret-N7WK1S5L0s6BTDU3jFPwyeuvR9I8E4hGzMlAVYHonibX-256bit}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
       FRONTEND_URL: http://localhost:3000
     ports:
       - "8080:8080"
     depends_on:
-      - postgres
-      - redis
+      postgres:
+        condition: service_started
+      redis:
+        condition: service_started
 
   frontend:
-    build: ../frontend
+    build:
+      context: ../frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8080/v1
+        NEXT_PUBLIC_STRIPE_KEY: ${STRIPE_PUBLIC_KEY:-}
     environment:
-      NEXT_PUBLIC_API_URL: http://backend:8080/v1
-      NEXT_PUBLIC_STRIPE_KEY: ${STRIPE_PUBLIC_KEY}
+      NEXT_PUBLIC_API_URL: http://localhost:8080/v1
+      NEXT_PUBLIC_STRIPE_KEY: ${STRIPE_PUBLIC_KEY:-}
     ports:
       - "3000:3000"
     depends_on:
-      - backend
+      backend:
+        condition: service_started
 
 volumes:
   postgres_data:
