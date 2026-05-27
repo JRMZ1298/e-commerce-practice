@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ecommerce-config
+data:
+  DB_URL: jdbc:postgresql://postgres:5432/ecommerce
+  REDIS_HOST: redis
+  FRONTEND_URL: https://dominio.com
