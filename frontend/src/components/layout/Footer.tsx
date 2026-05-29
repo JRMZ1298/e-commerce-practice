@@ -17,26 +17,64 @@ const helpLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-brand-house text-white">
-      <div className="mx-auto max-w-[1440px] px-4 py-9 sm:px-6 lg:px-10">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          <div>
-            <h3 className="mb-4 text-[2rem] font-bold tracking-tight text-white">MAISON</h3>
-            <p className="text-[1.4rem] text-foreground-white-soft">
+    <footer className="relative overflow-hidden bg-brand-house pt-20 pb-10">
+      {/* Giant Background Text */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none select-none z-0">
+        <span className="font-bold text-[200px] sm:text-[400px] text-white/[0.03] whitespace-nowrap leading-none">
+          MAISON
+        </span>
+      </div>
+
+      <div className="relative z-10 mx-auto px-6 lg:px-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-16">
+          {/* Brand */}
+          <div className="col-span-2 md:col-span-1">
+            <h2 className="mb-4 text-[2.4rem] font-bold tracking-tight text-white">
+              MAISON
+            </h2>
+            <p className="mb-6 text-[1.4rem] leading-relaxed text-white/60">
               Moda con elegancia y distinción. Descubre piezas únicas que definen tu estilo.
             </p>
+            <div className="flex gap-4">
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white/60 boty-transition hover:text-white"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-4 w-4" />
+              </a>
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white/60 boty-transition hover:text-white"
+                aria-label="Facebook"
+              >
+                <Facebook className="h-4 w-4" />
+              </a>
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white/60 boty-transition hover:text-white"
+                aria-label="Twitter"
+              >
+                <Twitter className="h-4 w-4" />
+              </a>
+            </div>
           </div>
 
+          {/* Enlaces */}
           <div>
-            <h4 className="mb-4 text-[1.3rem] font-semibold uppercase tracking-looser text-brand-gold">
-              Enlaces
-            </h4>
-            <ul className="space-y-2">
+            <h3 className="mb-4 font-medium text-white">Enlaces</h3>
+            <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-[1.4rem] text-foreground-white-soft transition-colors hover:text-white"
+                    className="text-[1.4rem] text-white/60 boty-transition hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -45,16 +83,15 @@ export function Footer() {
             </ul>
           </div>
 
+          {/* Ayuda */}
           <div>
-            <h4 className="mb-4 text-[1.3rem] font-semibold uppercase tracking-looser text-brand-gold">
-              Ayuda
-            </h4>
-            <ul className="space-y-2">
+            <h3 className="mb-4 font-medium text-white">Ayuda</h3>
+            <ul className="space-y-3">
               {helpLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-[1.4rem] text-foreground-white-soft transition-colors hover:text-white"
+                    className="text-[1.4rem] text-white/60 boty-transition hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -63,38 +100,44 @@ export function Footer() {
             </ul>
           </div>
 
+          {/* Síguenos */}
           <div>
-            <h4 className="mb-4 text-[1.3rem] font-semibold uppercase tracking-looser text-brand-gold">
-              Síguenos
-            </h4>
-            <div className="flex gap-3">
-              <a
-                href="#"
-                aria-label="Instagram"
-                className="rounded-pill p-2 text-foreground-white-soft transition-colors hover:bg-white/10 hover:text-white"
-              >
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                aria-label="Facebook"
-                className="rounded-pill p-2 text-foreground-white-soft transition-colors hover:bg-white/10 hover:text-white"
-              >
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                aria-label="Twitter"
-                className="rounded-pill p-2 text-foreground-white-soft transition-colors hover:bg-white/10 hover:text-white"
-              >
-                <Twitter className="h-5 w-5" />
-              </a>
-            </div>
+            <h3 className="mb-4 font-medium text-white">Síguenos</h3>
+            <ul className="space-y-3">
+              <li>
+                <a href="#" className="text-[1.4rem] text-white/60 boty-transition hover:text-white">
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-[1.4rem] text-white/60 boty-transition hover:text-white">
+                  Facebook
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-[1.4rem] text-white/60 boty-transition hover:text-white">
+                  Twitter
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="mt-9 border-t border-white/10 pt-6 text-center text-[1.3rem] text-foreground-white-soft">
-          &copy; {new Date().getFullYear()} MAISON. Todos los derechos reservados.
+        {/* Bottom Bar */}
+        <div className="border-t border-white/10 pt-10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-[1.4rem] text-white/60">
+              &copy; {new Date().getFullYear()} MAISON. Todos los derechos reservados.
+            </p>
+            <div className="flex gap-6">
+              <Link href="/" className="text-[1.4rem] text-white/60 boty-transition hover:text-white">
+                Política de Privacidad
+              </Link>
+              <Link href="/" className="text-[1.4rem] text-white/60 boty-transition hover:text-white">
+                Términos del Servicio
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

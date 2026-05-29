@@ -49,3 +49,4 @@ backend/logs/
 frontend/.pnpm-debug.log
 
 .agents
+example-design

@@ -5,6 +5,7 @@
 @layer base {
   html {
     font-size: 62.5%;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -64,6 +65,14 @@
 
   .btn-frap:active {
     box-shadow: 0 0 6px rgba(0,0,0,0.24), 0 8px 12px rgba(0,0,0,0);
+  }
+
+  .btn-pill {
+    @apply inline-flex items-center justify-center rounded-full bg-brand-accent text-white px-8 py-4 text-sm tracking-wide transition-all duration-300 hover:bg-brand-accent/90;
+  }
+
+  .btn-pill-outline {
+    @apply inline-flex items-center justify-center rounded-full border border-brand-accent/20 text-foreground px-8 py-4 text-sm tracking-wide transition-all duration-300 hover:bg-brand-green/5;
   }
 
   .input-field {
@@ -139,5 +148,13 @@
 
   .form-footer-link {
     @apply font-semibold text-brand-accent hover:underline;
+  }
+
+  .boty-shadow {
+    box-shadow: rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
+  }
+
+  .boty-transition {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
