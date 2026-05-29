@@ -45,42 +45,35 @@ export default function RegisterPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-canvas px-4">
-      <div className="w-full max-w-5xl">
+      <div className="w-full max-w-3xl">
         <div className="rounded-card bg-card px-8 py-10 shadow-card">
           <div className="mb-8 text-center">
             <Link
               href="/"
               className="mb-6 inline-block text-[2.4rem] font-bold tracking-tight text-brand-green"
             >
-              STORE
+              MAISON
             </Link>
-            <h1 className="text-[2.4rem] font-semibold text-brand-green sm:text-[3.6rem]">
+            <h1 className="text-[2.4rem] font-semibold text-brand-green sm:text-[3.2rem]">
               Crear cuenta
             </h1>
-            <p className="mt-1 text-[1.4rem] text-foreground-muted">
-              Únete a nuestra comunidad
+            <p className="mt-2 text-[1.4rem] text-foreground-muted">
+              Únete a nuestra comunidad y recibe 10% de descuento
             </p>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-2 gap-3">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <div className="grid grid-cols-2 gap-4">
               <div className="input-field-floating">
                 <input
                   id="firstName"
                   type="text"
                   placeholder=" "
-                  className={
-                    errors.firstName
-                      ? "focus:border-red-500 focus:ring-red-500/20"
-                      : ""
-                  }
                   {...register("firstName")}
                 />
                 <label htmlFor="firstName">Nombre</label>
                 {errors.firstName && (
-                  <p className="mt-1 text-[1.2rem] text-red-500">
-                    {errors.firstName.message}
-                  </p>
+                  <p className="error-message">{errors.firstName.message}</p>
                 )}
               </div>
 
@@ -89,18 +82,11 @@ export default function RegisterPage() {
                   id="lastName"
                   type="text"
                   placeholder=" "
-                  className={
-                    errors.lastName
-                      ? "focus:border-red-500 focus:ring-red-500/20"
-                      : ""
-                  }
                   {...register("lastName")}
                 />
                 <label htmlFor="lastName">Apellido</label>
                 {errors.lastName && (
-                  <p className="mt-1 text-[1.2rem] text-red-500">
-                    {errors.lastName.message}
-                  </p>
+                  <p className="error-message">{errors.lastName.message}</p>
                 )}
               </div>
             </div>
@@ -111,18 +97,11 @@ export default function RegisterPage() {
                 type="email"
                 autoComplete="email"
                 placeholder=" "
-                className={
-                  errors.email
-                    ? "focus:border-red-500 focus:ring-red-500/20"
-                    : ""
-                }
                 {...register("email")}
               />
               <label htmlFor="email">Correo electrónico</label>
               {errors.email && (
-                <p className="mt-1 text-[1.2rem] text-red-500">
-                  {errors.email.message}
-                </p>
+                <p className="error-message">{errors.email.message}</p>
               )}
             </div>
 
@@ -132,18 +111,14 @@ export default function RegisterPage() {
                 type={showPassword ? "text" : "password"}
                 autoComplete="new-password"
                 placeholder=" "
-                className={
-                  errors.password
-                    ? "pr-10 focus:border-red-500 focus:ring-red-500/20"
-                    : "pr-10"
-                }
+                className="pr-10"
                 {...register("password")}
               />
               <label htmlFor="password">Contraseña</label>
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground-muted"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground-muted hover:text-foreground"
                 tabIndex={-1}
               >
                 {showPassword ? (
@@ -153,9 +128,7 @@ export default function RegisterPage() {
                 )}
               </button>
               {errors.password && (
-                <p className="mt-1 text-[1.2rem] text-red-500">
-                  {errors.password.message}
-                </p>
+                <p className="error-message">{errors.password.message}</p>
               )}
             </div>
 
@@ -165,18 +138,14 @@ export default function RegisterPage() {
                 type={showConfirm ? "text" : "password"}
                 autoComplete="new-password"
                 placeholder=" "
-                className={
-                  errors.confirmPassword
-                    ? "pr-10 focus:border-red-500 focus:ring-red-500/20"
-                    : "pr-10"
-                }
+                className="pr-10"
                 {...register("confirmPassword")}
               />
               <label htmlFor="confirmPassword">Confirmar contraseña</label>
               <button
                 type="button"
                 onClick={() => setShowConfirm(!showConfirm)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground-muted"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground-muted hover:text-foreground"
                 tabIndex={-1}
               >
                 {showConfirm ? (
@@ -186,14 +155,14 @@ export default function RegisterPage() {
                 )}
               </button>
               {errors.confirmPassword && (
-                <p className="mt-1 text-[1.2rem] text-red-500">
+                <p className="error-message">
                   {errors.confirmPassword.message}
                 </p>
               )}
             </div>
 
             {error && (
-              <div className="rounded-xl bg-red-50 px-4 py-3 text-[1.4rem] text-red-600">
+              <div className="rounded-[4px] border border-destructive/20 bg-destructive/5 px-4 py-3 text-[1.4rem] text-destructive">
                 {error}
               </div>
             )}

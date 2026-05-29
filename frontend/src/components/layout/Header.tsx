@@ -14,13 +14,16 @@ export function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-white shadow-nav">
       <div className="mx-auto flex h-[64px] items-center justify-between px-4 sm:h-[72px] sm:px-6 lg:h-[83px] lg:px-10">
-        <Link href="/" className="text-[2rem] font-bold tracking-tight text-brand-green">
-          STORE
+        <Link
+          href="/"
+          className="text-[2rem] font-bold tracking-tight text-brand-green"
+        >
+          MAISON
         </Link>
 
         <Navbar className="hidden md:flex" />
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <button
             type="button"
             aria-label="Buscar"
@@ -54,7 +57,7 @@ export function Header() {
           <Link
             href="/login"
             aria-label="Iniciar sesión"
-            className="btn-dark-outline ml-1 hidden text-[1.3rem] sm:inline-flex"
+            className="btn-dark-outline ml-2 hidden text-[1.3rem] sm:inline-flex"
           >
             <User className="mr-1.5 h-4 w-4" />
             <span>Ingresar</span>

@@ -21,15 +21,15 @@ export function Footer() {
       <div className="mx-auto max-w-[1440px] px-4 py-9 sm:px-6 lg:px-10">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <h3 className="mb-4 text-[2rem] font-bold tracking-tight text-white">STORE</h3>
+            <h3 className="mb-4 text-[2rem] font-bold tracking-tight text-white">MAISON</h3>
             <p className="text-[1.4rem] text-foreground-white-soft">
-              Tu tienda de ropa y accesorios con los mejores estilos y tendencias.
+              Moda con elegancia y distinción. Descubre piezas únicas que definen tu estilo.
             </p>
           </div>
 
           <div>
             <h4 className="mb-4 text-[1.3rem] font-semibold uppercase tracking-looser text-brand-gold">
-              Enlaces rápidos
+              Enlaces
             </h4>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
@@ -94,7 +94,7 @@ export function Footer() {
         </div>
 
         <div className="mt-9 border-t border-white/10 pt-6 text-center text-[1.3rem] text-foreground-white-soft">
-          &copy; {new Date().getFullYear()} STORE. Todos los derechos reservados.
+          &copy; {new Date().getFullYear()} MAISON. Todos los derechos reservados.
         </div>
       </div>
     </footer>

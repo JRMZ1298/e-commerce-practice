@@ -71,9 +71,9 @@ export function CartDrawer() {
               {items.map((item) => (
                 <li
                   key={item.id}
-                  className="flex gap-4 rounded-card bg-canvas p-3"
+                  className="flex gap-4 rounded-card bg-canvas p-4"
                 >
-                  <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl bg-ceramic">
+                  <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-[4px] bg-ceramic">
                     {item.imageUrl ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
@@ -102,7 +102,7 @@ export function CartDrawer() {
                         type="button"
                         onClick={() => removeItem(item.id)}
                         aria-label="Eliminar"
-                        className="rounded-full p-1 text-foreground-muted transition-colors hover:bg-red-50 hover:text-red-500"
+                        className="rounded-full p-1 text-foreground-muted transition-colors hover:bg-red-50 hover:text-destructive"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>
@@ -113,7 +113,7 @@ export function CartDrawer() {
                         <button
                           type="button"
                           onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-foreground-muted transition-colors hover:bg-brand-green/5"
+                          className="flex h-7 w-7 items-center justify-center rounded-full border border-ceramic bg-white text-foreground-muted transition-colors hover:border-brand-accent hover:text-brand-accent"
                         >
                           <Minus className="h-3 w-3" />
                         </button>
@@ -123,7 +123,7 @@ export function CartDrawer() {
                         <button
                           type="button"
                           onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-foreground-muted transition-colors hover:bg-brand-green/5"
+                          className="flex h-7 w-7 items-center justify-center rounded-full border border-ceramic bg-white text-foreground-muted transition-colors hover:border-brand-accent hover:text-brand-accent"
                         >
                           <Plus className="h-3 w-3" />
                         </button>

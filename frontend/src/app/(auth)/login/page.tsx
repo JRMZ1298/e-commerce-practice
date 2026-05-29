@@ -33,42 +33,35 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-canvas px-4">
-      <div className="w-full max-w-3xl">
+      <div className="w-full max-w-xl">
         <div className="rounded-card bg-card px-8 py-10 shadow-card">
           <div className="mb-8 text-center">
             <Link
               href="/"
               className="mb-6 inline-block text-[2.4rem] font-bold tracking-tight text-brand-green"
             >
-              STORE
+              MAISON
             </Link>
-            <h1 className="text-[2.4rem] font-semibold text-brand-green sm:text-[3.6rem]">
+            <h1 className="text-[2.4rem] font-semibold text-brand-green sm:text-[3.2rem]">
               Iniciar sesión
             </h1>
-            <p className="mt-1 text-[1.4rem] text-foreground-muted">
+            <p className="mt-2 text-[1.4rem] text-foreground-muted">
               Ingresa tus datos para continuar
             </p>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div className="input-field-floating">
               <input
                 id="email"
                 type="email"
                 autoComplete="email"
                 placeholder=" "
-                className={
-                  errors.email
-                    ? "focus:border-red-500 focus:ring-red-500/20"
-                    : ""
-                }
                 {...register("email")}
               />
               <label htmlFor="email">Correo electrónico</label>
               {errors.email && (
-                <p className="mt-1 text-[1.2rem] text-red-500">
-                  {errors.email.message}
-                </p>
+                <p className="error-message">{errors.email.message}</p>
               )}
             </div>
 
@@ -78,18 +71,14 @@ export default function LoginPage() {
                 type={showPassword ? "text" : "password"}
                 autoComplete="current-password"
                 placeholder=" "
-                className={
-                  errors.password
-                    ? "pr-10 focus:border-red-500 focus:ring-red-500/20"
-                    : "pr-10"
-                }
+                className="pr-10"
                 {...register("password")}
               />
               <label htmlFor="password">Contraseña</label>
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground-muted"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground-muted hover:text-foreground"
                 tabIndex={-1}
               >
                 {showPassword ? (
@@ -99,14 +88,12 @@ export default function LoginPage() {
                 )}
               </button>
               {errors.password && (
-                <p className="mt-1 text-[1.2rem] text-red-500">
-                  {errors.password.message}
-                </p>
+                <p className="error-message">{errors.password.message}</p>
               )}
             </div>
 
             {error && (
-              <div className="rounded-xl bg-red-50 px-4 py-3 text-[1.4rem] text-red-600">
+              <div className="rounded-[4px] border border-destructive/20 bg-destructive/5 px-4 py-3 text-[1.4rem] text-destructive">
                 {error}
               </div>
             )}
@@ -124,13 +111,21 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <div className="mt-6 text-center text-[1.4rem] text-foreground-muted">
-            ¿No tienes cuenta?{" "}
+          <div className="mt-6 space-y-2 text-center text-[1.4rem] text-foreground-muted">
+            <p>
+              ¿No tienes cuenta?{" "}
+              <Link
+                href="/register"
+                className="font-semibold text-brand-accent hover:underline"
+              >
+                Regístrate
+              </Link>
+            </p>
             <Link
-              href="/register"
-              className="font-semibold text-brand-accent hover:underline"
+              href="/forgot-password"
+              className="block text-[1.3rem] text-foreground-muted hover:text-brand-accent"
             >
-              Regístrate
+              ¿Olvidaste tu contraseña?
             </Link>
           </div>
         </div>

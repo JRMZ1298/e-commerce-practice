@@ -1,18 +1,18 @@
 'use client'
 
-import { MessageCircle } from 'lucide-react'
+import { ShoppingBag } from 'lucide-react'
 
 export function FrapButton() {
   return (
     <button
       type="button"
-      aria-label="Ayuda"
+      aria-label="Carrito"
       className="btn-frap"
       onClick={() => {
-        // TODO: Open help/chat modal
+        // TODO: Open cart / special offers
       }}
     >
-      <MessageCircle className="h-6 w-6" />
+      <ShoppingBag className="h-6 w-6" />
     </button>
   )
 }

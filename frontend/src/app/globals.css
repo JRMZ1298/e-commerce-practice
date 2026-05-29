@@ -12,10 +12,17 @@
     background-color: #f2f0eb;
     color: rgba(0, 0, 0, 0.87);
     letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   * {
     letter-spacing: inherit;
+  }
+
+  ::selection {
+    background-color: rgba(0, 117, 74, 0.15);
+    color: #006241;
   }
 }
 
@@ -60,7 +67,7 @@
   }
 
   .input-field {
-    @apply w-full rounded-xl border border-[#d6dbde] bg-white px-3 py-3 text-[1.6rem] text-[rgba(0,0,0,0.87)] placeholder:text-[rgba(0,0,0,0.58)] focus:border-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-accent/20;
+    @apply w-full rounded-[4px] border border-[#d6dbde] bg-white px-3 py-3 text-[1.6rem] text-[rgba(0,0,0,0.87)] placeholder:text-[rgba(0,0,0,0.58)] focus:border-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-accent/20;
     letter-spacing: -0.01em;
   }
 
@@ -70,7 +77,7 @@
 
   .input-field-floating input,
   .input-field-floating select {
-    @apply w-full rounded-xl border border-[#d6dbde] bg-white px-3 pb-3 pt-6 text-[1.6rem] text-[rgba(0,0,0,0.87)] focus:border-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-accent/20;
+    @apply w-full rounded-[4px] border border-[#d6dbde] bg-white px-3 pb-3 pt-6 text-[1.6rem] text-[rgba(0,0,0,0.87)] focus:border-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-accent/20;
     letter-spacing: -0.01em;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
@@ -78,17 +85,7 @@
   .input-field-floating input:focus,
   .input-field-floating select:focus {
     @apply border-brand-accent/80;
-    box-shadow: 0 0 0 3px rgba(0, 117, 74, 0.2); /* Green Accent 20% opacity */
-  }
-
-  .input-field-floating input:valid,
-  .input-field-floating select:valid {
-    @apply border-[#d4e9e2]; /* Green Light */
-  }
-
-  .input-field-floating input:invalid,
-  .input-field-floating select:invalid {
-    @apply border-[#f8d7da]; /* Light red tint for invalid */
+    box-shadow: 0 0 0 3px rgba(0, 117, 74, 0.2);
   }
 
   .input-field-floating label {
@@ -109,39 +106,38 @@
 
   .input-field-floating input:focus:invalid + label,
   .input-field-floating select:focus:invalid + label {
-    @apply text-red-500;
+    @apply text-destructive;
   }
 
   .input-field-floating .error-message {
-    @apply mt-1 text-[1.2rem] text-red-500;
+    @apply mt-1 text-[1.2rem] text-destructive;
   }
 
   .card-starbucks {
-    @apply rounded-card bg-white shadow-card;
+    @apply rounded-card bg-card shadow-card;
   }
 
   .section-padding {
     @apply px-4 py-9 sm:px-6 lg:px-10;
   }
 
-  /* Form-specific enhancements */
   .form-section {
-    @applying space-y-6;
+    @apply space-y-6;
   }
 
   .form-title {
-    @applying text-[2.4rem] font-semibold text-brand-green sm:text-[3.6rem];
+    @apply text-[2.4rem] font-semibold text-brand-green sm:text-[3.6rem];
   }
 
   .form-subtitle {
-    @applying mt-1 text-[1.4rem] text-foreground-muted;
+    @apply mt-1 text-[1.4rem] text-foreground-muted;
   }
 
   .form-footer {
-    @applying mt-6 text-center text-[1.4rem] text-foreground-muted;
+    @apply mt-6 text-center text-[1.4rem] text-foreground-muted;
   }
 
   .form-footer-link {
-    @applying font-semibold text-brand-accent hover:underline;
+    @apply font-semibold text-brand-accent hover:underline;
   }
 }
