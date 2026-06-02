@@ -1605,13 +1605,13 @@ ecommerce/
 
 ### Fase 1 — Fundamentos (semanas 1–3)
 
-- [ ] Setup del repositorio monorepo, Docker Compose de desarrollo
-- [ ] Schema de base de datos + migraciones Flyway iniciales
+- [x] Setup del repositorio monorepo, Docker Compose de desarrollo
+- [x] Schema de base de datos + migraciones Flyway iniciales
 - [ ] Auth: registro, login, JWT, refresh token, OAuth Google
-- [ ] CRUD de usuarios y direcciones
-- [ ] CRUD de categorías y productos (sin variantes aún)
-- [ ] Subida de imágenes a S3
-- [ ] Setup de Next.js con Tailwind, shadcn/ui, Zustand, TanStack Query
+- [x] CRUD de usuarios y direcciones
+- [x] CRUD de categorías y productos (sin variantes aún)
+- [x] Subida de imágenes a S3
+- [x] Setup de Next.js con Tailwind, shadcn/ui, Zustand, TanStack Query
 
 ### Fase 2 — Catálogo y carrito (semanas 4–5)
 
