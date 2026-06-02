@@ -21,6 +21,8 @@ public record ProductDto(
     boolean isFeatured,
     List<ProductImageDto> images,
     CategorySummaryDto category,
+    List<VariantDto> variants,
+    List<VariantOptionTypeDto> optionTypes,
     Instant createdAt
 ) {
 

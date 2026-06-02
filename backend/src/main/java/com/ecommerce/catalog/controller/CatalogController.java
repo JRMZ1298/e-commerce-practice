@@ -27,9 +27,12 @@ public class CatalogController {
             @RequestParam(required = false) BigDecimal minPrice,
             @RequestParam(required = false) BigDecimal maxPrice,
             @RequestParam(required = false) String search,
-            @RequestParam(required = false) String sort) {
+            @RequestParam(required = false) String sort,
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) String tag,
+            @RequestParam(required = false) Boolean inStock) {
         return ResponseEntity.ok(
-            PageResponse.from(catalogService.getProducts(page, size, category, minPrice, maxPrice, search, sort))
+            PageResponse.from(catalogService.getProducts(page, size, category, minPrice, maxPrice, search, sort, brand, tag, inStock))
         );
     }
 

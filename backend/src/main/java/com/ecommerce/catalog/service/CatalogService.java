@@ -2,12 +2,8 @@ package com.ecommerce.catalog.service;
 
 import com.ecommerce.auth.entity.User;
 import com.ecommerce.catalog.dto.*;
-import com.ecommerce.catalog.entity.Category;
-import com.ecommerce.catalog.entity.Product;
-import com.ecommerce.catalog.entity.ProductImage;
-import com.ecommerce.catalog.repository.CategoryRepository;
-import com.ecommerce.catalog.repository.ProductImageRepository;
-import com.ecommerce.catalog.repository.ProductRepository;
+import com.ecommerce.catalog.entity.*;
+import com.ecommerce.catalog.repository.*;
 import com.ecommerce.common.exception.BusinessException;
 import com.ecommerce.common.exception.ResourceNotFoundException;
 import com.ecommerce.common.util.SlugUtil;
@@ -35,6 +31,9 @@ public class CatalogService {
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
     private final ProductImageRepository productImageRepository;
+    private final ProductVariantRepository productVariantRepository;
+    private final VariantOptionTypeRepository variantOptionTypeRepository;
+    private final VariantOptionValueRepository variantOptionValueRepository;
 
     public List<CategoryDto> getCategories() {
         List<Category> rootCategories = categoryRepository.findByParentIdIsNull();
@@ -121,9 +120,10 @@ public class CatalogService {
     }
 
     public Page<ProductListDto> getProducts(int page, int size, String category, BigDecimal minPrice,
-                                            BigDecimal maxPrice, String search, String sort) {
+                                            BigDecimal maxPrice, String search, String sort,
+                                            String brand, String tag, Boolean inStock) {
         Pageable pageable = createPageable(page, size, sort);
-        Specification<Product> spec = buildProductSpecification(category, minPrice, maxPrice, search);
+        Specification<Product> spec = buildProductSpecification(category, minPrice, maxPrice, search, brand, tag, inStock);
 
         return productRepository.findAll(spec, pageable)
             .map(this::toProductListDto);
@@ -225,7 +225,8 @@ public class CatalogService {
     }
 
     private Specification<Product> buildProductSpecification(String category, BigDecimal minPrice,
-                                                              BigDecimal maxPrice, String search) {
+                                                              BigDecimal maxPrice, String search,
+                                                              String brand, String tag, Boolean inStock) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
@@ -253,6 +254,22 @@ public class CatalogService {
                 ));
             }
 
+            if (brand != null && !brand.isBlank()) {
+                predicates.add(cb.equal(root.get("brand"), brand));
+            }
+
+            if (tag != null && !tag.isBlank()) {
+                predicates.add(cb.like(cb.lower(root.get("tags").as(String.class)), "%" + tag.toLowerCase() + "%"));
+            }
+
+            if (Boolean.TRUE.equals(inStock)) {
+                predicates.add(cb.greaterThan(root.get("stock"), 0));
+            }
+
+            if (!query.getResultType().equals(Long.class)) {
+                query.distinct(true);
+            }
+
             return cb.and(predicates.toArray(Predicate[]::new));
         };
     }
@@ -262,12 +279,20 @@ public class CatalogService {
             return PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         }
 
-        String[] parts = sort.split(",");
-        String field = parts[0];
-        Sort.Direction direction = parts.length > 1 && parts[1].equalsIgnoreCase("asc")
-            ? Sort.Direction.ASC : Sort.Direction.DESC;
-
-        return PageRequest.of(page, size, Sort.by(direction, field));
+        return switch (sort) {
+            case "price_asc" -> PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "basePrice"));
+            case "price_desc" -> PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "basePrice"));
+            case "name_asc" -> PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "name"));
+            case "name_desc" -> PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "name"));
+            case "newest" -> PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+            default -> {
+                String[] parts = sort.split(",");
+                String field = parts[0];
+                Sort.Direction direction = parts.length > 1 && parts[1].equalsIgnoreCase("asc")
+                    ? Sort.Direction.ASC : Sort.Direction.DESC;
+                yield PageRequest.of(page, size, Sort.by(direction, field));
+            }
+        };
     }
 
     private ProductListDto toProductListDto(Product product) {
@@ -278,14 +303,22 @@ public class CatalogService {
             .map(ProductImage::getUrl)
             .orElse(null);
 
+        List<ProductVariant> variants = productVariantRepository.findByProductIdAndIsActiveTrue(product.getId());
+        BigDecimal effectiveBasePrice = variants.isEmpty()
+            ? product.getBasePrice()
+            : variants.stream().map(ProductVariant::getPrice).min(BigDecimal::compareTo).orElse(product.getBasePrice());
+        int effectiveStock = variants.isEmpty()
+            ? product.getStock()
+            : variants.stream().mapToInt(v -> v.getStock() - v.getStockReserved()).sum();
+
         return new ProductListDto(
             product.getId(),
             product.getName(),
             product.getSlug(),
             product.getBrand(),
-            product.getBasePrice(),
+            effectiveBasePrice,
             product.getComparePrice(),
-            product.getStock(),
+            effectiveStock,
             product.isFeatured(),
             primaryImage,
             product.getCategory() != null ? product.getCategory().getName() : null,
@@ -308,6 +341,31 @@ public class CatalogService {
                 product.getCategory().getSlug())
             : null;
 
+        List<VariantOptionTypeDto> optionTypes = variantOptionTypeRepository
+            .findByProductIdOrderBySortOrder(product.getId())
+            .stream()
+            .map(type -> {
+                List<VariantOptionValueDto> values = variantOptionValueRepository
+                    .findByTypeIdOrderBySortOrder(type.getId())
+                    .stream()
+                    .map(val -> new VariantOptionValueDto(val.getId(), val.getValue(), val.getSortOrder()))
+                    .toList();
+                return new VariantOptionTypeDto(type.getId(), type.getName(), type.getSortOrder(), values);
+            })
+            .toList();
+
+        List<VariantDto> variants = productVariantRepository
+            .findByProductIdOrderBySortOrder(product.getId())
+            .stream()
+            .map(v -> new VariantDto(
+                v.getId(), v.getSku(), v.getName(), v.getPrice(), v.getComparePrice(),
+                v.getStock(), v.getStockReserved(), v.isActive(), v.getSortOrder(),
+                v.getOptionValues().stream()
+                    .map(ov -> new VariantOptionValueDto(ov.getId(), ov.getValue(), ov.getSortOrder()))
+                    .toList()
+            ))
+            .toList();
+
         return new ProductDto(
             product.getId(),
             product.getName(),
@@ -323,6 +381,8 @@ public class CatalogService {
             product.isFeatured(),
             images,
             categorySummary,
+            variants,
+            optionTypes,
             product.getCreatedAt()
         );
     }

@@ -1,6 +1,8 @@
 package com.ecommerce.user.controller;
 
 import com.ecommerce.auth.dto.UserDto;
+import com.ecommerce.catalog.dto.WishlistDto;
+import com.ecommerce.catalog.service.WishlistService;
 import com.ecommerce.user.dto.*;
 import com.ecommerce.user.service.UserService;
 import jakarta.validation.Valid;
@@ -19,6 +21,7 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
+    private final WishlistService wishlistService;
 
     @GetMapping
     public ResponseEntity<UserDto> getProfile(@AuthenticationPrincipal UUID userId) {
@@ -61,6 +64,25 @@ public class UserController {
     public ResponseEntity<Void> deleteAddress(@AuthenticationPrincipal UUID userId,
                                                @PathVariable UUID id) {
         userService.deleteAddress(userId, id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/wishlist")
+    public ResponseEntity<List<WishlistDto>> getWishlist(@AuthenticationPrincipal UUID userId) {
+        return ResponseEntity.ok(wishlistService.getWishlist(userId));
+    }
+
+    @PostMapping("/wishlist/{productId}")
+    public ResponseEntity<WishlistDto> addToWishlist(@AuthenticationPrincipal UUID userId,
+                                                      @PathVariable UUID productId) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+            .body(wishlistService.addToWishlist(userId, productId));
+    }
+
+    @DeleteMapping("/wishlist/{productId}")
+    public ResponseEntity<Void> removeFromWishlist(@AuthenticationPrincipal UUID userId,
+                                                    @PathVariable UUID productId) {
+        wishlistService.removeFromWishlist(userId, productId);
         return ResponseEntity.noContent().build();
     }
 }
