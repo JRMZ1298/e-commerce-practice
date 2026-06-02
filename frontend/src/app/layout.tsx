@@ -5,7 +5,7 @@ import { Providers } from '@/components/Providers'
 
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-sans',
   weight: ['400', '500', '600', '700'],
 })
 

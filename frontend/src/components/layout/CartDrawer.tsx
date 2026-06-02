@@ -55,7 +55,7 @@ export function CartDrawer() {
           ) : (
             <div className="space-y-6">
               {items.map((item) => (
-                <div key={item.id} className="flex gap-4">
+                <div key={item.variantId} className="flex gap-4">
                   {/* Product Image */}
                   <div className="relative w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden bg-muted">
                     {item.imageUrl ? (
@@ -84,7 +84,7 @@ export function CartDrawer() {
                       <div className="flex items-center border border-border rounded-full">
                         <button
                           type="button"
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
                           className="p-1.5 hover:bg-muted boty-transition rounded-l-full"
                           aria-label="Decrease quantity"
                         >
@@ -93,7 +93,7 @@ export function CartDrawer() {
                         <span className="px-3 text-[1.4rem] font-medium">{item.quantity}</span>
                         <button
                           type="button"
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
                           className="p-1.5 hover:bg-muted boty-transition rounded-r-full"
                           aria-label="Increase quantity"
                         >
@@ -103,7 +103,7 @@ export function CartDrawer() {
 
                       <button
                         type="button"
-                        onClick={() => removeItem(item.id)}
+                          onClick={() => removeItem(item.variantId)}
                         className="p-1.5 text-muted-foreground hover:text-destructive boty-transition"
                         aria-label="Remove item"
                       >
