@@ -5,9 +5,11 @@ interface CartStore {
   items: CartItem[]
   coupon: string | null
   isOpen: boolean
+  setItems: (items: CartItem[]) => void
   addItem: (item: CartItem) => void
   removeItem: (id: string) => void
   updateQuantity: (id: string, quantity: number) => void
+  clearStore: () => void
   clearCart: () => void
   toggleCart: () => void
   openCart: () => void
@@ -19,28 +21,32 @@ export const useCartStore = create<CartStore>((set) => ({
   coupon: null,
   isOpen: false,
 
+  setItems: (items) => set({ items }),
+
   addItem: (item) =>
     set((state) => {
-      const existing = state.items.find((i) => i.id === item.id)
+      const existing = state.items.find((i) => i.variantId === item.variantId)
       if (existing) {
         return {
           items: state.items.map((i) =>
-            i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
+            i.variantId === item.variantId ? { ...i, quantity: i.quantity + item.quantity } : i
           ),
         }
       }
       return { items: [...state.items, item] }
     }),
 
-  removeItem: (id) =>
+  removeItem: (variantId) =>
     set((state) => ({
-      items: state.items.filter((i) => i.id !== id),
+      items: state.items.filter((i) => i.variantId !== variantId),
     })),
 
-  updateQuantity: (id, quantity) =>
+  updateQuantity: (variantId, quantity) =>
     set((state) => ({
-      items: state.items.map((i) => (i.id === id ? { ...i, quantity } : i)),
+      items: state.items.map((i) => (i.variantId === variantId ? { ...i, quantity } : i)),
     })),
+
+  clearStore: () => set({ items: [] }),
 
   clearCart: () => set({ items: [] }),
 
