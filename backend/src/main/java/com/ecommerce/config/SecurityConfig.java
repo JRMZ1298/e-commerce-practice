@@ -32,13 +32,18 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(request -> {
                 var config = new org.springframework.web.cors.CorsConfiguration();
                 config.setAllowedOriginPatterns(List.of("*"));
-                config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
                 config.setAllowedHeaders(List.of("*"));
                 config.setAllowCredentials(true);
                 return config;
             }))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/**").permitAll()
+                .requestMatchers("/v1/admin/**").hasRole("ADMIN")
+                .requestMatchers("/v1/orders/**").authenticated()
+                .requestMatchers("/v1/users/me/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/v1/auth/logout").authenticated()
+                .requestMatchers("/v1/auth/me").authenticated()
+                .anyRequest().permitAll()
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 

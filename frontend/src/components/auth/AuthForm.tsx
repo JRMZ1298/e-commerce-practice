@@ -24,6 +24,7 @@ export function AuthForm() {
   const searchParams = useSearchParams()
   const { login, register: registerUser } = useAuth()
   const [error, setError] = useState<string | null>(null)
+  const redirectTo = searchParams.get('redirect') || '/'
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
   const [mode, setMode] = useState<AuthMode>(
@@ -90,6 +91,7 @@ export function AuthForm() {
       if (isLogin) {
         const d = data as LoginInput
         await login(d.email, d.password)
+        router.replace(redirectTo)
       } else {
         const d = data as RegisterInput
         await registerUser({
@@ -98,6 +100,7 @@ export function AuthForm() {
           firstName: d.firstName,
           lastName: d.lastName,
         })
+        router.replace(redirectTo)
       }
     } catch {
       setError(isLogin

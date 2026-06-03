@@ -10,5 +10,6 @@ import java.util.UUID;
 public interface CategoryRepository extends JpaRepository<Category, UUID> {
     Optional<Category> findBySlug(String slug);
     List<Category> findByParentIdIsNull();
+    List<Category> findByParentId(UUID parentId);
     List<Category> findByIsActiveTrue();
 }

@@ -90,7 +90,7 @@ export default function WishlistPage() {
   }
 
   return (
-    <section className="section-padding">
+    <section className="section-padding pt-[100px]">
       <div className="mx-auto max-w-7xl">
         <div className="mb-8 flex items-center justify-between">
           <div>

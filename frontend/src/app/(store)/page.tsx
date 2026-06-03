@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { ShoppingBag, ArrowRight } from 'lucide-react'
 import { Hero } from '@/components/home/Hero'
 import { TrustBadges } from '@/components/home/TrustBadges'
@@ -9,6 +10,7 @@ import { Testimonials } from '@/components/home/Testimonials'
 import { CTABanner } from '@/components/home/CTABanner'
 import { Newsletter } from '@/components/home/Newsletter'
 import { useCart } from '@/hooks/useCart'
+import { useAuth } from '@/hooks/useAuth'
 
 const products = [
   {
@@ -61,6 +63,8 @@ const categories = [
 ]
 
 export default function HomePage() {
+  const router = useRouter()
+  const { isAuthenticated } = useAuth()
   const { addItem } = useCart()
 
   return (
@@ -129,6 +133,10 @@ export default function HomePage() {
                       onClick={(e) => {
                         e.preventDefault()
                         e.stopPropagation()
+                        if (!isAuthenticated) {
+                          router.push(`/auth?mode=login&redirect=/products/${product.id}`)
+                          return
+                        }
                         addItem({
                           id: product.id,
                           productName: product.name,

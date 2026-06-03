@@ -27,6 +27,7 @@ services:
       JWT_SECRET: ${JWT_SECRET:-dev-jwt-secret-N7WK1S5L0s6BTDU3jFPwyeuvR9I8E4hGzMlAVYHonibX-256bit}
       STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
       STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
       FRONTEND_URL: http://localhost:3000
     ports:
       - "8080:8080"

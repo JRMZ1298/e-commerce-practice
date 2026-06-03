@@ -1,10 +1,14 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
+import { useQueryClient } from '@tanstack/react-query'
 import { useAuthStore } from '@/stores/authStore'
 import { useCallback } from 'react'
 
 export function useAuth() {
-  const { user, isAuthenticated, isLoading, login, register, logout } =
+  const router = useRouter()
+  const queryClient = useQueryClient()
+  const { user, isAuthenticated, isLoading, login, register, logout: storeLogout } =
     useAuthStore()
 
   const handleLogin = useCallback(
@@ -27,8 +31,10 @@ export function useAuth() {
   )
 
   const handleLogout = useCallback(() => {
-    logout()
-  }, [logout])
+    storeLogout()
+    queryClient.clear()
+    router.replace('/')
+  }, [storeLogout, queryClient, router])
 
   return {
     user,

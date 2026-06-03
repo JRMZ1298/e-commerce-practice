@@ -1,11 +1,15 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { X, ShoppingBag, Trash2, Minus, Plus } from 'lucide-react'
+import { useAuth } from '@/hooks/useAuth'
 import { useCart } from '@/hooks/useCart'
 import { formatPrice } from '@/lib/utils/formatPrice'
 import { cn } from '@/lib/utils/cn'
 
 export function CartDrawer() {
+  const router = useRouter()
+  const { isAuthenticated } = useAuth()
   const { items, subtotal, isOpen, closeCart, removeItem, updateQuantity } =
     useCart()
 
@@ -130,6 +134,10 @@ export function CartDrawer() {
             </div>
             <button
               type="button"
+              onClick={() => {
+                closeCart()
+                router.push(isAuthenticated ? '/checkout' : '/auth?mode=login&redirect=/checkout')
+              }}
               className="w-full bg-brand-accent text-white py-4 rounded-full font-medium hover:bg-brand-accent/90 boty-transition"
             >
               Ir a pagar

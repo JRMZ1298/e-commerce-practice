@@ -228,6 +228,7 @@ export default function CartPage() {
 
               <button
                 type="button"
+                onClick={() => router.push('/checkout')}
                 className="mt-6 w-full rounded-full bg-brand-accent py-4 text-[1.4rem] font-semibold text-white hover:bg-brand-accent/90 boty-transition"
               >
                 Proceder al pago

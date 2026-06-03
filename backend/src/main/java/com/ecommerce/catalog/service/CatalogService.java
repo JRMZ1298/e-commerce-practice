@@ -43,9 +43,7 @@ public class CatalogService {
     }
 
     private CategoryDto buildCategoryTree(Category category) {
-        List<Category> children = categoryRepository.findByParentIdIsNull().stream()
-            .filter(c -> c.getParent() != null && c.getParent().getId().equals(category.getId()))
-            .toList();
+        List<Category> children = categoryRepository.findByParentId(category.getId());
         return new CategoryDto(
             category.getId(),
             category.getName(),
@@ -233,8 +231,15 @@ public class CatalogService {
             predicates.add(cb.equal(root.get("status"), Product.Status.ACTIVE));
 
             if (category != null && !category.isBlank()) {
-                Join<Product, Category> categoryJoin = root.join("category");
-                predicates.add(cb.equal(categoryJoin.get("slug"), category));
+                Optional<Category> catOpt = categoryRepository.findBySlug(category);
+                if (catOpt.isPresent()) {
+                    Set<UUID> categoryIds = new HashSet<>();
+                    collectCategoryIds(catOpt.get(), categoryIds);
+                    Join<Product, Category> categoryJoin = root.join("category");
+                    predicates.add(categoryJoin.get("id").in(categoryIds));
+                } else {
+                    predicates.add(cb.equal(root.get("category"), null));
+                }
             }
 
             if (minPrice != null) {
@@ -293,6 +298,14 @@ public class CatalogService {
                 yield PageRequest.of(page, size, Sort.by(direction, field));
             }
         };
+    }
+
+    private void collectCategoryIds(Category category, Set<UUID> ids) {
+        ids.add(category.getId());
+        List<Category> children = categoryRepository.findByParentId(category.getId());
+        for (Category child : children) {
+            collectCategoryIds(child, ids);
+        }
     }
 
     private ProductListDto toProductListDto(Product product) {

@@ -140,6 +140,10 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = useCallback(() => {
     if (!product || displayStock === 0) return
+    if (!isAuthenticated) {
+      router.push(`/auth?mode=login&redirect=/products/${slug}`)
+      return
+    }
     const item: CartItem = {
       id: selectedVariant?.id ?? product.id,
       variantId: selectedVariant?.id ?? product.id,
@@ -153,7 +157,7 @@ export default function ProductDetailPage() {
     addItem(item)
     setAddedFeedback(true)
     setTimeout(() => setAddedFeedback(false), 2000)
-  }, [product, selectedVariant, displayName, displayPrice, displayStock, quantity, primaryImage, addItem])
+  }, [product, selectedVariant, displayName, displayPrice, displayStock, quantity, primaryImage, addItem, isAuthenticated, router, slug])
 
   const handleWishlistToggle = useCallback(() => {
     if (!isAuthenticated) {
@@ -183,7 +187,7 @@ export default function ProductDetailPage() {
   const maxQuantity = displayStock
 
   return (
-    <div className="bg-white">
+    <div className="bg-white pt-[100px]">
       <div className="mx-auto max-w-col-xl px-6 lg:px-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 py-6 text-[1.4rem] text-muted-foreground">

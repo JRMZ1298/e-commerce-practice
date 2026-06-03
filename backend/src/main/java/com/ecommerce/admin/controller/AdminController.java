@@ -2,6 +2,8 @@ package com.ecommerce.admin.controller;
 
 import com.ecommerce.admin.service.AdminService;
 import com.ecommerce.catalog.dto.*;
+import com.ecommerce.order.dto.*;
+import com.ecommerce.order.entity.OrderStatus;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -79,6 +81,49 @@ public class AdminController {
     @DeleteMapping("/variants/{variantId}")
     public ResponseEntity<Void> deleteVariant(@PathVariable UUID variantId) {
         adminService.deleteVariant(variantId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/orders")
+    public ResponseEntity<List<OrderDto>> getOrders(
+            @RequestParam(required = false) OrderStatus status) {
+        return ResponseEntity.ok(adminService.getAllOrders(status));
+    }
+
+    @GetMapping("/orders/{orderNumber}")
+    public ResponseEntity<OrderDto> getOrderByNumber(@PathVariable String orderNumber) {
+        return ResponseEntity.ok(adminService.getOrderByNumber(orderNumber));
+    }
+
+    @PutMapping("/orders/{orderNumber}/status")
+    public ResponseEntity<OrderDto> updateOrderStatus(
+            @AuthenticationPrincipal UUID adminId,
+            @PathVariable String orderNumber,
+            @Valid @RequestBody AdminOrderStatusRequest request) {
+        return ResponseEntity.ok(
+            adminService.updateOrderStatus(adminId, orderNumber, request.status(), request.notes()));
+    }
+
+    @GetMapping("/coupons")
+    public ResponseEntity<List<CouponDto>> getCoupons() {
+        return ResponseEntity.ok(adminService.getAllCoupons());
+    }
+
+    @PostMapping("/coupons")
+    public ResponseEntity<CouponDto> createCoupon(@Valid @RequestBody CouponRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+            .body(adminService.createCoupon(request));
+    }
+
+    @PutMapping("/coupons/{id}")
+    public ResponseEntity<CouponDto> updateCoupon(@PathVariable UUID id,
+                                                    @Valid @RequestBody CouponRequest request) {
+        return ResponseEntity.ok(adminService.updateCoupon(id, request));
+    }
+
+    @DeleteMapping("/coupons/{id}")
+    public ResponseEntity<Void> deleteCoupon(@PathVariable UUID id) {
+        adminService.deleteCoupon(id);
         return ResponseEntity.noContent().build();
     }
 }

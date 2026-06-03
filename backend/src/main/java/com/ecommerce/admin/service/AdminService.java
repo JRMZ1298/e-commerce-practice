@@ -8,6 +8,11 @@ import com.ecommerce.catalog.repository.*;
 import com.ecommerce.catalog.service.CatalogService;
 import com.ecommerce.common.exception.BusinessException;
 import com.ecommerce.common.exception.ResourceNotFoundException;
+import com.ecommerce.order.dto.*;
+import com.ecommerce.order.entity.*;
+import com.ecommerce.order.repository.*;
+import com.ecommerce.order.service.OrderService;
+import java.math.BigDecimal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +30,8 @@ public class AdminService {
     private final ProductVariantRepository productVariantRepository;
     private final VariantOptionTypeRepository variantOptionTypeRepository;
     private final VariantOptionValueRepository variantOptionValueRepository;
+    private final OrderService orderService;
+    private final CouponRepository couponRepository;
 
     @Transactional
     public CategoryDto createCategory(CategoryRequest request) {
@@ -198,6 +205,84 @@ public class AdminService {
             .orElseThrow(() -> new ResourceNotFoundException("Variant", variantId));
         variant.setActive(false);
         productVariantRepository.save(variant);
+    }
+
+    public List<OrderDto> getAllOrders(OrderStatus status) {
+        return orderService.getAllOrders(status);
+    }
+
+    public OrderDto getOrderByNumber(String orderNumber) {
+        return orderService.getOrderByNumberForAdmin(orderNumber);
+    }
+
+    @Transactional
+    public OrderDto updateOrderStatus(UUID adminId, String orderNumber, OrderStatus newStatus, String notes) {
+        return orderService.updateOrderStatus(adminId, orderNumber, newStatus, notes);
+    }
+
+    public List<CouponDto> getAllCoupons() {
+        return couponRepository.findAll().stream()
+            .map(this::toCouponDto)
+            .toList();
+    }
+
+    @Transactional
+    public CouponDto createCoupon(CouponRequest request) {
+        if (couponRepository.findByCode(request.code().trim().toUpperCase()).isPresent()) {
+            throw new BusinessException("Coupon code already exists: " + request.code());
+        }
+
+        Coupon coupon = Coupon.builder()
+            .code(request.code().trim().toUpperCase())
+            .type(request.type())
+            .value(request.value())
+            .minPurchase(request.minPurchase() != null ? request.minPurchase() : BigDecimal.ZERO)
+            .maxUses(request.maxUses())
+            .expiresAt(request.expiresAt())
+            .isActive(request.isActive())
+            .build();
+
+        coupon = couponRepository.save(coupon);
+        return toCouponDto(coupon);
+    }
+
+    @Transactional
+    public CouponDto updateCoupon(UUID id, CouponRequest request) {
+        Coupon coupon = couponRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Coupon", id));
+
+        couponRepository.findByCode(request.code().trim().toUpperCase())
+            .ifPresent(existing -> {
+                if (!existing.getId().equals(id)) {
+                    throw new BusinessException("Coupon code already exists: " + request.code());
+                }
+            });
+
+        coupon.setCode(request.code().trim().toUpperCase());
+        coupon.setType(request.type());
+        coupon.setValue(request.value());
+        if (request.minPurchase() != null) coupon.setMinPurchase(request.minPurchase());
+        coupon.setMaxUses(request.maxUses());
+        coupon.setExpiresAt(request.expiresAt());
+        coupon.setActive(request.isActive());
+
+        coupon = couponRepository.save(coupon);
+        return toCouponDto(coupon);
+    }
+
+    @Transactional
+    public void deleteCoupon(UUID id) {
+        Coupon coupon = couponRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Coupon", id));
+        couponRepository.delete(coupon);
+    }
+
+    private CouponDto toCouponDto(Coupon c) {
+        return new CouponDto(
+            c.getId(), c.getCode(), c.getType(), c.getValue(),
+            c.getMinPurchase(), c.getMaxUses(), c.getUsedCount(),
+            c.getExpiresAt(), c.isActive(), c.getCreatedAt()
+        );
     }
 
     private VariantDto toVariantDto(ProductVariant v) {
