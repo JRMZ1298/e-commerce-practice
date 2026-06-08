@@ -30,9 +30,10 @@ public class CatalogController {
             @RequestParam(required = false) String sort,
             @RequestParam(required = false) String brand,
             @RequestParam(required = false) String tag,
-            @RequestParam(required = false) Boolean inStock) {
+            @RequestParam(required = false) Boolean inStock,
+            @RequestParam(required = false) Boolean featured) {
         return ResponseEntity.ok(
-            PageResponse.from(catalogService.getProducts(page, size, category, minPrice, maxPrice, search, sort, brand, tag, inStock))
+            PageResponse.from(catalogService.getProducts(page, size, category, minPrice, maxPrice, search, sort, brand, tag, inStock, featured))
         );
     }
 

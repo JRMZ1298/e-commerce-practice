@@ -5,12 +5,12 @@ import { FrapButton } from '@/components/layout/FrapButton'
 
 export default function StoreLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       <Header />
-      <main>{children}</main>
+      <main className="flex-1 pt-[100px]">{children}</main>
       <Footer />
       <CartDrawer />
       <FrapButton />
-    </>
+    </div>
   )
 }

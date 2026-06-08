@@ -119,9 +119,9 @@ public class CatalogService {
 
     public Page<ProductListDto> getProducts(int page, int size, String category, BigDecimal minPrice,
                                             BigDecimal maxPrice, String search, String sort,
-                                            String brand, String tag, Boolean inStock) {
+                                            String brand, String tag, Boolean inStock, Boolean featured) {
         Pageable pageable = createPageable(page, size, sort);
-        Specification<Product> spec = buildProductSpecification(category, minPrice, maxPrice, search, brand, tag, inStock);
+        Specification<Product> spec = buildProductSpecification(category, minPrice, maxPrice, search, brand, tag, inStock, featured);
 
         return productRepository.findAll(spec, pageable)
             .map(this::toProductListDto);
@@ -224,7 +224,8 @@ public class CatalogService {
 
     private Specification<Product> buildProductSpecification(String category, BigDecimal minPrice,
                                                               BigDecimal maxPrice, String search,
-                                                              String brand, String tag, Boolean inStock) {
+                                                              String brand, String tag, Boolean inStock,
+                                                              Boolean featured) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
@@ -271,6 +272,10 @@ public class CatalogService {
                 predicates.add(cb.greaterThan(root.get("stock"), 0));
             }
 
+            if (Boolean.TRUE.equals(featured)) {
+                predicates.add(cb.isTrue(root.get("isFeatured")));
+            }
+
             if (!query.getResultType().equals(Long.class)) {
                 query.distinct(true);
             }
@@ -308,7 +313,7 @@ public class CatalogService {
         }
     }
 
-    private ProductListDto toProductListDto(Product product) {
+    public ProductListDto toProductListDto(Product product) {
         String primaryImage = productImageRepository.findByProductIdOrderBySortOrder(product.getId())
             .stream()
             .filter(ProductImage::isPrimary)
@@ -339,7 +344,7 @@ public class CatalogService {
         );
     }
 
-    private ProductDto toProductDto(Product product) {
+    public ProductDto toProductDto(Product product) {
         List<ProductDto.ProductImageDto> images = productImageRepository
             .findByProductIdOrderBySortOrder(product.getId())
             .stream()

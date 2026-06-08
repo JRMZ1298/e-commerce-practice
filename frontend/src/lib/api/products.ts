@@ -13,6 +13,7 @@ export interface ProductsParams {
   brand?: string;
   tag?: string;
   inStock?: boolean;
+  featured?: boolean;
 }
 
 export const productsApi = {

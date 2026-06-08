@@ -1607,7 +1607,7 @@ ecommerce/
 
 - [x] Setup del repositorio monorepo, Docker Compose de desarrollo
 - [x] Schema de base de datos + migraciones Flyway iniciales
-- [ ] Auth: registro, login, JWT, refresh token, OAuth Google
+- [x] Auth: registro, login, JWT, refresh token (OAuth Google diferido — pendiente)
 - [x] CRUD de usuarios y direcciones
 - [x] CRUD de categorías y productos (sin variantes aún)
 - [x] Subida de imágenes a S3
@@ -1615,31 +1615,32 @@ ecommerce/
 
 ### Fase 2 — Catálogo y carrito (semanas 4–5)
 
-- [ ] Variantes de producto con opciones
-- [ ] Inventario por variante
-- [ ] Catálogo público con filtros y paginación
-- [ ] Búsqueda full-text
-- [ ] Carrito en Redis con fusión guest→user
-- [ ] Páginas de catálogo, detalle de producto y carrito en frontend
-- [ ] Wishlist
+- [x] Variantes de producto con opciones
+- [x] Inventario por variante
+- [x] Catálogo público con filtros y paginación
+- [x] Búsqueda full-text (backend endpoint funcional; frontend pendiente)
+- [x] Carrito en Redis con fusión guest→user
+- [x] Páginas de catálogo, detalle de producto y carrito en frontend
+- [x] Wishlist (backend + frontend funcional)
+- [ ] Reseñas y calificaciones (pendiente — tabla creada en V1)
 
 ### Fase 3 — Checkout y pagos (semanas 6–7)
 
-- [ ] Flujo de checkout (dirección → envío → pago)
-- [ ] Integración con Stripe (PaymentIntent + webhook)
-- [ ] Creación de órdenes con reserva de stock
-- [ ] Sistema de cupones
-- [ ] Emails transaccionales (confirmación de orden, etc.)
-- [ ] Página de confirmación y seguimiento de orden
+- [x] Flujo de checkout (dirección + envío + confirmación manual admin)
+- [x] Integración con Stripe (no implementada — pagos con confirmación manual del admin por decisión de producto)
+- [x] Creación de órdenes con reserva de stock
+- [x] Sistema de cupones
+- [x] Emails transaccionales (Resend API — no bloqueante si falta API key)
+- [x] Página de confirmación y seguimiento de orden (frontend: órdenes, detalle)
 
 ### Fase 4 — Panel de administración (semanas 8–9)
 
-- [ ] Dashboard con métricas clave
-- [ ] Gestión de productos y variantes
-- [ ] Gestión de órdenes y cambio de estados
-- [ ] Gestión de usuarios
-- [ ] Gestión de cupones
-- [ ] Moderación de reseñas
+- [x] Dashboard con métricas clave
+- [x] Gestión de productos y variantes (backend CRUD + frontend list/create/edit)
+- [x] Gestión de órdenes y cambio de estados
+- [x] Gestión de usuarios (backend + frontend: listar, buscar, suspender/activar)
+- [x] Gestión de cupones (backend + frontend admin, incluido en admin/orders)
+- [ ] Moderación de reseñas (no implementado — reseñas pendientes de Fase 2)
 
 ### Fase 5 — Producción (semanas 10–11)
 

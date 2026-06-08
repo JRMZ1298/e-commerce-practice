@@ -187,7 +187,7 @@ export default function ProductDetailPage() {
   const maxQuantity = displayStock
 
   return (
-    <div className="bg-white pt-[100px]">
+    <div className="bg-white">
       <div className="mx-auto max-w-col-xl px-6 lg:px-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 py-6 text-[1.4rem] text-muted-foreground">

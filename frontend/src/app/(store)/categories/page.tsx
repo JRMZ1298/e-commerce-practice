@@ -12,7 +12,7 @@ export default function CategoriesPage() {
   })
 
   return (
-    <main className="min-h-screen pt-28 pb-20">
+    <main className="min-h-screen pb-20">
       <div className="mx-auto px-6 lg:px-8 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-16">

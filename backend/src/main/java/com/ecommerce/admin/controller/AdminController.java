@@ -1,11 +1,15 @@
 package com.ecommerce.admin.controller;
 
+import com.ecommerce.admin.dto.AdminUserDto;
+import com.ecommerce.admin.dto.DashboardStatsDto;
 import com.ecommerce.admin.service.AdminService;
 import com.ecommerce.catalog.dto.*;
+import com.ecommerce.common.dto.PageResponse;
 import com.ecommerce.order.dto.*;
 import com.ecommerce.order.entity.OrderStatus;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -125,5 +129,68 @@ public class AdminController {
     public ResponseEntity<Void> deleteCoupon(@PathVariable UUID id) {
         adminService.deleteCoupon(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // ── Dashboard ────────────────────────────────────────────────
+
+    @GetMapping("/stats")
+    public ResponseEntity<DashboardStatsDto> getStats() {
+        return ResponseEntity.ok(adminService.getDashboardStats());
+    }
+
+    // ── Users ────────────────────────────────────────────────────
+
+    @GetMapping("/users")
+    public ResponseEntity<List<AdminUserDto>> getUsers() {
+        return ResponseEntity.ok(adminService.getAllUsers());
+    }
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<AdminUserDto> getUser(@PathVariable UUID id) {
+        return ResponseEntity.ok(adminService.getUserById(id));
+    }
+
+    @PatchMapping("/users/{id}/status")
+    public ResponseEntity<AdminUserDto> updateUserStatus(@PathVariable UUID id,
+                                                          @RequestBody String status) {
+        return ResponseEntity.ok(adminService.updateUserStatus(id, status));
+    }
+
+    // ── Products (admin) ─────────────────────────────────────────
+
+    @GetMapping("/products")
+    public ResponseEntity<PageResponse<ProductListDto>> getProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        Page<ProductListDto> result = adminService.getAllProducts(page, size);
+        return ResponseEntity.ok(PageResponse.from(result));
+    }
+
+    @GetMapping("/products/{id}")
+    public ResponseEntity<ProductDto> getProduct(@PathVariable UUID id) {
+        return ResponseEntity.ok(adminService.getProductById(id));
+    }
+
+    // ── Product Images ───────────────────────────────────────────
+
+    @PostMapping("/products/{id}/images")
+    public ResponseEntity<ProductDto> addProductImage(
+            @PathVariable UUID id,
+            @RequestParam String url,
+            @RequestParam(required = false) String altText,
+            @RequestParam(required = false) Boolean primary) {
+        return ResponseEntity.ok(adminService.addProductImage(id, url, altText, primary));
+    }
+
+    @DeleteMapping("/products/{id}/images/{imageId}")
+    public ResponseEntity<ProductDto> deleteProductImage(
+            @PathVariable UUID id, @PathVariable UUID imageId) {
+        return ResponseEntity.ok(adminService.deleteProductImage(id, imageId));
+    }
+
+    @PutMapping("/products/{id}/images/{imageId}/primary")
+    public ResponseEntity<ProductDto> setPrimaryImage(
+            @PathVariable UUID id, @PathVariable UUID imageId) {
+        return ResponseEntity.ok(adminService.setPrimaryImage(id, imageId));
     }
 }

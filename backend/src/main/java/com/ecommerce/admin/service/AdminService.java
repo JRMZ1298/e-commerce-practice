@@ -1,5 +1,7 @@
 package com.ecommerce.admin.service;
 
+import com.ecommerce.admin.dto.AdminUserDto;
+import com.ecommerce.admin.dto.DashboardStatsDto;
 import com.ecommerce.auth.entity.User;
 import com.ecommerce.auth.repository.UserRepository;
 import com.ecommerce.catalog.dto.*;
@@ -14,6 +16,9 @@ import com.ecommerce.order.repository.*;
 import com.ecommerce.order.service.OrderService;
 import java.math.BigDecimal;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,10 +32,12 @@ public class AdminService {
     private final CatalogService catalogService;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
+    private final ProductImageRepository productImageRepository;
     private final ProductVariantRepository productVariantRepository;
     private final VariantOptionTypeRepository variantOptionTypeRepository;
     private final VariantOptionValueRepository variantOptionValueRepository;
     private final OrderService orderService;
+    private final OrderRepository orderRepository;
     private final CouponRepository couponRepository;
 
     @Transactional
@@ -283,6 +290,135 @@ public class AdminService {
             c.getMinPurchase(), c.getMaxUses(), c.getUsedCount(),
             c.getExpiresAt(), c.isActive(), c.getCreatedAt()
         );
+    }
+
+    // ── Dashboard ──────────────────────────────────────────────
+
+    public DashboardStatsDto getDashboardStats() {
+        long totalOrders = orderRepository.count();
+        long totalProducts = productRepository.count();
+        long totalUsers = userRepository.count();
+
+        BigDecimal totalRevenue = orderRepository.findAll().stream()
+            .filter(o -> o.getStatus() == OrderStatus.DELIVERED)
+            .map(Order::getTotal)
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        long pendingOrders = orderRepository.findByStatusOrderByCreatedAtDesc(OrderStatus.AWAITING_PAYMENT).size();
+        long lowStockProducts = productVariantRepository.findByStockLessThanEqual(5).size();
+
+        return new DashboardStatsDto(totalOrders, totalProducts, totalUsers, totalRevenue, pendingOrders, lowStockProducts);
+    }
+
+    // ── Users ──────────────────────────────────────────────────
+
+    public List<AdminUserDto> getAllUsers() {
+        return userRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"))
+            .stream()
+            .map(AdminUserDto::from)
+            .toList();
+    }
+
+    public AdminUserDto getUserById(UUID id) {
+        User user = userRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("User", id));
+        return AdminUserDto.from(user);
+    }
+
+    @Transactional
+    public AdminUserDto updateUserStatus(UUID id, String status) {
+        User user = userRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("User", id));
+        user.setStatus(User.Status.valueOf(status));
+        user = userRepository.save(user);
+        return AdminUserDto.from(user);
+    }
+
+    // ── Product Images ───────────────────────────────────────────
+
+    @Transactional
+    public ProductDto addProductImage(UUID productId, String url, String altText, Boolean primary) {
+        Product product = productRepository.findById(productId)
+            .orElseThrow(() -> new ResourceNotFoundException("Product", productId));
+
+        List<ProductImage> existing = productImageRepository.findByProductIdOrderBySortOrder(productId);
+        int nextSortOrder = existing.stream().mapToInt(ProductImage::getSortOrder).max().orElse(-1) + 1;
+
+        boolean isPrimary = Boolean.TRUE.equals(primary) || existing.isEmpty();
+
+        if (isPrimary) {
+            existing.forEach(img -> img.setPrimary(false));
+            productImageRepository.saveAll(existing);
+        }
+
+        ProductImage image = ProductImage.builder()
+            .product(product)
+            .url(url)
+            .altText(altText)
+            .sortOrder(nextSortOrder)
+            .isPrimary(isPrimary)
+            .build();
+
+        productImageRepository.save(image);
+        return catalogService.toProductDto(product);
+    }
+
+    @Transactional
+    public ProductDto deleteProductImage(UUID productId, UUID imageId) {
+        ProductImage image = productImageRepository.findById(imageId)
+            .orElseThrow(() -> new ResourceNotFoundException("ProductImage", imageId));
+
+        if (!image.getProduct().getId().equals(productId)) {
+            throw new BusinessException("Image does not belong to this product");
+        }
+
+        boolean wasPrimary = image.isPrimary();
+        productImageRepository.delete(image);
+
+        if (wasPrimary) {
+            List<ProductImage> remaining = productImageRepository.findByProductIdOrderBySortOrder(productId);
+            if (!remaining.isEmpty()) {
+                ProductImage newPrimary = remaining.getFirst();
+                newPrimary.setPrimary(true);
+                productImageRepository.save(newPrimary);
+            }
+        }
+
+        Product product = productRepository.findById(productId)
+            .orElseThrow(() -> new ResourceNotFoundException("Product", productId));
+        return catalogService.toProductDto(product);
+    }
+
+    @Transactional
+    public ProductDto setPrimaryImage(UUID productId, UUID imageId) {
+        ProductImage image = productImageRepository.findById(imageId)
+            .orElseThrow(() -> new ResourceNotFoundException("ProductImage", imageId));
+
+        if (!image.getProduct().getId().equals(productId)) {
+            throw new BusinessException("Image does not belong to this product");
+        }
+
+        List<ProductImage> all = productImageRepository.findByProductIdOrderBySortOrder(productId);
+        all.forEach(img -> img.setPrimary(img.getId().equals(imageId)));
+        productImageRepository.saveAll(all);
+
+        Product product = productRepository.findById(productId)
+            .orElseThrow(() -> new ResourceNotFoundException("Product", productId));
+        return catalogService.toProductDto(product);
+    }
+
+    // ── Products (admin) ────────────────────────────────────────
+
+    public Page<ProductListDto> getAllProducts(int page, int size) {
+        PageRequest pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        return productRepository.findAll(pageable)
+            .map(catalogService::toProductListDto);
+    }
+
+    public ProductDto getProductById(UUID id) {
+        Product product = productRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Product", id));
+        return catalogService.toProductDto(product);
     }
 
     private VariantDto toVariantDto(ProductVariant v) {

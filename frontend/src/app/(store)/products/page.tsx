@@ -17,12 +17,10 @@ import {
   X,
   ChevronDown,
   Package,
-  ShoppingBag,
 } from "lucide-react";
 import { productsApi, type ProductsParams } from "@/lib/api/products";
-import { formatPrice } from "@/lib/utils/formatPrice";
 import { cn } from "@/lib/utils/cn";
-import type { ProductListDto } from "@/types/product";
+import { ProductCard } from "@/components/products/ProductCard";
 
 const SORT_OPTIONS = [
   { value: "", label: "Más relevantes" },
@@ -32,54 +30,6 @@ const SORT_OPTIONS = [
   { value: "name_desc", label: "Nombre Z-A" },
   { value: "newest", label: "Más recientes" },
 ];
-
-function ProductCard({ product }: { product: ProductListDto }) {
-  return (
-    <Link href={`/products/${product.slug}`} className="group block">
-      <div className="card-starbucks boty-shadow boty-transition group-hover:scale-[1.02] overflow-hidden rounded-2xl bg-background">
-        <div className="relative aspect-square bg-muted overflow-hidden">
-          {product.primaryImage ? (
-            <img
-              src={product.primaryImage}
-              alt={product.name}
-              className="h-full w-full object-cover boty-transition group-hover:scale-105"
-            />
-          ) : (
-            <div className="flex h-full items-center justify-center text-muted-foreground/20">
-              <ShoppingBag className="h-16 w-16" />
-            </div>
-          )}
-          {product.stock === 0 && (
-            <span className="absolute left-3 top-3 rounded-full bg-black/70 px-3 py-1 text-[1.2rem] text-white">
-              Agotado
-            </span>
-          )}
-        </div>
-        <div className="p-4">
-          {product.brand && (
-            <p className="text-[1.2rem] text-muted-foreground mb-1 uppercase tracking-wide">
-              {product.brand}
-            </p>
-          )}
-          <h3 className="text-[1.5rem] font-semibold text-foreground mb-1 line-clamp-2">
-            {product.name}
-          </h3>
-          <div className="mt-2 flex items-center gap-2">
-            <span className="text-[1.6rem] font-bold text-brand-accent">
-              {formatPrice(product.basePrice)}
-            </span>
-            {product.comparePrice &&
-              product.comparePrice > product.basePrice && (
-                <span className="text-[1.3rem] text-muted-foreground line-through">
-                  {formatPrice(product.comparePrice)}
-                </span>
-              )}
-          </div>
-        </div>
-      </div>
-    </Link>
-  );
-}
 
 function CatalogPageContent() {
   const searchParams = useSearchParams();
@@ -353,7 +303,7 @@ function CatalogPageContent() {
   );
 
   return (
-    <div className="section-padding pt-[100px]">
+    <div className="section-padding">
       <div className="mx-auto max-w-full px-5">
         {/* Header */}
         <div className="mb-8">

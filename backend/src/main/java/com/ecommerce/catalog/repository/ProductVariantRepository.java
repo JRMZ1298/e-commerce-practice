@@ -11,4 +11,5 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariant, 
     List<ProductVariant> findByProductIdOrderBySortOrder(UUID productId);
     Optional<ProductVariant> findBySku(String sku);
     List<ProductVariant> findByProductIdAndIsActiveTrue(UUID productId);
+    List<ProductVariant> findByStockLessThanEqual(int threshold);
 }
