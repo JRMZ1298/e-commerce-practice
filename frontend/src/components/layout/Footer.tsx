@@ -1,19 +1,18 @@
-import Link from 'next/link'
-import { Instagram, Facebook, Twitter } from 'lucide-react'
+import Link from "next/link";
+import { Instagram, Facebook, Twitter } from "lucide-react";
 
 const quickLinks = [
-  { href: '/products', label: 'Todos los productos' },
-  { href: '/categories', label: 'Categorías' },
-  { href: '/orders', label: 'Mis pedidos' },
-  { href: '/about', label: 'Sobre nosotros' },
-]
+  { href: "/products", label: "Todos los productos" },
+  { href: "/categories", label: "Categorías" },
+  { href: "/orders", label: "Mis pedidos" },
+];
 
 const helpLinks = [
-  { href: '/contact', label: 'Contacto' },
-  { href: '/faq', label: 'FAQ' },
-  { href: '/shipping', label: 'Envíos' },
-  { href: '/returns', label: 'Devoluciones' },
-]
+  { href: "/contact", label: "Contacto" },
+  { href: "/faq", label: "FAQ" },
+  { href: "/shipping", label: "Envíos" },
+  { href: "/returns", label: "Devoluciones" },
+];
 
 export function Footer() {
   return (
@@ -33,7 +32,8 @@ export function Footer() {
               MAISON
             </h2>
             <p className="mb-6 text-[1.4rem] leading-relaxed text-white/60">
-              Moda con elegancia y distinción. Descubre piezas únicas que definen tu estilo.
+              Moda con elegancia y distinción. Descubre piezas únicas que
+              definen tu estilo.
             </p>
             <div className="flex gap-4">
               <a
@@ -105,17 +105,26 @@ export function Footer() {
             <h3 className="mb-4 font-medium text-white">Síguenos</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-[1.4rem] text-white/60 boty-transition hover:text-white">
+                <a
+                  href="#"
+                  className="text-[1.4rem] text-white/60 boty-transition hover:text-white"
+                >
                   Instagram
                 </a>
               </li>
               <li>
-                <a href="#" className="text-[1.4rem] text-white/60 boty-transition hover:text-white">
+                <a
+                  href="#"
+                  className="text-[1.4rem] text-white/60 boty-transition hover:text-white"
+                >
                   Facebook
                 </a>
               </li>
               <li>
-                <a href="#" className="text-[1.4rem] text-white/60 boty-transition hover:text-white">
+                <a
+                  href="#"
+                  className="text-[1.4rem] text-white/60 boty-transition hover:text-white"
+                >
                   Twitter
                 </a>
               </li>
@@ -127,13 +136,20 @@ export function Footer() {
         <div className="border-t border-white/10 pt-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-[1.4rem] text-white/60">
-              &copy; {new Date().getFullYear()} MAISON. Todos los derechos reservados.
+              &copy; {new Date().getFullYear()} MAISON. Todos los derechos
+              reservados.
             </p>
             <div className="flex gap-6">
-              <Link href="/" className="text-[1.4rem] text-white/60 boty-transition hover:text-white">
+              <Link
+                href="/"
+                className="text-[1.4rem] text-white/60 boty-transition hover:text-white"
+              >
                 Política de Privacidad
               </Link>
-              <Link href="/" className="text-[1.4rem] text-white/60 boty-transition hover:text-white">
+              <Link
+                href="/"
+                className="text-[1.4rem] text-white/60 boty-transition hover:text-white"
+              >
                 Términos del Servicio
               </Link>
             </div>
@@ -141,5 +157,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

@@ -80,7 +80,7 @@ export default function AdminOrderDetailPage() {
   const possibleTransitions = allowedTransitions[order.status] ?? []
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       <div className="mb-6">
         <Link
           href="/admin/orders"
@@ -91,9 +91,9 @@ export default function AdminOrderDetailPage() {
         </Link>
       </div>
 
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="flex items-center gap-4">
-          <h1 className="font-mono text-[2rem] font-bold text-foreground">
+          <h1 className="font-mono text-[1.6rem] sm:text-[2rem] font-bold text-foreground">
             {order.orderNumber}
           </h1>
           <span className={cn('inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-[1.3rem] font-medium', currentCfg.color)}>

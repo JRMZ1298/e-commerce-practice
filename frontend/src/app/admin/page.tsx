@@ -47,9 +47,9 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       <div className="mb-8">
-        <h1 className="font-serif text-[2.4rem] font-bold text-foreground">Dashboard</h1>
+        <h1 className="font-serif text-[2rem] sm:text-[2.4rem] font-bold text-foreground">Dashboard</h1>
         <p className="text-[1.3rem] text-muted-foreground">Resumen de la tienda</p>
       </div>
 

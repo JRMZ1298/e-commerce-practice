@@ -244,7 +244,7 @@ export default function CartPage() {
             </div>
 
             {/* Trust Badges */}
-            <div className="mt-6 grid grid-cols-3 gap-4">
+            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
               <div className="flex flex-col items-center gap-2 rounded-xl bg-white p-4 text-center boty-shadow">
                 <Package className="h-6 w-6 text-brand-accent" />
                 <span className="text-[1.2rem] font-medium text-foreground">Envío gratis</span>

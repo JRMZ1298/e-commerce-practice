@@ -38,7 +38,7 @@ export default function AdminEditProductPage() {
   }
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       <div className="mb-6">
         <Link
           href="/admin/products"
@@ -49,7 +49,7 @@ export default function AdminEditProductPage() {
         </Link>
       </div>
       <div className="mb-8">
-        <h1 className="font-serif text-[2.4rem] font-bold text-foreground">{product.name}</h1>
+        <h1 className="font-serif text-[2rem] sm:text-[2.4rem] font-bold text-foreground">{product.name}</h1>
         <p className="text-[1.3rem] text-muted-foreground">Edita los detalles del producto</p>
       </div>
       <ProductForm product={product} />

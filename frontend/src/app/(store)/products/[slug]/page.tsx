@@ -414,7 +414,7 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Trust Badges */}
-            <div className="mt-10 grid grid-cols-2 gap-4 rounded-2xl bg-canvas p-6">
+            <div className="mt-10 grid grid-cols-1 gap-4 rounded-2xl bg-canvas p-6 sm:grid-cols-2">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-green-light/30">
                   <Truck className="h-5 w-5 text-brand-green" />

@@ -1,12 +1,20 @@
 'use client'
 
 import { Suspense } from 'react'
+import Link from 'next/link'
 import { AuthForm } from '@/components/auth/AuthForm'
-import { Loader2 } from 'lucide-react'
+import { Loader2, X } from 'lucide-react'
 
 function AuthContent() {
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4 md:p-6 bg-gradient-to-br from-brand-green/5 via-canvas to-brand-green/10">
+    <div className="relative min-h-screen w-full flex items-center justify-center p-4 md:p-6 bg-gradient-to-br from-brand-green/5 via-canvas to-brand-green/10">
+      <Link
+        href="/"
+        className="fixed right-6 top-6 z-50 flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-foreground/60 hover:bg-white hover:text-foreground transition-all shadow-md"
+        aria-label="Cerrar"
+      >
+        <X className="h-5 w-5" />
+      </Link>
       <div className="w-full max-w-[900px] bg-white rounded-2xl md:rounded-[2.5rem] shadow-2xl overflow-hidden">
         <div className="grid lg:grid-cols-2 gap-0 min-h-[600px]">
           {/* LEFT SIDE - FORM */}

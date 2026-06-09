@@ -2,16 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import {
-  Search,
-  Heart,
-  ShoppingBag,
-  Menu,
-  X,
-  User,
-  LogOut,
-} from "lucide-react";
-import { Navbar } from "./Navbar";
+import { Heart, ShoppingBag, Menu, X, User, LogOut, Home } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
 import { useAuth } from "@/hooks/useAuth";
 import { useUIStore } from "@/stores/uiStore";
@@ -66,7 +57,13 @@ export function Header() {
           </button>
 
           {/* Desktop Navigation - Left */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-6">
+            <Link
+              href="/"
+              className="text-[1.4rem] tracking-wide text-foreground/70 hover:text-foreground boty-transition"
+            >
+              Home
+            </Link>
             <Link
               href="/products"
               className="text-[1.4rem] tracking-wide text-foreground/70 hover:text-foreground boty-transition"
@@ -78,12 +75,6 @@ export function Header() {
               className="text-[1.4rem] tracking-wide text-foreground/70 hover:text-foreground boty-transition"
             >
               Categorías
-            </Link>
-            <Link
-              href="/about"
-              className="text-[1.4rem] tracking-wide text-foreground/70 hover:text-foreground boty-transition"
-            >
-              Nosotros
             </Link>
           </div>
 
@@ -118,7 +109,7 @@ export function Header() {
             </button>
             {isAuthenticated && user ? (
               <div className="hidden sm:flex items-center gap-2">
-                {(user.role === 'ADMIN' || user.role === 'SUPER_ADMIN') && (
+                {(user.role === "ADMIN" || user.role === "SUPER_ADMIN") && (
                   <Link
                     href="/admin"
                     className="text-[1.3rem] tracking-wide text-brand-accent hover:text-brand-accent/80 boty-transition"
@@ -172,16 +163,10 @@ export function Header() {
             >
               Categorías
             </Link>
-            <Link
-              href="/about"
-              onClick={toggleMobileMenu}
-              className="text-[1.4rem] tracking-wide text-foreground/70 hover:text-foreground boty-transition"
-            >
-              Nosotros
-            </Link>
+
             {isAuthenticated && user ? (
               <>
-                {(user.role === 'ADMIN' || user.role === 'SUPER_ADMIN') && (
+                {(user.role === "ADMIN" || user.role === "SUPER_ADMIN") && (
                   <Link
                     href="/admin"
                     onClick={toggleMobileMenu}
