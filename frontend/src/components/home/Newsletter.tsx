@@ -37,6 +37,7 @@ export function Newsletter() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                aria-label="Tu correo electrónico"
                 placeholder="Tu correo electrónico"
                 className="flex-1 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-4 text-white placeholder:text-white/50 focus:outline-none focus:border-white/40 boty-transition"
                 required

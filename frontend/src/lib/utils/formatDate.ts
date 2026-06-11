@@ -1,5 +1,7 @@
+const dateFormatter = new Intl.DateTimeFormat('es-MX', {
+  dateStyle: 'long',
+})
+
 export function formatDate(date: string | Date): string {
-  return new Intl.DateTimeFormat('es-MX', {
-    dateStyle: 'long',
-  }).format(new Date(date))
+  return dateFormatter.format(new Date(date))
 }

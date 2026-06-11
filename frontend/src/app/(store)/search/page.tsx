@@ -1,4 +1,10 @@
+import type { Metadata } from 'next'
 import { Search } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Búsqueda - MAISON',
+  description: 'Busca entre nuestra colección de productos MAISON.',
+}
 
 export default function SearchPage() {
   return (

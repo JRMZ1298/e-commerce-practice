@@ -1,4 +1,10 @@
+import type { Metadata } from 'next'
 import { CreditCard } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Pago - MAISON',
+  description: 'Procesa tu pago de forma segura en MAISON.',
+}
 
 export default function PaymentPage() {
   return (

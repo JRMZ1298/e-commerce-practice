@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import {
@@ -110,10 +111,9 @@ export default function AdminOrderDetailPage() {
           <div className="divide-y divide-border">
             {order.items.map((item) => (
               <div key={item.id} className="flex gap-4 py-4 first:pt-0 last:pb-0">
-                <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-muted">
+                <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-muted">
                   {item.imageUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={item.imageUrl} alt={item.productName} className="h-full w-full object-cover" />
+                    <Image src={item.imageUrl} alt={item.productName} fill className="object-cover" sizes="64px" />
                   ) : (
                     <div className="flex h-full items-center justify-center text-muted-foreground/30">
                       <ShoppingBag className="h-5 w-5" />
@@ -206,8 +206,9 @@ export default function AdminOrderDetailPage() {
                   })}
                 </div>
                 <div>
-                  <label className="text-[1.2rem] font-medium text-foreground">Notas (opcional)</label>
+                  <label htmlFor="status-notes" className="text-[1.2rem] font-medium text-foreground">Notas (opcional)</label>
                   <textarea
+                    id="status-notes"
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     rows={2}

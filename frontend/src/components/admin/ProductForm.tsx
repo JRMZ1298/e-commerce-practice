@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Loader2, Star, StarOff, Trash2, Plus, ImageIcon, Link as LinkIcon } from 'lucide-react'
@@ -24,6 +25,8 @@ function ImageManager({ product }: { product: Product }) {
       adminApi.addProductImage(product.id, params.url, params.altText),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-product', product.id] })
+      queryClient.invalidateQueries({ queryKey: ['product', product.slug] })
+      queryClient.invalidateQueries({ queryKey: ['products'] })
       setUrl('')
       setShowUrlInput(false)
     },
@@ -34,6 +37,8 @@ function ImageManager({ product }: { product: Product }) {
       adminApi.deleteProductImage(product.id, imageId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-product', product.id] })
+      queryClient.invalidateQueries({ queryKey: ['product', product.slug] })
+      queryClient.invalidateQueries({ queryKey: ['products'] })
     },
   })
 
@@ -42,6 +47,8 @@ function ImageManager({ product }: { product: Product }) {
       adminApi.setPrimaryImage(product.id, imageId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-product', product.id] })
+      queryClient.invalidateQueries({ queryKey: ['product', product.slug] })
+      queryClient.invalidateQueries({ queryKey: ['products'] })
     },
   })
 
@@ -67,6 +74,7 @@ function ImageManager({ product }: { product: Product }) {
             type="text"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
+            aria-label="URL de la imagen"
             placeholder="URL de la imagen..."
             className="input-field flex-1 px-3 py-2 text-[1.4rem]"
           />
@@ -100,11 +108,13 @@ function ImageManager({ product }: { product: Product }) {
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
           {images.map((img) => (
             <div key={img.id} className="group relative overflow-hidden rounded-lg border border-border">
-              <div className="aspect-square bg-muted">
-                <img
+              <div className="relative aspect-square bg-muted">
+                <Image
                   src={img.url}
                   alt={img.altText || ''}
-                  className="h-full w-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 />
               </div>
               <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/0 opacity-0 group-hover:bg-black/30 group-hover:opacity-100 transition-all">
@@ -184,17 +194,15 @@ export function ProductForm({ product }: ProductFormProps) {
 
   const flatCategories = flattenCategories(categories)
 
-  useEffect(() => {
-    if (!slugManuallyEdited && name) {
-      setSlug(slugify(name, { lower: true, strict: true }))
-    }
-  }, [name, slugManuallyEdited])
+  const effectiveSlug = !slugManuallyEdited && name
+    ? slugify(name, { lower: true, strict: true })
+    : slug
 
   const mutation = useMutation({
     mutationFn: async () => {
       const payload: Record<string, unknown> = {
         name,
-        slug,
+        slug: effectiveSlug,
         description: description || undefined,
         shortDescription: shortDescription || undefined,
         sku: sku || undefined,
@@ -213,6 +221,10 @@ export function ProductForm({ product }: ProductFormProps) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-products'] })
+      queryClient.invalidateQueries({ queryKey: ['products'] })
+      if (product) {
+        queryClient.invalidateQueries({ queryKey: ['product', product.slug] })
+      }
       router.push('/admin/products')
     },
   })
@@ -233,8 +245,9 @@ export function ProductForm({ product }: ProductFormProps) {
             <h2 className="mb-4 font-serif text-[1.8rem] font-semibold text-foreground">Información básica</h2>
             <div className="space-y-4">
               <div>
-                <label className="mb-1 block text-[1.3rem] font-medium text-foreground">Nombre *</label>
+                <label htmlFor="pf-name" className="mb-1 block text-[1.3rem] font-medium text-foreground">Nombre *</label>
                 <input
+                  id="pf-name"
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -243,8 +256,9 @@ export function ProductForm({ product }: ProductFormProps) {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-[1.3rem] font-medium text-foreground">Slug</label>
+                <label htmlFor="pf-slug" className="mb-1 block text-[1.3rem] font-medium text-foreground">Slug</label>
                 <input
+                  id="pf-slug"
                   type="text"
                   value={slug}
                   onChange={(e) => { setSlug(e.target.value); setSlugManuallyEdited(true) }}
@@ -253,8 +267,9 @@ export function ProductForm({ product }: ProductFormProps) {
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="mb-1 block text-[1.3rem] font-medium text-foreground">Marca</label>
+                  <label htmlFor="pf-brand" className="mb-1 block text-[1.3rem] font-medium text-foreground">Marca</label>
                   <input
+                    id="pf-brand"
                     type="text"
                     value={brand}
                     onChange={(e) => setBrand(e.target.value)}
@@ -262,8 +277,9 @@ export function ProductForm({ product }: ProductFormProps) {
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-[1.3rem] font-medium text-foreground">SKU</label>
+                  <label htmlFor="pf-sku" className="mb-1 block text-[1.3rem] font-medium text-foreground">SKU</label>
                   <input
+                    id="pf-sku"
                     type="text"
                     value={sku}
                     onChange={(e) => setSku(e.target.value)}
@@ -272,8 +288,9 @@ export function ProductForm({ product }: ProductFormProps) {
                 </div>
               </div>
               <div>
-                <label className="mb-1 block text-[1.3rem] font-medium text-foreground">Categoría</label>
+                <label htmlFor="pf-category" className="mb-1 block text-[1.3rem] font-medium text-foreground">Categoría</label>
                 <select
+                  id="pf-category"
                   value={categoryId}
                   onChange={(e) => setCategoryId(e.target.value)}
                   className="input-field w-full px-3 py-2.5 text-[1.4rem]"
@@ -293,8 +310,9 @@ export function ProductForm({ product }: ProductFormProps) {
             <h2 className="mb-4 font-serif text-[1.8rem] font-semibold text-foreground">Descripción</h2>
             <div className="space-y-4">
               <div>
-                <label className="mb-1 block text-[1.3rem] font-medium text-foreground">Descripción corta</label>
+                <label htmlFor="pf-short-desc" className="mb-1 block text-[1.3rem] font-medium text-foreground">Descripción corta</label>
                 <input
+                  id="pf-short-desc"
                   type="text"
                   value={shortDescription}
                   onChange={(e) => setShortDescription(e.target.value)}
@@ -302,8 +320,9 @@ export function ProductForm({ product }: ProductFormProps) {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-[1.3rem] font-medium text-foreground">Descripción</label>
+                <label htmlFor="pf-desc" className="mb-1 block text-[1.3rem] font-medium text-foreground">Descripción</label>
                 <textarea
+                  id="pf-desc"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   rows={5}
@@ -335,8 +354,9 @@ export function ProductForm({ product }: ProductFormProps) {
             <h2 className="mb-4 font-serif text-[1.8rem] font-semibold text-foreground">Precio y stock</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="mb-1 block text-[1.3rem] font-medium text-foreground">Precio base</label>
+                <label htmlFor="pf-base-price" className="mb-1 block text-[1.3rem] font-medium text-foreground">Precio base</label>
                 <input
+                  id="pf-base-price"
                   type="number"
                   value={basePrice}
                   onChange={(e) => setBasePrice(e.target.value)}
@@ -346,8 +366,9 @@ export function ProductForm({ product }: ProductFormProps) {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-[1.3rem] font-medium text-foreground">Precio comparativo</label>
+                <label htmlFor="pf-compare-price" className="mb-1 block text-[1.3rem] font-medium text-foreground">Precio comparativo</label>
                 <input
+                  id="pf-compare-price"
                   type="number"
                   value={comparePrice}
                   onChange={(e) => setComparePrice(e.target.value)}
@@ -357,8 +378,9 @@ export function ProductForm({ product }: ProductFormProps) {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-[1.3rem] font-medium text-foreground">Stock</label>
+                <label htmlFor="pf-stock" className="mb-1 block text-[1.3rem] font-medium text-foreground">Stock</label>
                 <input
+                  id="pf-stock"
                   type="number"
                   value={stock}
                   onChange={(e) => setStock(e.target.value)}
@@ -383,8 +405,9 @@ export function ProductForm({ product }: ProductFormProps) {
           <div className={sectionClass}>
             <h2 className="mb-4 font-serif text-[1.8rem] font-semibold text-foreground">Tags</h2>
             <div>
-              <label className="mb-1 block text-[1.3rem] font-medium text-foreground">Tags (separados por coma)</label>
+              <label htmlFor="pf-tags" className="mb-1 block text-[1.3rem] font-medium text-foreground">Tags (separados por coma)</label>
               <input
+                id="pf-tags"
                 type="text"
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}

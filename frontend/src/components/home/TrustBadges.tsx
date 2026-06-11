@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useState, useCallback } from 'react'
 import { Truck, Shield, RefreshCw, Sparkles } from 'lucide-react'
 
 const badges = [
@@ -28,9 +28,9 @@ const badges = [
 
 export function TrustBadges() {
   const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
+  const sectionRef = useCallback((node: HTMLDivElement | null) => {
+    if (!node) return
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -39,16 +39,8 @@ export function TrustBadges() {
       },
       { threshold: 0.1 }
     )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current)
-      }
-    }
+    observer.observe(node)
+    return () => observer.disconnect()
   }, [])
 
   return (

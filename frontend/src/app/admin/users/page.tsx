@@ -65,6 +65,7 @@ export default function AdminUsersPage() {
       <div className="relative mb-6 max-w-md">
         <input
           type="text"
+          aria-label="Buscar usuarios"
           placeholder="Buscar usuarios..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}

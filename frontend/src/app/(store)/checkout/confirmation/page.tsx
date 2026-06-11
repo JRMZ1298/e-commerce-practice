@@ -1,4 +1,10 @@
+import type { Metadata } from 'next'
 import { CheckCircle } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Confirmación - MAISON',
+  description: 'Resumen de tu compra en MAISON.',
+}
 
 export default function ConfirmationPage() {
   return (

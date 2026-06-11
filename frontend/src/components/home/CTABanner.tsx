@@ -1,14 +1,14 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useState, useCallback } from 'react'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
 export function CTABanner() {
   const [isVisible, setIsVisible] = useState(false)
-  const bannerRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
+  const bannerRef = useCallback((node: HTMLDivElement | null) => {
+    if (!node) return
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -17,16 +17,8 @@ export function CTABanner() {
       },
       { threshold: 0.1 }
     )
-
-    if (bannerRef.current) {
-      observer.observe(bannerRef.current)
-    }
-
-    return () => {
-      if (bannerRef.current) {
-        observer.unobserve(bannerRef.current)
-      }
-    }
+    observer.observe(node)
+    return () => observer.disconnect()
   }, [])
 
   return (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ShoppingBag, Plus, ChevronRight, Loader2, Search } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
@@ -53,6 +54,7 @@ export default function AdminProductsPage() {
       <div className="relative mb-6 max-w-md">
         <input
           type="text"
+          aria-label="Buscar productos"
           placeholder="Buscar productos..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -89,7 +91,7 @@ export default function AdminProductsPage() {
                   <th className="px-5 py-3 font-medium">Precio</th>
                   <th className="px-5 py-3 font-medium">Stock</th>
                   <th className="px-5 py-3 font-medium">Estado</th>
-                  <th className="px-5 py-3 font-medium" />
+                  <th className="px-5 py-3 font-medium" aria-label="Acciones" />
                 </tr>
               </thead>
               <tbody>
@@ -100,12 +102,14 @@ export default function AdminProductsPage() {
                   >
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-lg bg-muted">
+                        <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-lg bg-muted">
                           {product.primaryImage ? (
-                            <img
+                            <Image
                               src={product.primaryImage}
                               alt=""
-                              className="h-full w-full object-cover"
+                              fill
+                              className="object-cover"
+                              sizes="40px"
                             />
                           ) : (
                             <div className="flex h-full items-center justify-center text-muted-foreground/20">
@@ -179,9 +183,9 @@ export default function AdminProductsPage() {
                 href={`/admin/products/${product.id}`}
                 className="flex items-center gap-3 rounded-xl bg-white p-4 boty-shadow transition-all hover:shadow-md"
               >
-                <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg bg-muted">
+                <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg bg-muted">
                   {product.primaryImage ? (
-                    <img src={product.primaryImage} alt="" className="h-full w-full object-cover" />
+                    <Image src={product.primaryImage} alt="" fill className="object-cover" sizes="48px" />
                   ) : (
                     <div className="flex h-full items-center justify-center text-muted-foreground/20">
                       <ShoppingBag className="h-5 w-5" />

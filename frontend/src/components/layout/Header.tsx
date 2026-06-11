@@ -121,6 +121,7 @@ export function Header() {
                   {user.firstName || user.email}
                 </span>
                 <button
+                  type="button"
                   onClick={logout}
                   className="inline-flex items-center gap-1 text-[1.3rem] tracking-wide text-foreground/70 hover:text-destructive boty-transition"
                   aria-label="Cerrar sesión"
@@ -179,6 +180,7 @@ export function Header() {
                   {user.firstName || user.email}
                 </span>
                 <button
+                  type="button"
                   onClick={() => {
                     logout();
                     toggleMobileMenu();

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useState, useCallback } from 'react'
 import { Shirt, Sparkles, Repeat, Gem } from 'lucide-react'
 
 const features = [
@@ -29,10 +29,9 @@ const features = [
 export function FeatureSection() {
   const [isVisible, setIsVisible] = useState(false)
   const [headerVisible, setHeaderVisible] = useState(false)
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const headerRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
+  const sectionRef = useCallback((node: HTMLDivElement | null) => {
+    if (!node) return
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -41,8 +40,13 @@ export function FeatureSection() {
       },
       { threshold: 0.1 }
     )
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
 
-    const headerObserver = new IntersectionObserver(
+  const headerRef = useCallback((node: HTMLDivElement | null) => {
+    if (!node) return
+    const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setHeaderVisible(true)
@@ -50,23 +54,8 @@ export function FeatureSection() {
       },
       { threshold: 0.1 }
     )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
-    if (headerRef.current) {
-      headerObserver.observe(headerRef.current)
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current)
-      }
-      if (headerRef.current) {
-        observer.unobserve(headerRef.current)
-      }
-    }
+    observer.observe(node)
+    return () => observer.disconnect()
   }, [])
 
   return (

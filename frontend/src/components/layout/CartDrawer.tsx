@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { X, ShoppingBag, Trash2, Minus, Plus } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
@@ -63,11 +64,12 @@ export function CartDrawer() {
                   {/* Product Image */}
                   <div className="relative w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden bg-muted">
                     {item.imageUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <Image
                         src={item.imageUrl}
                         alt={item.productName}
-                        className="h-full w-full object-cover"
+                        fill
+                        className="object-cover"
+                        sizes="96px"
                       />
                     ) : (
                       <div className="flex h-full items-center justify-center text-muted-foreground/30">

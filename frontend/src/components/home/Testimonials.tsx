@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useState, useCallback } from 'react'
 import { Star } from 'lucide-react'
 
 const testimonials = [
@@ -104,13 +104,9 @@ const TestimonialCard = ({ testimonial }: { testimonial: typeof testimonials[0] 
 
 export function Testimonials() {
   const [headerVisible, setHeaderVisible] = useState(false)
-  const headerRef = useRef<HTMLDivElement>(null)
 
-  const column1 = [testimonials[0], testimonials[3], testimonials[6]]
-  const column2 = [testimonials[1], testimonials[4], testimonials[7]]
-  const column3 = [testimonials[2], testimonials[5], testimonials[8]]
-
-  useEffect(() => {
+  const headerRef = useCallback((node: HTMLDivElement | null) => {
+    if (!node) return
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -119,17 +115,13 @@ export function Testimonials() {
       },
       { threshold: 0.1 }
     )
-
-    if (headerRef.current) {
-      observer.observe(headerRef.current)
-    }
-
-    return () => {
-      if (headerRef.current) {
-        observer.unobserve(headerRef.current)
-      }
-    }
+    observer.observe(node)
+    return () => observer.disconnect()
   }, [])
+
+  const column1 = [testimonials[0], testimonials[3], testimonials[6]]
+  const column2 = [testimonials[1], testimonials[4], testimonials[7]]
+  const column3 = [testimonials[2], testimonials[5], testimonials[8]]
 
   return (
     <section className="py-24 bg-[#f2f0eb] overflow-hidden pb-24 pt-12">

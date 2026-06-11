@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { ShoppingBag } from 'lucide-react'
 import { useCart } from '@/hooks/useCart'
@@ -26,10 +27,12 @@ export function ProductCard({ product }: { product: ProductListDto }) {
       <div className="card-starbucks boty-shadow boty-transition group-hover:scale-[1.02] overflow-hidden rounded-2xl bg-background">
         <div className="relative aspect-square bg-muted overflow-hidden">
           {product.primaryImage ? (
-            <img
+            <Image
               src={product.primaryImage}
               alt={product.name}
-              className="h-full w-full object-cover boty-transition group-hover:scale-105"
+              fill
+              className="object-cover boty-transition group-hover:scale-105"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
           ) : (
             <div className="flex h-full items-center justify-center text-muted-foreground/20">

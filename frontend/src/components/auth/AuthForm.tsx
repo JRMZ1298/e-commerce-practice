@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
@@ -27,11 +27,9 @@ export function AuthForm() {
   const redirectTo = searchParams.get('redirect') || '/'
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
-  const [mode, setMode] = useState<AuthMode>(
-    (searchParams.get('mode') as AuthMode) || 'login'
-  )
   const [transitioning, setTransitioning] = useState(false)
 
+  const mode = (searchParams.get('mode') as AuthMode) || 'login'
   const isLogin = mode === 'login'
 
   const {
@@ -43,22 +41,11 @@ export function AuthForm() {
     resolver: zodResolver(isLogin ? loginSchema : registerSchema),
   })
 
-  useEffect(() => {
-    reset()
-    setError(null)
-    const m = searchParams.get('mode') as AuthMode
-    if (m && m !== mode) {
-      setMode(m)
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams])
-
   const switchMode = useCallback(
     (newMode: AuthMode) => {
       if (newMode === mode) return
       setTransitioning(true)
       setTimeout(() => {
-        setMode(newMode)
         setError(null)
         reset()
         router.replace(`/auth?mode=${newMode}`, { scroll: false })

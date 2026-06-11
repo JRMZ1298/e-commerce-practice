@@ -1,14 +1,5 @@
-'use client'
-
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
 
 export default function LoginPage() {
-  const router = useRouter()
-
-  useEffect(() => {
-    router.replace('/auth?mode=login')
-  }, [router])
-
-  return null
+  redirect('/auth?mode=login')
 }

@@ -75,7 +75,7 @@ export default function AdminOrdersPage() {
                   <th className="px-5 py-3 font-medium">Cliente</th>
                   <th className="px-5 py-3 font-medium">Total</th>
                   <th className="px-5 py-3 font-medium">Estado</th>
-                  <th className="px-5 py-3 font-medium" />
+                  <th className="px-5 py-3 font-medium" aria-label="Acciones" />
                 </tr>
               </thead>
               <tbody>
