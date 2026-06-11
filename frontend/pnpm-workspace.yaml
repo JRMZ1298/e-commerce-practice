@@ -1,0 +1,13 @@
+packages:
+  - '.'
+
+onlyBuiltDependencies:
+  - '@prisma/client'
+  - 'esbuild'
+  - 'sharp'
+
+minimumReleaseAge: 10080
+minimumReleaseAgeExclude:
+  - '@next/*'
+  - 'next'
+trustPolicy: no-downgrade

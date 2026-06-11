@@ -50,3 +50,5 @@ frontend/.pnpm-debug.log
 
 .agents
 example-design
+.claude
+.kiro
