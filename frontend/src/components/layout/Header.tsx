@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Heart, ShoppingBag, Menu, X, User, LogOut, Home } from "lucide-react";
+import { Heart, ShoppingBag, Menu, X, User, LogOut, Home, Moon, Sun } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
 import { useAuth } from "@/hooks/useAuth";
 import { useUIStore } from "@/stores/uiStore";
@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils/cn";
 export function Header() {
   const { totalItems, toggleCart } = useCart();
   const { user, isAuthenticated, logout } = useAuth();
-  const { mobileMenuOpen, toggleMobileMenu } = useUIStore();
+  const { mobileMenuOpen, toggleMobileMenu, isDark, toggleDark } = useUIStore();
   const [headerVisible, setHeaderVisible] = useState(true);
   const lastScrollY = useRef(0);
 
@@ -30,6 +30,25 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", isDark);
+  }, []);
+
+  const prevDark = useRef(isDark);
+
+  useEffect(() => {
+    if (prevDark.current === isDark) return;
+    prevDark.current = isDark;
+
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        document.documentElement.classList.toggle("dark", isDark);
+      });
+    } else {
+      document.documentElement.classList.toggle("dark", isDark);
+    }
+  }, [isDark]);
+
   return (
     <header
       className={cn(
@@ -38,8 +57,11 @@ export function Header() {
       )}
     >
       <nav
-        className="mx-auto px-6 lg:px-8 backdrop-blur-md rounded-lg bg-[rgba(255,255,255,0.6)] border border-white/30 animate-scale-fade-in"
-        style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 50px" }}
+        className="mx-auto px-6 lg:px-8 backdrop-blur-md rounded-lg border border-white/30 dark:border-white/10 animate-scale-fade-in"
+        style={{
+          backgroundColor: "color-mix(in srgb, var(--background) 80%, transparent)",
+          boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 50px",
+        }}
       >
         <div className="flex items-center justify-between h-[68px]">
           {/* Mobile menu button */}
@@ -87,6 +109,14 @@ export function Header() {
 
           {/* Right Actions */}
           <div className="flex items-center gap-4">
+            <button
+              type="button"
+              onClick={toggleDark}
+              className="p-2 text-foreground/70 hover:text-foreground boty-transition"
+              aria-label="Toggle dark mode"
+            >
+              {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
             <Link
               href="/wishlist"
               className="hidden sm:block p-2 text-foreground/70 hover:text-foreground boty-transition"
