@@ -388,7 +388,7 @@ INSERT INTO product_images (id, product_id, url, alt_text, sort_order, is_primar
 VALUES
 -- Camisa Blanca
     ('30000000-0001-0000-0000-000000000001', '20000000-0000-0000-0000-000000000001',
-     'https://picsum.photos/seed/camisa-blanca-1/600/800', 'Camisa blanca Classic Fit frente', 1, true),
+     'https://ecommerce-maison-images-prod.s3.us-east-2.amazonaws.com/camisa-blanca.webp', 'Camisa blanca Classic Fit frente', 1, true),
     ('30000000-0001-0000-0000-000000000002', '20000000-0000-0000-0000-000000000001',
      'https://picsum.photos/seed/camisa-blanca-2/600/800', 'Camisa blanca Classic Fit detalle', 2, false),
 -- Camisa Azul Oxford
@@ -401,7 +401,7 @@ VALUES
      'https://picsum.photos/seed/camisa-lino-2/600/800', 'Camisa de lino beige detalle', 2, false),
 -- Camisa Negra
     ('30000000-0004-0000-0000-000000000001', '20000000-0000-0000-0000-000000000004',
-     'https://picsum.photos/seed/camisa-negra-1/600/800', 'Camisa negra slim fit frente', 1, true),
+     'https://ecommerce-maison-images-prod.s3.us-east-2.amazonaws.com/camisa-negra.webp', 'Camisa negra slim fit frente', 1, true),
 -- Camisa Cuadros
     ('30000000-0005-0000-0000-000000000001', '20000000-0000-0000-0000-000000000005',
      'https://picsum.photos/seed/camisa-cuadros-1/600/800', 'Camisa casual cuadros frente', 1, true),
