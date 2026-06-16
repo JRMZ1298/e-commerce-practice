@@ -1,33 +1,33 @@
-'use client'
+"use client";
 
-import { useState, useCallback } from 'react'
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { useState, useCallback } from "react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export function CTABanner() {
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(false);
 
   const bannerRef = useCallback((node: HTMLDivElement | null) => {
-    if (!node) return
+    if (!node) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true)
+          setIsVisible(true);
         }
       },
-      { threshold: 0.1 }
-    )
-    observer.observe(node)
-    return () => observer.disconnect()
-  }, [])
+      { threshold: 0.1 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section className="py-24 bg-background" style={{ backgroundColor: '#f2f0eb' }}>
+    <section className="py-24" style={{ backgroundColor: "#5D4037" }}>
       <div className="mx-auto px-6 lg:px-8">
         <div
           ref={bannerRef}
           className={`rounded-3xl p-12 md:p-16 flex flex-col justify-center relative overflow-hidden min-h-[300px] bg-gradient-to-br from-brand-house to-brand-uplift transition-all duration-700 ease-out ${
-            isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+            isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
           }`}
         >
           <div className="relative z-10 text-left max-w-2xl">
@@ -49,5 +49,5 @@ export function CTABanner() {
         </div>
       </div>
     </section>
-  )
+  );
 }

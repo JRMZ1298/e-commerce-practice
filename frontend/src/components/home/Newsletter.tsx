@@ -16,7 +16,7 @@ export function Newsletter() {
   }
 
   return (
-    <section className="py-24" style={{ backgroundColor: '#5D4037' }}>
+    <section className="py-24 relative" style={{ backgroundColor: '#5D4037' }}>
       <div className="mx-auto px-6 lg:px-8">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-4xl leading-tight text-white mb-4 text-balance md:text-7xl font-bold">
@@ -57,6 +57,7 @@ export function Newsletter() {
           </p>
         </div>
       </div>
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-[#5D4037] to-brand-house pointer-events-none" />
     </section>
   )
 }

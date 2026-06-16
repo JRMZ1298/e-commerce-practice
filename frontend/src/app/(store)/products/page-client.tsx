@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  useState,
-  useCallback,
-  useMemo,
-  useRef,
-  Suspense,
-} from "react";
+import { useState, useCallback, useMemo, useRef, Suspense } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
@@ -32,30 +26,41 @@ const SORT_OPTIONS = [
 ];
 
 interface FilterContentProps {
-  isMobile: boolean
-  categoryInput: string
-  onCategoryChange: (value: string) => void
-  brandInput: string
-  onBrandChange: (value: string) => void
-  minPriceInput: string
-  onMinPriceChange: (value: string) => void
-  maxPriceInput: string
-  onMaxPriceChange: (value: string) => void
-  inStockInput: boolean
-  onInStockChange: (checked: boolean) => void
-  sortInput: string
-  onSortChange: (value: string) => void
-  allCategories: Array<{ id: string; name: string; slug: string; depth: number }>
+  isMobile: boolean;
+  categoryInput: string;
+  onCategoryChange: (value: string) => void;
+  brandInput: string;
+  onBrandChange: (value: string) => void;
+  minPriceInput: string;
+  onMinPriceChange: (value: string) => void;
+  maxPriceInput: string;
+  onMaxPriceChange: (value: string) => void;
+  inStockInput: boolean;
+  onInStockChange: (checked: boolean) => void;
+  sortInput: string;
+  onSortChange: (value: string) => void;
+  allCategories: Array<{
+    id: string;
+    name: string;
+    slug: string;
+    depth: number;
+  }>;
 }
 
 function FilterContent({
   isMobile,
-  categoryInput, onCategoryChange,
-  brandInput, onBrandChange,
-  minPriceInput, onMinPriceChange,
-  maxPriceInput, onMaxPriceChange,
-  inStockInput, onInStockChange,
-  sortInput, onSortChange,
+  categoryInput,
+  onCategoryChange,
+  brandInput,
+  onBrandChange,
+  minPriceInput,
+  onMinPriceChange,
+  maxPriceInput,
+  onMaxPriceChange,
+  inStockInput,
+  onInStockChange,
+  sortInput,
+  onSortChange,
   allCategories,
 }: FilterContentProps) {
   return (
@@ -74,7 +79,9 @@ function FilterContent({
             <option value="">Todas</option>
             {allCategories.map((cat) => (
               <option key={cat.id} value={cat.slug}>
-                {cat.depth > 0 ? `${'\u00A0\u00A0\u00A0\u00A0'}${cat.name}` : cat.name}
+                {cat.depth > 0
+                  ? `${"\u00A0\u00A0\u00A0\u00A0"}${cat.name}`
+                  : cat.name}
               </option>
             ))}
           </select>
@@ -272,12 +279,18 @@ function CatalogPageContent() {
   const totalElements = productsData?.totalElements ?? 0;
   const currentPage = productsData?.page ?? 0;
 
-  const hasFilters =
-    Boolean(q || category || minPrice || maxPrice || brand || sort || inStock);
+  const hasFilters = Boolean(
+    q || category || minPrice || maxPrice || brand || sort || inStock,
+  );
 
   const allCategories = useMemo(() => {
     if (!categories) return [];
-    const flat: Array<{ id: string; name: string; slug: string; depth: number }> = [];
+    const flat: Array<{
+      id: string;
+      name: string;
+      slug: string;
+      depth: number;
+    }> = [];
     const walk = (items: typeof categories, depth: number) => {
       for (const item of items) {
         flat.push({ id: item.id, name: item.name, slug: item.slug, depth });
@@ -352,17 +365,19 @@ function CatalogPageContent() {
               <FilterContent
                 isMobile={false}
                 categoryInput={categoryInput}
-                onCategoryChange={(v) => handleFilterChange('category', v)}
+                onCategoryChange={(v) => handleFilterChange("category", v)}
                 brandInput={brandInput}
-                onBrandChange={(v) => handleFilterChange('brand', v)}
+                onBrandChange={(v) => handleFilterChange("brand", v)}
                 minPriceInput={minPriceInput}
-                onMinPriceChange={(v) => handleFilterChange('minPrice', v)}
+                onMinPriceChange={(v) => handleFilterChange("minPrice", v)}
                 maxPriceInput={maxPriceInput}
-                onMaxPriceChange={(v) => handleFilterChange('maxPrice', v)}
+                onMaxPriceChange={(v) => handleFilterChange("maxPrice", v)}
                 inStockInput={inStockInput}
-                onInStockChange={(c) => handleFilterChange('inStock', c ? 'true' : '')}
+                onInStockChange={(c) =>
+                  handleFilterChange("inStock", c ? "true" : "")
+                }
                 sortInput={sortInput}
-                onSortChange={(v) => handleFilterChange('sort', v)}
+                onSortChange={(v) => handleFilterChange("sort", v)}
                 allCategories={allCategories}
               />
             </div>
@@ -380,7 +395,11 @@ function CatalogPageContent() {
                   <h2 className="text-[1.8rem] font-semibold text-foreground">
                     Filtros
                   </h2>
-                  <button type="button" onClick={() => setMobileFiltersOpen(false)} aria-label="Cerrar filtros">
+                  <button
+                    type="button"
+                    onClick={() => setMobileFiltersOpen(false)}
+                    aria-label="Cerrar filtros"
+                  >
                     <X className="h-5 w-5 text-muted-foreground" />
                   </button>
                 </div>
@@ -406,17 +425,19 @@ function CatalogPageContent() {
                 <FilterContent
                   isMobile={true}
                   categoryInput={categoryInput}
-                  onCategoryChange={(v) => handleFilterChange('category', v)}
+                  onCategoryChange={(v) => handleFilterChange("category", v)}
                   brandInput={brandInput}
-                  onBrandChange={(v) => handleFilterChange('brand', v)}
+                  onBrandChange={(v) => handleFilterChange("brand", v)}
                   minPriceInput={minPriceInput}
-                  onMinPriceChange={(v) => handleFilterChange('minPrice', v)}
+                  onMinPriceChange={(v) => handleFilterChange("minPrice", v)}
                   maxPriceInput={maxPriceInput}
-                  onMaxPriceChange={(v) => handleFilterChange('maxPrice', v)}
+                  onMaxPriceChange={(v) => handleFilterChange("maxPrice", v)}
                   inStockInput={inStockInput}
-                  onInStockChange={(c) => handleFilterChange('inStock', c ? 'true' : '')}
+                  onInStockChange={(c) =>
+                    handleFilterChange("inStock", c ? "true" : "")
+                  }
                   sortInput={sortInput}
-                  onSortChange={(v) => handleFilterChange('sort', v)}
+                  onSortChange={(v) => handleFilterChange("sort", v)}
                   allCategories={allCategories}
                 />
 
@@ -473,10 +494,10 @@ function ProductGridSection({
   hasFilters,
   onClearFilters,
 }: {
-  isLoading: boolean
-  products: ProductListDto[]
-  hasFilters: boolean
-  onClearFilters: () => void
+  isLoading: boolean;
+  products: ProductListDto[];
+  hasFilters: boolean;
+  onClearFilters: () => void;
 }) {
   if (isLoading) {
     return (
@@ -492,7 +513,7 @@ function ProductGridSection({
           </div>
         ))}
       </div>
-    )
+    );
   }
 
   if (products.length === 0) {
@@ -506,12 +527,16 @@ function ProductGridSection({
           Intenta ajustar los filtros o realizar otra búsqueda.
         </p>
         {hasFilters && (
-          <button type="button" onClick={onClearFilters} className="btn-primary mt-6 px-6 py-3 text-[1.4rem]">
+          <button
+            type="button"
+            onClick={onClearFilters}
+            className="btn-primary mt-6 px-6 py-3 text-[1.4rem]"
+          >
             Limpiar filtros
           </button>
         )}
       </div>
-    )
+    );
   }
 
   return (
@@ -522,7 +547,7 @@ function ProductGridSection({
         ))}
       </div>
     </>
-  )
+  );
 }
 
 function Pagination({
@@ -530,9 +555,9 @@ function Pagination({
   currentPage,
   onGoToPage,
 }: {
-  totalPages: number
-  currentPage: number
-  onGoToPage: (page: number) => void
+  totalPages: number;
+  currentPage: number;
+  onGoToPage: (page: number) => void;
 }) {
   return (
     <div className="mt-12 flex items-center justify-center gap-2">
@@ -545,7 +570,11 @@ function Pagination({
         Anterior
       </button>
       {Array.from({ length: totalPages }, (_, i) => i).map((p) => {
-        if (p === 0 || p === totalPages - 1 || (p >= currentPage - 2 && p <= currentPage + 2)) {
+        if (
+          p === 0 ||
+          p === totalPages - 1 ||
+          (p >= currentPage - 2 && p <= currentPage + 2)
+        ) {
           return (
             <button
               key={p}
@@ -553,17 +582,23 @@ function Pagination({
               onClick={() => onGoToPage(p)}
               className={cn(
                 "min-w-[3.6rem] rounded-lg px-3 py-2 text-[1.4rem] boty-transition",
-                p === currentPage ? "bg-brand-accent text-white" : "text-foreground hover:bg-muted"
+                p === currentPage
+                  ? "bg-brand-accent text-white"
+                  : "text-foreground hover:bg-muted",
               )}
             >
               {p + 1}
             </button>
-          )
+          );
         }
         if (p === currentPage - 3 || p === currentPage + 3) {
-          return <span key={p} className="px-1 text-muted-foreground">...</span>
+          return (
+            <span key={p} className="px-1 text-muted-foreground">
+              ...
+            </span>
+          );
         }
-        return null
+        return null;
       })}
       <button
         type="button"
@@ -574,7 +609,7 @@ function Pagination({
         Siguiente
       </button>
     </div>
-  )
+  );
 }
 
 export default function CatalogPageClient() {

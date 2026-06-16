@@ -1,46 +1,48 @@
-'use client'
+"use client";
 
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { Heart, ShoppingBag, Trash2, Share2 } from 'lucide-react'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { useAuth } from '@/hooks/useAuth'
-import { wishlistApi } from '@/lib/api/wishlist'
-import { formatDate } from '@/lib/utils/formatDate'
-import { cn } from '@/lib/utils/cn'
-import type { WishlistDto } from '@/types/wishlist'
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Heart, ShoppingBag, Trash2, Share2 } from "lucide-react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "@/hooks/useAuth";
+import { wishlistApi } from "@/lib/api/wishlist";
+import { formatDate } from "@/lib/utils/formatDate";
+import { cn } from "@/lib/utils/cn";
+import type { WishlistDto } from "@/types/wishlist";
 
 export default function WishlistPageClient() {
-  const router = useRouter()
-  const queryClient = useQueryClient()
-  const { isAuthenticated } = useAuth()
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const { isAuthenticated } = useAuth();
 
   const { data: wishlist, isLoading } = useQuery({
-    queryKey: ['wishlist'],
+    queryKey: ["wishlist"],
     queryFn: wishlistApi.getWishlist,
     enabled: isAuthenticated,
-  })
+  });
 
   const removeMutation = useMutation({
-    mutationFn: (productId: string) => wishlistApi.removeFromWishlist(productId),
+    mutationFn: (productId: string) =>
+      wishlistApi.removeFromWishlist(productId),
     onMutate: async (productId) => {
-      await queryClient.cancelQueries({ queryKey: ['wishlist'] })
-      const previous = queryClient.getQueryData<WishlistDto[]>(['wishlist'])
-      queryClient.setQueryData<WishlistDto[]>(['wishlist'], (old) =>
-        old?.filter((item) => item.productId !== productId) ?? []
-      )
-      return { previous }
+      await queryClient.cancelQueries({ queryKey: ["wishlist"] });
+      const previous = queryClient.getQueryData<WishlistDto[]>(["wishlist"]);
+      queryClient.setQueryData<WishlistDto[]>(
+        ["wishlist"],
+        (old) => old?.filter((item) => item.productId !== productId) ?? [],
+      );
+      return { previous };
     },
     onError: (_err, _productId, context) => {
       if (context?.previous) {
-        queryClient.setQueryData(['wishlist'], context.previous)
+        queryClient.setQueryData(["wishlist"], context.previous);
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['wishlist'] })
+      queryClient.invalidateQueries({ queryKey: ["wishlist"] });
     },
-  })
+  });
 
   if (!isAuthenticated) {
     return (
@@ -58,7 +60,7 @@ export default function WishlistPageClient() {
           </Link>
         </div>
       </section>
-    )
+    );
   }
 
   if (isLoading) {
@@ -68,7 +70,7 @@ export default function WishlistPageClient() {
           <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-accent border-t-transparent" />
         </div>
       </section>
-    )
+    );
   }
 
   if (!wishlist?.length) {
@@ -87,7 +89,7 @@ export default function WishlistPageClient() {
           </Link>
         </div>
       </section>
-    )
+    );
   }
 
   return (
@@ -99,7 +101,8 @@ export default function WishlistPageClient() {
               Mis Favoritos
             </h1>
             <p className="mt-1 text-[1.4rem] text-muted-foreground">
-              {wishlist.length} {wishlist.length === 1 ? 'producto' : 'productos'}
+              {wishlist.length}{" "}
+              {wishlist.length === 1 ? "producto" : "productos"}
             </p>
           </div>
           <button
@@ -115,7 +118,7 @@ export default function WishlistPageClient() {
           {wishlist.map((item) => (
             <div
               key={item.id}
-              className="group overflow-hidden rounded-3xl bg-white boty-shadow boty-transition hover:scale-[1.02]"
+              className="group overflow-hidden rounded-3xl bg-background boty-shadow boty-transition hover:scale-[1.02]"
             >
               <Link
                 href={`/products/${item.productSlug}`}
@@ -149,7 +152,7 @@ export default function WishlistPageClient() {
                 <div className="mt-4 flex items-center gap-2">
                   <button
                     type="button"
-                    className={cn('btn-primary flex-1 text-[1.2rem] py-[6px]')}
+                    className={cn("btn-primary flex-1 text-[1.2rem] py-[6px]")}
                     onClick={() => router.push(`/products/${item.productSlug}`)}
                   >
                     <ShoppingBag className="mr-1.5 inline h-3.5 w-3.5" />
@@ -170,5 +173,5 @@ export default function WishlistPageClient() {
         </div>
       </div>
     </section>
-  )
+  );
 }

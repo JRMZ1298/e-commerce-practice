@@ -39,6 +39,7 @@
     --secondary-rgb: 215 204 200;
     --secondary-foreground: #5d4037;
     --muted: #edebe9;
+    --cards: #ffff;
     --muted-rgb: 237 235 233;
     --muted-foreground: rgba(0, 0, 0, 0.58);
     --accent: #d7ccc8;
@@ -87,6 +88,7 @@
     --secondary-rgb: 93 74 61;
     --secondary-foreground: #e8ddd5;
     --muted: #4a372e;
+    --cards: #4a372e;
     --muted-rgb: 74 55 46;
     --muted-foreground: rgba(255, 255, 255, 0.62);
     --accent: #5d4a3d;

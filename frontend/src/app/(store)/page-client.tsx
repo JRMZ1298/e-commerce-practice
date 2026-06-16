@@ -1,24 +1,24 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { useQuery } from '@tanstack/react-query'
-import { Loader2 } from 'lucide-react'
-import { Hero } from '@/components/home/Hero'
-import { TrustBadges } from '@/components/home/TrustBadges'
-import { FeatureSection } from '@/components/home/FeatureSection'
-import { Testimonials } from '@/components/home/Testimonials'
-import { CTABanner } from '@/components/home/CTABanner'
-import { Newsletter } from '@/components/home/Newsletter'
-import { ProductCard } from '@/components/products/ProductCard'
-import { productsApi } from '@/lib/api/products'
+import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
+import { Hero } from "@/components/home/Hero";
+import { TrustBadges } from "@/components/home/TrustBadges";
+import { FeatureSection } from "@/components/home/FeatureSection";
+import { Testimonials } from "@/components/home/Testimonials";
+import { CTABanner } from "@/components/home/CTABanner";
+import { Newsletter } from "@/components/home/Newsletter";
+import { ProductCard } from "@/components/products/ProductCard";
+import { productsApi } from "@/lib/api/products";
 
 export default function HomePageClient() {
   const { data: featuredData, isLoading } = useQuery({
-    queryKey: ['products', 'featured'],
+    queryKey: ["products", "featured"],
     queryFn: () => productsApi.getProducts({ featured: true, size: 4 }),
-  })
+  });
 
-  const products = featuredData?.content ?? []
+  const products = featuredData?.content ?? [];
 
   return (
     <main className="-mt-[100px]">
@@ -26,14 +26,14 @@ export default function HomePageClient() {
       <TrustBadges />
 
       {/* Featured Products */}
-      <section className="bg-white py-24">
+      <section className="bg-muted py-24 relative">
         <div className="mx-auto px-6 lg:px-8">
           {/* Header */}
           <div className="mb-16 text-center">
             <span className="mb-4 block text-[1.4rem] tracking-[0.3em] uppercase text-brand-accent">
               Destacados
             </span>
-            <h2 className="text-balance mb-4 text-4xl font-bold leading-tight text-foreground md:text-7xl">
+            <h2 className="text-balance mb-4 text-4xl font-bold leading-tight text-brand-green md:text-7xl">
               Productos destacados
             </h2>
             <p className="mx-auto max-w-md text-[1.6rem] text-muted-foreground">
@@ -64,6 +64,7 @@ export default function HomePageClient() {
             </Link>
           </div>
         </div>
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-muted to-background pointer-events-none" />
       </section>
 
       <FeatureSection />
@@ -71,5 +72,5 @@ export default function HomePageClient() {
       <CTABanner />
       <Newsletter />
     </main>
-  )
+  );
 }

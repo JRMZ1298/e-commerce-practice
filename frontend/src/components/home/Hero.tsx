@@ -19,7 +19,7 @@ export function Hero() {
       </div>
 
       {/* Bottom gradient overlay */}
-      <div className="absolute bottom-0 left-0 right-0 h-[23rem] bg-gradient-to-t from-canvas to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-[23rem] bg-gradient-to-t from-background to-transparent" />
 
       {/* Content */}
       <div className="relative z-10 w-full pt-24 pb-16">

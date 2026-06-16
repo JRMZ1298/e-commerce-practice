@@ -1,41 +1,55 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import { ShoppingBag, Minus, Plus, Trash2, ChevronLeft, CreditCard, Shield, Package } from 'lucide-react'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { cartApi } from '@/lib/api/cart'
-import { formatPrice } from '@/lib/utils/formatPrice'
-import { cn } from '@/lib/utils/cn'
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import {
+  ShoppingBag,
+  Minus,
+  Plus,
+  Trash2,
+  ChevronLeft,
+  CreditCard,
+  Shield,
+  Package,
+} from "lucide-react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { cartApi } from "@/lib/api/cart";
+import { formatPrice } from "@/lib/utils/formatPrice";
+import { cn } from "@/lib/utils/cn";
 
 export default function CartPageClient() {
-  const router = useRouter()
-  const queryClient = useQueryClient()
+  const router = useRouter();
+  const queryClient = useQueryClient();
 
   const { data: cart, isLoading } = useQuery({
-    queryKey: ['cart'],
+    queryKey: ["cart"],
     queryFn: cartApi.getCart,
-  })
+  });
 
   const updateMutation = useMutation({
-    mutationFn: ({ variantId, quantity }: { variantId: string; quantity: number }) =>
-      cartApi.updateItemQuantity(variantId, quantity),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cart'] }),
-  })
+    mutationFn: ({
+      variantId,
+      quantity,
+    }: {
+      variantId: string;
+      quantity: number;
+    }) => cartApi.updateItemQuantity(variantId, quantity),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["cart"] }),
+  });
 
   const removeMutation = useMutation({
     mutationFn: (variantId: string) => cartApi.removeItem(variantId),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cart'] }),
-  })
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["cart"] }),
+  });
 
   if (isLoading) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-accent border-t-transparent" />
       </div>
-    )
+    );
   }
 
   if (!cart || cart.items.length === 0) {
@@ -55,12 +69,12 @@ export default function CartPageClient() {
           Explorar productos
         </Link>
       </div>
-    )
+    );
   }
 
-  const totalItems = cart.items.reduce((sum, item) => sum + item.quantity, 0)
-  const freeShippingThreshold = 999
-  const shipping = cart.subtotal > freeShippingThreshold ? 0 : null
+  const totalItems = cart.items.reduce((sum, item) => sum + item.quantity, 0);
+  const freeShippingThreshold = 999;
+  const shipping = cart.subtotal > freeShippingThreshold ? 0 : null;
 
   return (
     <div className="section-padding">
@@ -71,8 +85,8 @@ export default function CartPageClient() {
             <h1 className="font-serif text-[3.2rem] font-bold text-brand-green sm:text-[4rem]">
               Carrito de Compras
             </h1>
-            <p className="mt-1 text-[1.4rem] text-foreground-muted">
-              {totalItems} {totalItems === 1 ? 'artículo' : 'artículos'}
+            <p className="mt-1 text-[1.4rem] text-foreground">
+              {totalItems} {totalItems === 1 ? "artículo" : "artículos"}
             </p>
           </div>
           <Link
@@ -141,21 +155,23 @@ export default function CartPageClient() {
                           type="button"
                           onClick={() => {
                             if (item.quantity <= 1) {
-                              removeMutation.mutate(item.variantId)
+                              removeMutation.mutate(item.variantId);
                             } else {
                               updateMutation.mutate({
                                 variantId: item.variantId,
                                 quantity: item.quantity - 1,
-                              })
+                              });
                             }
                           }}
-                          disabled={updateMutation.isPending || removeMutation.isPending}
-                          className="p-1.5 hover:bg-muted boty-transition rounded-l-full disabled:opacity-50"
+                          disabled={
+                            updateMutation.isPending || removeMutation.isPending
+                          }
+                          className="p-1.5 hover:bg-muted boty-transition rounded-l-full disabled:opacity-50 text-foreground"
                           aria-label="Disminuir cantidad"
                         >
                           <Minus className="h-3 w-3" />
                         </button>
-                        <span className="min-w-[2.4rem] text-center text-[1.4rem] font-medium">
+                        <span className="min-w-[2.4rem] text-center text-[1.4rem] font-medium text-foreground">
                           {item.quantity}
                         </span>
                         <button
@@ -167,7 +183,7 @@ export default function CartPageClient() {
                             })
                           }
                           disabled={updateMutation.isPending}
-                          className="p-1.5 hover:bg-muted boty-transition rounded-r-full disabled:opacity-50"
+                          className="p-1.5 hover:bg-muted boty-transition rounded-r-full disabled:opacity-50 text-foreground"
                           aria-label="Aumentar cantidad"
                         >
                           <Plus className="h-3 w-3" />
@@ -202,22 +218,27 @@ export default function CartPageClient() {
               <div className="mt-6 space-y-4">
                 <div className="flex justify-between text-[1.4rem]">
                   <span className="text-muted-foreground">Subtotal</span>
-                  <span className="font-medium text-foreground">{formatPrice(cart.subtotal)}</span>
+                  <span className="font-medium text-foreground">
+                    {formatPrice(cart.subtotal)}
+                  </span>
                 </div>
                 <div className="flex justify-between text-[1.4rem]">
                   <span className="text-muted-foreground">Envío</span>
                   <span className="font-medium text-foreground">
-                    {shipping === 0 ? 'Gratis' : 'Por calcular'}
+                    {shipping === 0 ? "Gratis" : "Por calcular"}
                   </span>
                 </div>
                 {shipping === null && cart.subtotal < freeShippingThreshold && (
                   <p className="text-[1.2rem] text-muted-foreground">
-                    Envío gratis en pedidos mayores a {formatPrice(freeShippingThreshold)}
+                    Envío gratis en pedidos mayores a{" "}
+                    {formatPrice(freeShippingThreshold)}
                   </p>
                 )}
                 <div className="border-t border-border pt-4">
                   <div className="flex justify-between">
-                    <span className="text-[1.6rem] font-semibold text-foreground">Total</span>
+                    <span className="text-[1.6rem] font-semibold text-foreground">
+                      Total
+                    </span>
                     <span className="text-[1.8rem] font-bold text-brand-accent">
                       {formatPrice(cart.total)}
                     </span>
@@ -230,7 +251,7 @@ export default function CartPageClient() {
 
               <button
                 type="button"
-                onClick={() => router.push('/checkout')}
+                onClick={() => router.push("/checkout")}
                 className="mt-6 w-full rounded-full bg-brand-accent py-4 text-[1.4rem] font-semibold text-white hover:bg-brand-accent/90 boty-transition"
               >
                 Proceder al pago
@@ -247,17 +268,23 @@ export default function CartPageClient() {
 
             {/* Trust Badges */}
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-              <div className="flex flex-col items-center gap-2 rounded-xl bg-white p-4 text-center boty-shadow">
+              <div className="flex flex-col items-center gap-2 rounded-xl bg-background p-4 text-center boty-shadow">
                 <Package className="h-6 w-6 text-brand-accent" />
-                <span className="text-[1.2rem] font-medium text-foreground">Envío gratis</span>
+                <span className="text-[1.2rem] font-medium text-foreground">
+                  Envío gratis
+                </span>
               </div>
-              <div className="flex flex-col items-center gap-2 rounded-xl bg-white p-4 text-center boty-shadow">
+              <div className="flex flex-col items-center gap-2 rounded-xl bg-background p-4 text-center boty-shadow">
                 <CreditCard className="h-6 w-6 text-brand-accent" />
-                <span className="text-[1.2rem] font-medium text-foreground">Pago seguro</span>
+                <span className="text-[1.2rem] font-medium text-foreground">
+                  Pago seguro
+                </span>
               </div>
-              <div className="flex flex-col items-center gap-2 rounded-xl bg-white p-4 text-center boty-shadow">
+              <div className="flex flex-col items-center gap-2 rounded-xl bg-background p-4 text-center boty-shadow">
                 <Shield className="h-6 w-6 text-brand-accent" />
-                <span className="text-[1.2rem] font-medium text-foreground">Devolución fácil</span>
+                <span className="text-[1.2rem] font-medium text-foreground">
+                  Devolución fácil
+                </span>
               </div>
             </div>
           </div>
@@ -275,11 +302,11 @@ export default function CartPageClient() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 function CouponSection() {
-  const [code, setCode] = useState('')
+  const [code, setCode] = useState("");
 
   return (
     <div className="mt-6 border-t border-border pt-6">
@@ -300,5 +327,5 @@ function CouponSection() {
         </button>
       </div>
     </div>
-  )
+  );
 }
