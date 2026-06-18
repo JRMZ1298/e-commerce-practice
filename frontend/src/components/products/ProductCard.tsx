@@ -1,26 +1,26 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import { ShoppingBag } from 'lucide-react'
-import { useCart } from '@/hooks/useCart'
-import { useAuth } from '@/hooks/useAuth'
-import { formatPrice } from '@/lib/utils/formatPrice'
-import { cn } from '@/lib/utils/cn'
-import type { ProductListDto } from '@/types/product'
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { ShoppingBag } from "lucide-react";
+import { useCart } from "@/hooks/useCart";
+import { useAuth } from "@/hooks/useAuth";
+import { formatPrice } from "@/lib/utils/formatPrice";
+import { cn } from "@/lib/utils/cn";
+import type { ProductListDto } from "@/types/product";
 
 export function ProductCard({ product }: { product: ProductListDto }) {
-  const router = useRouter()
-  const { isAuthenticated } = useAuth()
-  const { addItem } = useCart()
+  const router = useRouter();
+  const { isAuthenticated } = useAuth();
+  const { addItem } = useCart();
 
   const badge =
     product.comparePrice && product.comparePrice > product.basePrice
-      ? 'Oferta'
+      ? "Oferta"
       : product.isFeatured
-        ? 'Destacado'
-        : null
+        ? "Destacado"
+        : null;
 
   return (
     <Link href={`/products/${product.slug}`} className="group block">
@@ -46,10 +46,10 @@ export function ProductCard({ product }: { product: ProductListDto }) {
           ) : badge ? (
             <span
               className={cn(
-                'absolute left-3 top-3 rounded-full px-3 py-1 text-[1.2rem] tracking-wide',
-                badge === 'Oferta'
-                  ? 'bg-red-50 text-red-500'
-                  : 'bg-brand-accent/10 text-brand-accent',
+                "absolute left-3 top-3 rounded-full px-3 py-1 text-[1.2rem] tracking-wide",
+                badge === "Oferta"
+                  ? "bg-red-50 text-red-500"
+                  : "bg-brand-accent/10 text-brand-accent",
               )}
             >
               {badge}
@@ -58,24 +58,26 @@ export function ProductCard({ product }: { product: ProductListDto }) {
           {product.stock > 0 && (
             <button
               type="button"
-              className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 backdrop-blur-sm opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 boty-transition boty-shadow"
+              className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-background backdrop-blur-sm opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 boty-transition boty-shadow"
               onClick={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
+                e.preventDefault();
+                e.stopPropagation();
                 if (!isAuthenticated) {
-                  router.push(`/auth?mode=login&redirect=/products/${product.slug}`)
-                  return
+                  router.push(
+                    `/auth?mode=login&redirect=/products/${product.slug}`,
+                  );
+                  return;
                 }
                 addItem({
                   id: product.id,
                   productName: product.name,
-                  variantName: product.brand ?? '',
+                  variantName: product.brand ?? "",
                   unitPrice: product.basePrice,
-                  imageUrl: product.primaryImage || '',
+                  imageUrl: product.primaryImage || "",
                   quantity: 1,
                   totalPrice: product.basePrice,
                   variantId: product.id,
-                })
+                });
               }}
               aria-label="Añadir al carrito"
             >
@@ -106,5 +108,5 @@ export function ProductCard({ product }: { product: ProductListDto }) {
         </div>
       </div>
     </Link>
-  )
+  );
 }

@@ -175,6 +175,7 @@ export function ProductForm({ product }: ProductFormProps) {
   const [stock, setStock] = useState(product?.stock?.toString() ?? '0')
   const [categoryId, setCategoryId] = useState(product?.category?.id ?? '')
   const [isFeatured, setIsFeatured] = useState(product?.isFeatured ?? false)
+  const [genero, setGenero] = useState(product?.genero ?? '')
   const [tags, setTags] = useState('')
 
   const { data: categories } = useQuery({
@@ -212,6 +213,7 @@ export function ProductForm({ product }: ProductFormProps) {
         stock: stock ? Number(stock) : undefined,
         categoryId: categoryId || undefined,
         isFeatured,
+        genero: genero || undefined,
         tags: tags ? tags.split(',').map((t) => t.trim()).filter(Boolean) : undefined,
       }
       if (isEditing && product) {
@@ -301,6 +303,20 @@ export function ProductForm({ product }: ProductFormProps) {
                       {cat.depth > 0 ? `${'\u00A0'.repeat(cat.depth * 2)}${cat.name}` : cat.name}
                     </option>
                   ))}
+                </select>
+              </div>
+              <div>
+                <label htmlFor="pf-genero" className="mb-1 block text-[1.3rem] font-medium text-foreground">Género</label>
+                <select
+                  id="pf-genero"
+                  value={genero}
+                  onChange={(e) => setGenero(e.target.value)}
+                  className="input-field w-full px-3 py-2.5 text-[1.4rem]"
+                >
+                  <option value="">Sin género</option>
+                  <option value="Hombre">Hombre</option>
+                  <option value="Mujer">Mujer</option>
+                  <option value="Niños">Niños</option>
                 </select>
               </div>
             </div>

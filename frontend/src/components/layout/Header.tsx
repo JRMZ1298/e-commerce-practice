@@ -78,7 +78,7 @@ export function Header() {
           {/* Mobile menu button */}
           <button
             type="button"
-            className="lg:hidden p-2 text-foreground hover:text-foreground boty-transition"
+            className="lg:hidden p-2 text-foreground hover:text-brand-accent boty-transition"
             onClick={toggleMobileMenu}
             aria-label="Toggle menu"
           >
@@ -93,19 +93,19 @@ export function Header() {
           <div className="hidden lg:flex items-center gap-6">
             <Link
               href="/"
-              className="text-[1.4rem] tracking-wide text-foreground hover:text-foreground boty-transition"
+              className="text-[1.4rem] tracking-wide text-foreground hover:text-brand-accent boty-transition"
             >
               Home
             </Link>
             <Link
               href="/products"
-              className="text-[1.4rem] tracking-wide text-foreground hover:text-foreground boty-transition"
+              className="text-[1.4rem] tracking-wide text-foreground hover:text-brand-accent boty-transition"
             >
               Colección
             </Link>
             <Link
               href="/categories"
-              className="text-[1.4rem] tracking-wide text-foreground hover:text-foreground boty-transition"
+              className="text-[1.4rem] tracking-wide text-foreground hover:text-brand-accent boty-transition"
             >
               Categorías
             </Link>
@@ -123,7 +123,7 @@ export function Header() {
             <button
               type="button"
               onClick={toggleDark}
-              className="p-2 text-foreground hover:text-foreground boty-transition"
+              className="p-2 text-foreground hover:text-brand-accent boty-transition"
               aria-label="Toggle dark mode"
             >
               {isDark ? (
@@ -134,7 +134,7 @@ export function Header() {
             </button>
             <Link
               href="/wishlist"
-              className="hidden sm:block p-2 text-foreground hover:text-foreground boty-transition"
+              className="hidden sm:block p-2 text-foreground hover:text-brand-accent boty-transition"
               aria-label="Wishlist"
             >
               <Heart className="w-5 h-5" />
@@ -142,7 +142,7 @@ export function Header() {
             <button
               type="button"
               onClick={toggleCart}
-              className="relative p-2 text-foreground hover:text-foreground boty-transition"
+              className="relative p-2 text-foreground hover:text-brand-accent boty-transition"
               aria-label="Cart"
             >
               <ShoppingBag className="w-5 h-5" />
@@ -162,7 +162,7 @@ export function Header() {
                     Admin →
                   </Link>
                 )}
-                <span className="text-[1.3rem] text-foreground">
+                <span className="text-[1.3rem] text-muted-foreground">
                   {user.firstName || user.email}
                 </span>
                 <button
@@ -178,7 +178,7 @@ export function Header() {
             ) : (
               <Link
                 href="/login"
-                className="hidden sm:inline-flex items-center gap-1.5 text-[1.4rem] tracking-wide text-foreground hover:text-foreground boty-transition"
+                className="hidden sm:inline-flex items-center gap-1.5 text-[1.4rem] tracking-wide text-foreground hover:text-brand-accent boty-transition"
               >
                 <User className="w-4 h-4" />
                 <span>Ingresar</span>
@@ -198,14 +198,14 @@ export function Header() {
             <Link
               href="/products"
               onClick={toggleMobileMenu}
-              className="text-[1.4rem] tracking-wide text-foreground hover:text-foreground boty-transition"
+              className="text-[1.4rem] tracking-wide text-foreground hover:text-brand-accent boty-transition"
             >
               Colección
             </Link>
             <Link
               href="/categories"
               onClick={toggleMobileMenu}
-              className="text-[1.4rem] tracking-wide text-foreground hover:text-foreground boty-transition"
+              className="text-[1.4rem] tracking-wide text-foreground hover:text-brand-accent boty-transition"
             >
               Categorías
             </Link>
@@ -240,14 +240,14 @@ export function Header() {
                 <Link
                   href="/login"
                   onClick={toggleMobileMenu}
-                  className="text-[1.4rem] tracking-wide text-foreground hover:text-foreground boty-transition"
+                  className="text-[1.4rem] tracking-wide text-foreground hover:text-brand-accent boty-transition"
                 >
                   Ingresar
                 </Link>
                 <Link
                   href="/register"
                   onClick={toggleMobileMenu}
-                  className="text-[1.4rem] tracking-wide text-foreground hover:text-foreground boty-transition"
+                  className="text-[1.4rem] tracking-wide text-foreground hover:text-brand-accent boty-transition"
                 >
                   Unirme
                 </Link>

@@ -159,6 +159,10 @@ const config: Config = {
           "0%": { transform: "translateY(0)" },
           "100%": { transform: "translateY(-50%)" },
         },
+        "pulse-ring": {
+          "0%": { transform: "scale(1)", opacity: "0.45" },
+          "100%": { transform: "scale(1.4)", opacity: "0" },
+        },
         "scroll-up": {
           "0%": { transform: "translateY(-50%)" },
           "100%": { transform: "translateY(0)" },
@@ -171,6 +175,7 @@ const config: Config = {
         "scroll-up": "scroll-up 30s linear infinite",
         "scroll-down-slow": "scroll-down 60s linear infinite",
         "scroll-up-slow": "scroll-up 60s linear infinite",
+        "pulse-ring": "pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
     },
   },

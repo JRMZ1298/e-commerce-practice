@@ -39,6 +39,8 @@ interface FilterContentProps {
   onInStockChange: (checked: boolean) => void;
   sortInput: string;
   onSortChange: (value: string) => void;
+  generoInput: string;
+  onGeneroChange: (value: string) => void;
   allCategories: Array<{
     id: string;
     name: string;
@@ -61,6 +63,8 @@ function FilterContent({
   onInStockChange,
   sortInput,
   onSortChange,
+  generoInput,
+  onGeneroChange,
   allCategories,
 }: FilterContentProps) {
   return (
@@ -102,6 +106,26 @@ function FilterContent({
           onChange={(e) => onBrandChange(e.target.value)}
           className="input-field w-full px-3 py-2.5 text-[1.4rem]"
         />
+      </div>
+
+      {/* Gender */}
+      <div>
+        <label className="mb-2 block text-[1.3rem] font-medium text-muted-foreground uppercase tracking-wide">
+          Género
+        </label>
+        <div className="relative">
+          <select
+            value={generoInput}
+            onChange={(e) => onGeneroChange(e.target.value)}
+            className="input-field w-full appearance-none px-3 py-2.5 text-[1.4rem] pr-8"
+          >
+            <option value="">Todos</option>
+            <option value="Hombre">Hombre</option>
+            <option value="Mujer">Mujer</option>
+            <option value="Niños">Niños</option>
+          </select>
+          <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        </div>
       </div>
 
       {/* Price Range */}
@@ -180,12 +204,14 @@ function CatalogPageContent() {
   const minPrice = searchParams.get("minPrice") || "";
   const maxPrice = searchParams.get("maxPrice") || "";
   const brand = searchParams.get("brand") || "";
+  const genero = searchParams.get("genero") || "";
   const sort = searchParams.get("sort") || "";
   const inStock = searchParams.get("inStock") || "";
   const page = parseInt(searchParams.get("page") || "0", 10);
 
   const categoryInput = category;
   const brandInput = brand;
+  const generoInput = genero;
   const minPriceInput = minPrice;
   const maxPriceInput = maxPrice;
   const inStockInput = inStock === "true";
@@ -258,10 +284,11 @@ function CatalogPageContent() {
       minPrice: minPrice ? Number(minPrice) : undefined,
       maxPrice: maxPrice ? Number(maxPrice) : undefined,
       brand: brand || undefined,
+      genero: genero || undefined,
       sort: sort || undefined,
       inStock: inStock === "true" || undefined,
     }),
-    [page, q, category, minPrice, maxPrice, brand, sort, inStock],
+    [page, q, category, minPrice, maxPrice, brand, genero, sort, inStock],
   );
 
   const { data: productsData, isLoading: productsLoading } = useQuery({
@@ -280,7 +307,7 @@ function CatalogPageContent() {
   const currentPage = productsData?.page ?? 0;
 
   const hasFilters = Boolean(
-    q || category || minPrice || maxPrice || brand || sort || inStock,
+    q || category || minPrice || maxPrice || brand || genero || sort || inStock,
   );
 
   const allCategories = useMemo(() => {
@@ -378,6 +405,8 @@ function CatalogPageContent() {
                 }
                 sortInput={sortInput}
                 onSortChange={(v) => handleFilterChange("sort", v)}
+                generoInput={generoInput}
+                onGeneroChange={(v) => handleFilterChange("genero", v)}
                 allCategories={allCategories}
               />
             </div>
@@ -438,6 +467,8 @@ function CatalogPageContent() {
                   }
                   sortInput={sortInput}
                   onSortChange={(v) => handleFilterChange("sort", v)}
+                  generoInput={generoInput}
+                  onGeneroChange={(v) => handleFilterChange("genero", v)}
                   allCategories={allCategories}
                 />
 

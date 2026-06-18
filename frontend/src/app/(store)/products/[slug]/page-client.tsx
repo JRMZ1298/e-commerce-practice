@@ -109,10 +109,16 @@ export default function ProductDetailPageClient() {
     },
   });
 
-  const [userSelection, setUserSelection] = useState<Record<string, string> | null>(null);
+  const [userSelection, setUserSelection] = useState<Record<
+    string,
+    string
+  > | null>(null);
 
   const variantSelection = useMemo(() => {
-    return userSelection ?? (product ? buildInitialSelection(product.optionTypes) : {});
+    return (
+      userSelection ??
+      (product ? buildInitialSelection(product.optionTypes) : {})
+    );
   }, [userSelection, product]);
 
   const selectedVariant = useMemo(() => {
@@ -134,6 +140,7 @@ export default function ProductDetailPageClient() {
       return a.isPrimary ? -1 : 1;
     });
   }, [product?.images]);
+
   const primaryImage = product ? getPrimaryImage(product) : undefined;
   const currentImage = images[selectedImageIndex] ?? primaryImage;
 
@@ -221,7 +228,7 @@ export default function ProductDetailPageClient() {
   const maxQuantity = displayStock;
 
   return (
-    <div className="bg-white">
+    <div className="bg-cards">
       <div className="mx-auto max-w-col-xl px-6 lg:px-8">
         <nav className="flex items-center gap-2 py-6 text-[1.4rem] text-muted-foreground">
           <Link href="/" className="hover:text-brand-accent boty-transition">
@@ -304,9 +311,9 @@ function ImageGallery({
   return (
     <div className="lg:col-span-7">
       <div
-          className="relative overflow-hidden rounded-3xl bg-ceramic"
-          style={{ aspectRatio: "4 / 5", maxHeight: "680px" }}
-        >
+        className="relative overflow-hidden rounded-3xl bg-ceramic"
+        style={{ aspectRatio: "4 / 5", maxHeight: "680px" }}
+      >
         {currentImage ? (
           <Image
             src={currentImage.url}
@@ -468,7 +475,7 @@ function VariantSelector({
                     "rounded-full border px-5 py-2 text-[1.3rem] font-medium boty-transition",
                     isSelected
                       ? "border-brand-accent bg-brand-accent text-white"
-                      : "border-border bg-white text-foreground hover:border-brand-accent/50",
+                      : "border-border bg-white text-foreground-muted hover:border-brand-accent/50",
                   )}
                 >
                   {value.value}
@@ -557,7 +564,7 @@ function AddToCartSection({
         type="button"
         onClick={onWishlistToggle}
         className={cn(
-          "flex h-11 w-11 items-center justify-center rounded-full border boty-transition",
+          "flex h-11 w-11 items-center justify-center rounded-full border-none boty-transition",
           isInWishlist
             ? "border-red-200 bg-red-50 text-red-500"
             : "border-border text-muted-foreground hover:border-red-200 hover:text-red-400",
@@ -571,7 +578,7 @@ function AddToCartSection({
 
 function TrustBadgesSection() {
   return (
-    <div className="mt-10 grid grid-cols-1 gap-4 rounded-2xl bg-canvas p-6 sm:grid-cols-2">
+    <div className="mt-10 grid grid-cols-1 gap-4 rounded-2xl bg-background p-6 sm:grid-cols-2">
       <div className="flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-green-light/30">
           <Truck className="h-5 w-5 text-brand-green" />

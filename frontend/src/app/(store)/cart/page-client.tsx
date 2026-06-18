@@ -59,7 +59,7 @@ export default function CartPageClient() {
         <h1 className="font-sans text-[2.4rem] font-bold text-brand-green">
           Tu carrito está vacío
         </h1>
-        <p className="mt-2 text-[1.4rem] text-foreground-muted">
+        <p className="mt-2 text-[1.4rem] text-muted-foreground">
           Agrega productos para empezar tu compra
         </p>
         <Link
@@ -85,7 +85,7 @@ export default function CartPageClient() {
             <h1 className="font-serif text-[3.2rem] font-bold text-brand-green sm:text-[4rem]">
               Carrito de Compras
             </h1>
-            <p className="mt-1 text-[1.4rem] text-foreground">
+            <p className="mt-1 text-[1.4rem] text-muted-foreground">
               {totalItems} {totalItems === 1 ? "artículo" : "artículos"}
             </p>
           </div>

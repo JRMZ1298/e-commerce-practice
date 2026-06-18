@@ -1,44 +1,46 @@
-'use client'
+"use client";
 
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import { X, ShoppingBag, Trash2, Minus, Plus } from 'lucide-react'
-import { useAuth } from '@/hooks/useAuth'
-import { useCart } from '@/hooks/useCart'
-import { formatPrice } from '@/lib/utils/formatPrice'
-import { cn } from '@/lib/utils/cn'
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { X, ShoppingBag, Trash2, Minus, Plus } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useCart } from "@/hooks/useCart";
+import { formatPrice } from "@/lib/utils/formatPrice";
+import { cn } from "@/lib/utils/cn";
 
 export function CartDrawer() {
-  const router = useRouter()
-  const { isAuthenticated } = useAuth()
+  const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const { items, subtotal, isOpen, closeCart, removeItem, updateQuantity } =
-    useCart()
+    useCart();
 
   return (
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity"
+          className="fixed inset-0 z-40 bg-brand-accent/40 backdrop-blur-sm transition-opacity"
           onClick={closeCart}
         />
       )}
 
       <div
         className={cn(
-          'fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col bg-background shadow-soft transition-transform duration-300',
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+          "fixed inset-y-0 right-0 z-50 flex w-full max-w-xl flex-col bg-background shadow-soft transition-transform duration-300",
+          isOpen ? "translate-x-0" : "translate-x-full",
         )}
       >
-        <div className="flex items-center justify-between border-b border-black/10 px-6 py-2.5">
+        <div className="flex items-center justify-between border-b border-black/10 px-4 py-2.5">
           <div>
             <h2 className="font-serif text-[2rem] text-foreground">Carrito</h2>
-            <p className="text-[1.4rem] text-muted-foreground">{items.length} {items.length === 1 ? 'artículo' : 'artículos'}</p>
+            <p className="text-[1.4rem] text-muted-foreground">
+              {items.length} {items.length === 1 ? "artículo" : "artículos"}
+            </p>
           </div>
           <button
             type="button"
             onClick={closeCart}
             aria-label="Cerrar carrito"
-            className="p-2 text-foreground/70 hover:text-foreground boty-transition"
+            className="p-2 text-foreground hover:text-brand-accent boty-transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -47,7 +49,7 @@ export function CartDrawer() {
         <div className="flex-1 overflow-y-auto px-6 py-6">
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center">
-              <ShoppingBag className="w-12 h-12 text-muted-foreground/50 mb-4" />
+              <ShoppingBag className="w-12 h-12 text-muted-foreground mb-4" />
               <p className="text-muted-foreground">Tu carrito está vacío</p>
               <button
                 type="button"
@@ -80,27 +82,42 @@ export function CartDrawer() {
 
                   {/* Product Details */}
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-serif text-[1.5rem] text-foreground mb-1 font-semibold">
-                      {item.productName}
-                    </h3>
-                    <p className="text-muted-foreground mb-3 text-[1.4rem]">{item.variantName}</p>
+                    <div className="flex justify-between items-start gap-2">
+                      <div>
+                        <h3 className="font-serif text-[1.5rem] text-foreground mb-1 font-semibold">
+                          {item.productName}
+                        </h3>
+                        <p className="text-muted-foreground mb-3 text-[1.4rem]">
+                          {item.variantName}
+                        </p>
+                      </div>
+                      <p className="font-medium text-foreground whitespace-nowrap">
+                        {formatPrice(item.totalPrice)}
+                      </p>
+                    </div>
 
                     {/* Quantity Controls */}
                     <div className="flex items-center gap-3">
                       <div className="flex items-center border border-border rounded-full">
                         <button
                           type="button"
-                          onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
-                          className="p-1.5 hover:bg-muted boty-transition rounded-l-full"
+                          onClick={() =>
+                            updateQuantity(item.variantId, item.quantity - 1)
+                          }
+                          className="p-1.5 hover:bg-muted boty-transition rounded-l-full text-foreground"
                           aria-label="Decrease quantity"
                         >
                           <Minus className="w-3 h-3" />
                         </button>
-                        <span className="px-3 text-[1.4rem] font-medium">{item.quantity}</span>
+                        <span className="px-3 text-[1.4rem] font-medium text-foreground">
+                          {item.quantity}
+                        </span>
                         <button
                           type="button"
-                          onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
-                          className="p-1.5 hover:bg-muted boty-transition rounded-r-full"
+                          onClick={() =>
+                            updateQuantity(item.variantId, item.quantity + 1)
+                          }
+                          className="p-1.5 hover:bg-muted boty-transition rounded-r-full text-foreground"
                           aria-label="Increase quantity"
                         >
                           <Plus className="w-3 h-3" />
@@ -109,18 +126,13 @@ export function CartDrawer() {
 
                       <button
                         type="button"
-                          onClick={() => removeItem(item.variantId)}
-                        className="p-1.5 text-muted-foreground hover:text-destructive boty-transition"
+                        onClick={() => removeItem(item.variantId)}
+                        className="p-1.5 text-destructive hover:text-red-800 boty-transition"
                         aria-label="Remove item"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
-                  </div>
-
-                  {/* Price */}
-                  <div className="text-right">
-                    <p className="font-medium text-foreground">{formatPrice(item.totalPrice)}</p>
                   </div>
                 </div>
               ))}
@@ -132,13 +144,19 @@ export function CartDrawer() {
           <div className="border-t border-black/10 p-6 space-y-4">
             <div className="flex justify-between text-[1.4rem]">
               <span className="text-muted-foreground">Subtotal</span>
-              <span className="font-medium text-foreground">{formatPrice(subtotal)}</span>
+              <span className="font-medium text-foreground">
+                {formatPrice(subtotal)}
+              </span>
             </div>
             <button
               type="button"
               onClick={() => {
-                closeCart()
-                router.push(isAuthenticated ? '/checkout' : '/auth?mode=login&redirect=/checkout')
+                closeCart();
+                router.push(
+                  isAuthenticated
+                    ? "/checkout"
+                    : "/auth?mode=login&redirect=/checkout",
+                );
               }}
               className="w-full bg-brand-accent text-white py-4 rounded-full font-medium hover:bg-brand-accent/90 boty-transition"
             >
@@ -155,5 +173,5 @@ export function CartDrawer() {
         )}
       </div>
     </>
-  )
+  );
 }
