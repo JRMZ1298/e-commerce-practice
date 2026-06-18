@@ -59,7 +59,7 @@ VALUES
 -- 3. PRODUCTOS ---------------------------------------------------
 
 -- 3a. Camisas (5 productos)
-INSERT INTO products (id, category_id, name, slug, description, short_description, sku, brand, status, is_featured, base_price, compare_price, stock, tags, created_by)
+INSERT INTO products (id, category_id, name, slug, description, short_description, sku, brand, status, is_featured, base_price, compare_price, stock, tags, genero, created_by)
 VALUES
     ('20000000-0000-0000-0000-000000000001',
      '10000000-0000-0000-0000-000000000010',
@@ -68,7 +68,7 @@ VALUES
      'Camisa blanca de corte clásico en algodón premium. Perfecta para ocasiones formales y casuales. Confeccionada con tejido de punto suave que brinda comodidad durante todo el día. Cuello clásico y puños ajustables.',
      'Camisa blanca de algodón premium, corte clásico',
      'CAM-BLA-001', 'MAISON Collection', 'ACTIVE', true, 899.00, 1299.00, 50,
-     ARRAY['clásico', 'formal', 'algodón'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['clásico', 'formal', 'algodón'], 'Hombre', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000002',
      '10000000-0000-0000-0000-000000000010',
@@ -77,7 +77,7 @@ VALUES
      'Camisa estilo Oxford en azul marino. Tejido de alta durabilidad con un acabado ligeramente texturizado. Ideal para looks semifor males o para combinar con jeans y chinos.',
      'Camisa Oxford azul, duradera y versátil',
      'CAM-AZU-002', 'MAISON Collection', 'ACTIVE', true, 749.00, NULL, 35,
-     ARRAY['oxford', 'casual', 'versátil'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['oxford', 'casual', 'versátil'], 'Hombre', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000003',
      '10000000-0000-0000-0000-000000000010',
@@ -86,7 +86,7 @@ VALUES
      'Camisa de lino 100% natural en tono beige. Fresca y ligera, perfecta para días cálidos. Corte relajado con botones de concha natural.',
      'Camisa de lino beige, fresca y ligera',
      'CAM-LIN-003', 'Natural Fiber Co.', 'ACTIVE', false, 1099.00, 1399.00, 20,
-     ARRAY['lino', 'verano', 'natural'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['lino', 'verano', 'natural'], 'Mujer', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000004',
      '10000000-0000-0000-0000-000000000010',
@@ -95,7 +95,7 @@ VALUES
      'Camisa negra de corte ajustado moderna. Elegante y sofisticada, perfecta para cenas y eventos. Detalle de botones negros mate y costuras reforzadas.',
      'Camisa negra slim fit moderna',
      'CAM-NEG-004', 'Urban Elegance', 'ACTIVE', true, 949.00, NULL, 40,
-     ARRAY['slim', 'elegante', 'moderna'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['slim', 'elegante', 'moderna'], 'Hombre', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000005',
      '10000000-0000-0000-0000-000000000010',
@@ -104,10 +104,10 @@ VALUES
      'Camisa casual de cuadros en tonos rojos y negros. Tejido de franela suave para los días frescos. Ideal para un look relajado de fin de semana.',
      'Camisa de franela a cuadros',
      'CAM-CUA-005', 'Rustic Weave', 'ACTIVE', false, 649.00, 849.00, 25,
-     ARRAY['casual', 'cuadros', 'franela'], '00000000-0000-0000-0000-000000000001');
+     ARRAY['casual', 'cuadros', 'franela'], 'Niños', '00000000-0000-0000-0000-000000000001');
 
 -- 3b. Pantalones (5 productos)
-INSERT INTO products (id, category_id, name, slug, description, short_description, sku, brand, status, is_featured, base_price, compare_price, stock, tags, created_by)
+INSERT INTO products (id, category_id, name, slug, description, short_description, sku, brand, status, is_featured, base_price, compare_price, stock, tags, genero, created_by)
 VALUES
     ('20000000-0000-0000-0000-000000000006',
      '10000000-0000-0000-0000-000000000011',
@@ -116,7 +116,7 @@ VALUES
      'Pantalón de vestir en gris carbón. Corte recto con tela de lana mezcla. Perfecto para oficina y eventos formales. Pretina con trabillas para cinturón.',
      'Pantalón de vestir gris carbón',
      'PAN-GRI-006', 'MAISON Collection', 'ACTIVE', true, 1299.00, 1599.00, 30,
-     ARRAY['formal', 'vestir', 'oficina'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['formal', 'vestir', 'oficina'], 'Hombre', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000007',
      '10000000-0000-0000-0000-000000000011',
@@ -125,7 +125,7 @@ VALUES
      'Jeans clásicos de corte regular en azul índigo. Algodón denim de alta calidad con elasticidad para mayor comodidad. Cinco bolsillos y cierre de botón.',
      'Jeans clásicos azul índigo',
      'PAN-JEA-007', 'Denim Lab', 'ACTIVE', true, 999.00, NULL, 60,
-     ARRAY['jeans', 'clásico', 'denim'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['jeans', 'clásico', 'denim'], 'Hombre', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000008',
      '10000000-0000-0000-0000-000000000011',
@@ -134,7 +134,7 @@ VALUES
      'Pantalón chino en beige. Corte slim recto, ideal para looks casuales pero pulcros. Tejido de algodón sarga con acabado suave al tacto.',
      'Pantalón chino beige slim',
      'PAN-CHI-008', 'MAISON Collection', 'ACTIVE', false, 849.00, NULL, 45,
-     ARRAY['chino', 'casual', 'cómodo'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['chino', 'casual', 'cómodo'], 'Hombre', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000009',
      '10000000-0000-0000-0000-000000000011',
@@ -143,7 +143,7 @@ VALUES
      'Pantalón cargo en verde olivo con múltiples bolsillos. Corte holgado y cómodo, perfecto para actividades al aire libre. Tela resistente con costuras reforzadas.',
      'Pantalón cargo verde olivo',
      'PAN-CAR-009', 'Trail Gear', 'ACTIVE', false, 799.00, 999.00, 15,
-     ARRAY['cargo', 'outdoor', 'resistente'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['cargo', 'outdoor', 'resistente'], 'Hombre', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000010',
      '10000000-0000-0000-0000-000000000011',
@@ -152,10 +152,10 @@ VALUES
      'Pantalón de mezclilla en negro intenso. Corte moderno ajustado con ligera elasticidad. Perfecto para looks nocturnos o urbanos.',
      'Jeans negro ajustado moderno',
      'PAN-MEZ-010', 'Denim Lab', 'ACTIVE', true, 1049.00, NULL, 35,
-     ARRAY['mezclilla', 'negro', 'moderno'], '00000000-0000-0000-0000-000000000001');
+     ARRAY['mezclilla', 'negro', 'moderno'], 'Hombre', '00000000-0000-0000-0000-000000000001');
 
 -- 3c. Chaquetas (5 productos)
-INSERT INTO products (id, category_id, name, slug, description, short_description, sku, brand, status, is_featured, base_price, compare_price, stock, tags, created_by)
+INSERT INTO products (id, category_id, name, slug, description, short_description, sku, brand, status, is_featured, base_price, compare_price, stock, tags, genero, created_by)
 VALUES
     ('20000000-0000-0000-0000-000000000011',
      '10000000-0000-0000-0000-000000000012',
@@ -164,7 +164,7 @@ VALUES
      'Chaqueta de cuero genuino en marrón oscuro. Cierre de cremallera frontal, cuello solapa y bolsillos con cremallera. Un clásico atemporal que nunca pasa de moda.',
      'Chaqueta de cuero genuino marrón',
      'CHA-CUE-011', 'Heritage Leather', 'ACTIVE', true, 3499.00, 4299.00, 10,
-     ARRAY['cuero', 'clásico', 'atemporal'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['cuero', 'clásico', 'atemporal'], 'Hombre', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000012',
      '10000000-0000-0000-0000-000000000012',
@@ -173,7 +173,7 @@ VALUES
      'Chaqueta impermeable técnica en negro. Membrana transpirable que mantiene seco sin sacrificar comodidad. Capucha ajustable y múltiples bolsillos sellados.',
      'Chaqueta impermeable técnica negra',
      'CHA-IMP-012', 'Trail Gear', 'ACTIVE', false, 2199.00, NULL, 20,
-     ARRAY['impermeable', 'técnica', 'outdoor'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['impermeable', 'técnica', 'outdoor'], 'Hombre', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000013',
      '10000000-0000-0000-0000-000000000012',
@@ -182,7 +182,7 @@ VALUES
      'Chamarra ligera de algodón en beige. Corte bomber clásico con cuello ribeteado. Perfecta para entretiempo o como capa adicional.',
      'Chamarra bomber ligera beige',
      'CHA-ALG-013', 'MAISON Collection', 'ACTIVE', true, 1499.00, 1799.00, 25,
-     ARRAY['bomber', 'ligera', 'entretiempo'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['bomber', 'ligera', 'entretiempo'], 'Hombre', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000014',
      '10000000-0000-0000-0000-000000000012',
@@ -191,7 +191,7 @@ VALUES
      'Abrigo largo de lana en gris perla. Corte clásico de doble botonadura. Forro interior de seda artificial. Perfecto para temporada de frío.',
      'Abrigo de lana gris doble botonadura',
      'CHA-LAN-014', 'MAISON Collection', 'ACTIVE', true, 4499.00, 5299.00, 8,
-     ARRAY['abrigo', 'lana', 'invierno'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['abrigo', 'lana', 'invierno'], 'Hombre', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000015',
      '10000000-0000-0000-0000-000000000012',
@@ -200,10 +200,10 @@ VALUES
      'Chaqueta deportiva en azul marino con cremallera. Tejido fleece suave y cálido. Ideal para actividades al aire libre o uso diario en clima fresco.',
      'Chaqueta fleece deportiva azul',
      'CHA-DEP-015', 'Trail Gear', 'ACTIVE', false, 999.00, NULL, 30,
-     ARRAY['deportiva', 'fleece', 'cálida'], '00000000-0000-0000-0000-000000000001');
+     ARRAY['deportiva', 'fleece', 'cálida'], 'Hombre', '00000000-0000-0000-0000-000000000001');
 
 -- 3d. Bolsos (3 productos)
-INSERT INTO products (id, category_id, name, slug, description, short_description, sku, brand, status, is_featured, base_price, compare_price, stock, tags, created_by)
+INSERT INTO products (id, category_id, name, slug, description, short_description, sku, brand, status, is_featured, base_price, compare_price, stock, tags, genero, created_by)
 VALUES
     ('20000000-0000-0000-0000-000000000016',
      '10000000-0000-0000-0000-000000000020',
@@ -212,7 +212,7 @@ VALUES
      'Mochila urbana en negro con compartimento para laptop de 15". Bolsillo frontal organizador, laterales para botella y respaldo acolchado. Cierre impermeable.',
      'Mochila urbana con compartimento laptop',
      'BOL-MOC-016', 'Urban Gear', 'ACTIVE', true, 1599.00, 1899.00, 20,
-     ARRAY['mochila', 'urbana', 'laptop'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['mochila', 'urbana', 'laptop'], 'Mujer', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000017',
      '10000000-0000-0000-0000-000000000020',
@@ -221,7 +221,7 @@ VALUES
      'Bolso tote de cuero genuino en color coñac. Amplio compartimento principal con bolsillo interior con cremallera. Asas robustas con remaches metálicos.',
      'Bolso tote de cuero coñac',
      'BOL-TOT-017', 'Heritage Leather', 'ACTIVE', true, 2899.00, NULL, 12,
-     ARRAY['tote', 'cuero', 'elegante'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['tote', 'cuero', 'elegante'], 'Mujer', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000018',
      '10000000-0000-0000-0000-000000000020',
@@ -230,10 +230,10 @@ VALUES
      'Riñonera ajustable en verde militar. Pequeña pero funcional con compartimentos organizadores. Correa ajustable para usar en cintura o cruzada.',
      'Riñonera verde militar ajustable',
      'BOL-RIN-018', 'Urban Gear', 'ACTIVE', false, 599.00, 799.00, 40,
-     ARRAY['riñonera', 'casual', 'práctica'], '00000000-0000-0000-0000-000000000001');
+     ARRAY['riñonera', 'casual', 'práctica'], 'Mujer', '00000000-0000-0000-0000-000000000001');
 
 -- 3e. Relojes (3 productos)
-INSERT INTO products (id, category_id, name, slug, description, short_description, sku, brand, status, is_featured, base_price, compare_price, stock, tags, created_by)
+INSERT INTO products (id, category_id, name, slug, description, short_description, sku, brand, status, is_featured, base_price, compare_price, stock, tags, genero, created_by)
 VALUES
     ('20000000-0000-0000-0000-000000000019',
      '10000000-0000-0000-0000-000000000021',
@@ -242,7 +242,7 @@ VALUES
      'Reloj de pulsera clásico con caja dorada y esfera blanca. Correa de cuero marrón. Movimiento de cuarzo suizo con fecha. Resistente al agua 30m.',
      'Reloj clásico dorado con correa de cuero',
      'REL-CLA-019', 'Timeless Watches', 'ACTIVE', true, 3999.00, 4599.00, 15,
-     ARRAY['clásico', 'dorado', 'cuarzo'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['clásico', 'dorado', 'cuarzo'], 'Hombre', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000020',
      '10000000-0000-0000-0000-000000000021',
@@ -251,7 +251,7 @@ VALUES
      'Reloj deportivo digital con múltiples funciones. Cronómetro, GPS, monitor de frecuencia cardíaca y resistencia al agua 100m. Batería de larga duración.',
      'Reloj deportivo digital con GPS',
      'REL-DEP-020', 'Sportech', 'ACTIVE', false, 5499.00, 6499.00, 10,
-     ARRAY['deportivo', 'digital', 'GPS'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['deportivo', 'digital', 'GPS'], 'Hombre', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000021',
      '10000000-0000-0000-0000-000000000021',
@@ -260,10 +260,10 @@ VALUES
      'Reloj minimalista con caja plateada delgada y esfera sin números. Correa de malla milanesa. Diseño escandinavo elegante para cualquier ocasión.',
      'Reloj minimalista plateado delgado',
      'REL-MIN-021', 'Nordic Design', 'ACTIVE', true, 2199.00, NULL, 25,
-     ARRAY['minimalista', 'plateado', 'elegante'], '00000000-0000-0000-0000-000000000001');
+     ARRAY['minimalista', 'plateado', 'elegante'], 'Hombre', '00000000-0000-0000-0000-000000000001');
 
 -- 3f. Joyería (3 productos)
-INSERT INTO products (id, category_id, name, slug, description, short_description, sku, brand, status, is_featured, base_price, compare_price, stock, tags, created_by)
+INSERT INTO products (id, category_id, name, slug, description, short_description, sku, brand, status, is_featured, base_price, compare_price, stock, tags, genero, created_by)
 VALUES
     ('20000000-0000-0000-0000-000000000022',
      '10000000-0000-0000-0000-000000000022',
@@ -272,7 +272,7 @@ VALUES
      'Collar de plata esterlina 925 con dije de ónix negro. Cadena delgada ajustable de 45-50cm. Piedra natural pulida con acabado brillante.',
      'Collar plata 925 con ónix negro',
      'JOY-COL-022', 'Silver Craft', 'ACTIVE', true, 1899.00, 2299.00, 18,
-     ARRAY['plata', 'ónix', 'elegante'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['plata', 'ónix', 'elegante'], 'Mujer', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000023',
      '10000000-0000-0000-0000-000000000022',
@@ -281,7 +281,7 @@ VALUES
      'Pulsera trenzada de cuero negro con cierre de plata esterlina. Ajustable mediante nudo deslizante. Diseño moderno y versátil.',
      'Pulsera de cuero negro con plata',
      'JOY-PUL-023', 'Silver Craft', 'ACTIVE', false, 699.00, NULL, 30,
-     ARRAY['pulsera', 'cuero', 'plata'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['pulsera', 'cuero', 'plata'], 'Mujer', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000024',
      '10000000-0000-0000-0000-000000000022',
@@ -290,10 +290,10 @@ VALUES
      'Anillo clásico de oro amarillo 18k con superficie pulida. Ancho 3mm. Perfecto como alianza o accesorio diario. Incluye estuche de presentación.',
      'Anillo de oro 18k clásico',
      'JOY-ANI-024', 'Luxury Gold', 'ACTIVE', true, 7999.00, 9499.00, 5,
-     ARRAY['oro', 'anillo', 'lujo'], '00000000-0000-0000-0000-000000000001');
+     ARRAY['oro', 'anillo', 'lujo'], 'Mujer', '00000000-0000-0000-0000-000000000001');
 
 -- 3g. Zapatos (3 productos)
-INSERT INTO products (id, category_id, name, slug, description, short_description, sku, brand, status, is_featured, base_price, compare_price, stock, tags, created_by)
+INSERT INTO products (id, category_id, name, slug, description, short_description, sku, brand, status, is_featured, base_price, compare_price, stock, tags, genero, created_by)
 VALUES
     ('20000000-0000-0000-0000-000000000025',
      '10000000-0000-0000-0000-000000000030',
@@ -302,7 +302,7 @@ VALUES
      'Zapatos formales Oxford en cuero negro. Corte clásico con cordones abiertos. Suela de cuero y goma. Plantilla acolchada para comodidad todo el día.',
      'Zapatos Oxford de cuero negro',
      'ZAP-OXF-025', 'Heritage Leather', 'ACTIVE', true, 2799.00, 3299.00, 15,
-     ARRAY['formal', 'oxford', 'cuero'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['formal', 'oxford', 'cuero'], 'Hombre', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000026',
      '10000000-0000-0000-0000-000000000030',
@@ -311,7 +311,7 @@ VALUES
      'Mocasín en cuero café con detalles de costura contrastante. Suela de goma ligera. Diseño sin cordones fácil de poner y quitar.',
      'Mocasín de cuero café',
      'ZAP-MOC-026', 'Urban Comfort', 'ACTIVE', false, 1999.00, NULL, 22,
-     ARRAY['mocasín', 'cómodo', 'casual'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['mocasín', 'cómodo', 'casual'], 'Mujer', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000027',
      '10000000-0000-0000-0000-000000000030',
@@ -320,10 +320,10 @@ VALUES
      'Zapatos Derby en cuero marrón con acabado brillante. Cordones cerrados clásicos. Forro de cuero y plantilla anatómica extraíble.',
      'Zapatos Derby cuero marrón brillante',
      'ZAP-DER-027', 'Heritage Leather', 'ACTIVE', true, 2599.00, 2999.00, 18,
-     ARRAY['derby', 'cuero', 'elegante'], '00000000-0000-0000-0000-000000000001');
+     ARRAY['derby', 'cuero', 'elegante'], 'Hombre', '00000000-0000-0000-0000-000000000001');
 
 -- 3h. Tenis (3 productos)
-INSERT INTO products (id, category_id, name, slug, description, short_description, sku, brand, status, is_featured, base_price, compare_price, stock, tags, created_by)
+INSERT INTO products (id, category_id, name, slug, description, short_description, sku, brand, status, is_featured, base_price, compare_price, stock, tags, genero, created_by)
 VALUES
     ('20000000-0000-0000-0000-000000000028',
      '10000000-0000-0000-0000-000000000031',
@@ -332,7 +332,7 @@ VALUES
      'Tenis blancos de corte clásico en lona y goma. Diseño atemporal que combina con todo. Suela vulcanizada antiderrapante. Cómodos y duraderos.',
      'Tenis blancos clásicos de lona',
      'TEN-BLA-028', 'Urban Comfort', 'ACTIVE', true, 1299.00, 1599.00, 40,
-     ARRAY['tenis', 'blancos', 'clásicos'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['tenis', 'blancos', 'clásicos'], 'Niños', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000029',
      '10000000-0000-0000-0000-000000000031',
@@ -341,7 +341,7 @@ VALUES
      'Tenis deportivos en rojo con tecnología de amortiguación Air+. Parte superior de malla transpirable. Ideal para running y entrenamiento.',
      'Tenis deportivos rojos con Air+',
      'TEN-DEP-029', 'Sportech', 'ACTIVE', false, 2299.00, 2799.00, 20,
-     ARRAY['deportivos', 'running', 'amortiguación'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['deportivos', 'running', 'amortiguación'], 'Hombre', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000030',
      '10000000-0000-0000-0000-000000000031',
@@ -350,10 +350,10 @@ VALUES
      'Tenis urbanos en gris con detalles en blanco. Diseño moderno con suela gruesa plateforme. Parte superior de gamuza y malla.',
      'Tenis urbanos gris plataforma',
      'TEN-URB-030', 'Urban Edge', 'ACTIVE', true, 1799.00, NULL, 30,
-     ARRAY['urbanos', 'gris', 'plataforma'], '00000000-0000-0000-0000-000000000001');
+     ARRAY['urbanos', 'gris', 'plataforma'], 'Mujer', '00000000-0000-0000-0000-000000000001');
 
 -- 3i. Botas (3 productos)
-INSERT INTO products (id, category_id, name, slug, description, short_description, sku, brand, status, is_featured, base_price, compare_price, stock, tags, created_by)
+INSERT INTO products (id, category_id, name, slug, description, short_description, sku, brand, status, is_featured, base_price, compare_price, stock, tags, genero, created_by)
 VALUES
     ('20000000-0000-0000-0000-000000000031',
      '10000000-0000-0000-0000-000000000032',
@@ -362,7 +362,7 @@ VALUES
      'Botas de cuero café con suela de goma dentada. Altura media con cremallera lateral para fácil calce. Forro térmico para clima frío.',
      'Botas de cuero café con forro térmico',
      'BOT-CUE-031', 'Trail Gear', 'ACTIVE', true, 3299.00, 3899.00, 12,
-     ARRAY['botas', 'cuero', 'invierno'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['botas', 'cuero', 'invierno'], 'Hombre', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000032',
      '10000000-0000-0000-0000-000000000032',
@@ -371,7 +371,7 @@ VALUES
      'Botas de lluvia clásicas en amarillo. Goma 100% impermeable con suela antiderrapante. Altura media con agarradera trasera.',
      'Botas de lluvia amarillas impermeables',
      'BOT-LLU-032', 'Rain Shield', 'ACTIVE', false, 899.00, NULL, 25,
-     ARRAY['lluvia', 'impermeable', 'amarillas'], '00000000-0000-0000-0000-000000000001'),
+     ARRAY['lluvia', 'impermeable', 'amarillas'], 'Niños', '00000000-0000-0000-0000-000000000001'),
 
     ('20000000-0000-0000-0000-000000000033',
      '10000000-0000-0000-0000-000000000032',
@@ -380,7 +380,7 @@ VALUES
      'Botín negro de cuero con tacón de 5cm. Diseño moderno con punta ligeramente afilada. Cremallera interior. Perfecto para looks elegantes.',
      'Botín negro de cuero con tacón',
      'BOT-BOT-033', 'Urban Elegance', 'ACTIVE', true, 2499.00, 2999.00, 15,
-     ARRAY['botín', 'tacón', 'elegante'], '00000000-0000-0000-0000-000000000001');
+     ARRAY['botín', 'tacón', 'elegante'], 'Mujer', '00000000-0000-0000-0000-000000000001');
 
 -- 4. IMÁGENES DE PRODUCTOS -------------------------------------
 

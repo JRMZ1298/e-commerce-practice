@@ -28,6 +28,7 @@ CREATE TABLE products (
     meta_description VARCHAR(500),
     tags             TEXT[],
     weight_grams     INTEGER,
+    genero           VARCHAR(20),
     base_price       NUMERIC(12,2) NOT NULL DEFAULT 0,
     compare_price    NUMERIC(12,2),
     stock            INTEGER NOT NULL DEFAULT 0,

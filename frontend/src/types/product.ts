@@ -43,6 +43,7 @@ export interface ProductListDto {
   isFeatured: boolean
   primaryImage: string | null
   categoryName: string | null
+  genero: string | null
   createdAt: string
 }
 
@@ -59,6 +60,7 @@ export interface Product {
   stock: number
   status: 'DRAFT' | 'ACTIVE' | 'ARCHIVED'
   isFeatured: boolean
+  genero: string | null
   images: ProductImage[]
   category: { id: string; name: string; slug: string } | null
   variants: ProductVariant[]

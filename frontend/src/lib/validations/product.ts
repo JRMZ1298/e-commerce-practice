@@ -7,6 +7,7 @@ export const productSchema = z.object({
   price: z.number().positive('El precio debe ser mayor a 0'),
   compareAtPrice: z.number().positive().optional(),
   categoryId: z.string().min(1, 'La categoría es obligatoria'),
+  genero: z.string().optional(),
   images: z
     .array(
       z.object({

@@ -18,5 +18,6 @@ public record ProductRequest(
     @PositiveOrZero BigDecimal comparePrice,
     @PositiveOrZero Integer stock,
     List<String> tags,
-    boolean isFeatured
+    boolean isFeatured,
+    String genero
 ) {}

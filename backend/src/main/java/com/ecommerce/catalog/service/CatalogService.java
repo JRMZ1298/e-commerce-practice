@@ -119,9 +119,10 @@ public class CatalogService {
 
     public Page<ProductListDto> getProducts(int page, int size, String category, BigDecimal minPrice,
                                             BigDecimal maxPrice, String search, String sort,
-                                            String brand, String tag, Boolean inStock, Boolean featured) {
+                                            String brand, String tag, Boolean inStock, Boolean featured,
+                                            String genero) {
         Pageable pageable = createPageable(page, size, sort);
-        Specification<Product> spec = buildProductSpecification(category, minPrice, maxPrice, search, brand, tag, inStock, featured);
+        Specification<Product> spec = buildProductSpecification(category, minPrice, maxPrice, search, brand, tag, inStock, featured, genero);
 
         return productRepository.findAll(spec, pageable)
             .map(this::toProductListDto);
@@ -176,6 +177,7 @@ public class CatalogService {
             .stock(request.stock() != null ? request.stock() : 0)
             .isFeatured(request.isFeatured())
             .tags(request.tags() != null ? request.tags().toArray(String[]::new) : null)
+            .genero(request.genero())
             .createdBy(createdBy)
             .build();
 
@@ -203,6 +205,7 @@ public class CatalogService {
         if (request.comparePrice() != null) product.setComparePrice(request.comparePrice());
         if (request.stock() != null) product.setStock(request.stock());
         if (request.tags() != null) product.setTags(request.tags().toArray(String[]::new));
+        if (request.genero() != null) product.setGenero(request.genero());
 
         if (request.categoryId() != null) {
             Category category = categoryRepository.findById(request.categoryId())
@@ -225,7 +228,7 @@ public class CatalogService {
     private Specification<Product> buildProductSpecification(String category, BigDecimal minPrice,
                                                               BigDecimal maxPrice, String search,
                                                               String brand, String tag, Boolean inStock,
-                                                              Boolean featured) {
+                                                              Boolean featured, String genero) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
@@ -274,6 +277,10 @@ public class CatalogService {
 
             if (Boolean.TRUE.equals(featured)) {
                 predicates.add(cb.isTrue(root.get("isFeatured")));
+            }
+
+            if (genero != null && !genero.isBlank()) {
+                predicates.add(cb.equal(root.get("genero"), genero));
             }
 
             if (!query.getResultType().equals(Long.class)) {
@@ -340,6 +347,7 @@ public class CatalogService {
             product.isFeatured(),
             primaryImage,
             product.getCategory() != null ? product.getCategory().getName() : null,
+            product.getGenero(),
             product.getCreatedAt()
         );
     }
@@ -397,6 +405,7 @@ public class CatalogService {
             product.getStock(),
             product.getStatus(),
             product.isFeatured(),
+            product.getGenero(),
             images,
             categorySummary,
             variants,

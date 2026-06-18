@@ -102,7 +102,7 @@ public class SearchService {
 
         String baseFrom = "FROM products p LEFT JOIN categories c ON p.category_id = c.id";
 
-        String selectColumns = "SELECT p.id, p.name, p.slug, p.brand, p.base_price, p.compare_price, p.stock, p.is_featured, p.created_at, c.name AS category_name, (SELECT pi.url FROM product_images pi WHERE pi.product_id = p.id ORDER BY pi.is_primary DESC, pi.sort_order LIMIT 1) AS primary_image";
+        String selectColumns = "SELECT p.id, p.name, p.slug, p.brand, p.base_price, p.compare_price, p.stock, p.is_featured, p.created_at, c.name AS category_name, (SELECT pi.url FROM product_images pi WHERE pi.product_id = p.id ORDER BY pi.is_primary DESC, pi.sort_order LIMIT 1) AS primary_image, p.genero";
 
         String countSql = "SELECT COUNT(*) " + baseFrom + " " + conditions;
         Query countQuery = entityManager.createNativeQuery(countSql);
@@ -139,10 +139,11 @@ public class SearchService {
             Instant createdAt = row[8] != null ? ((Timestamp) row[8]).toInstant() : null;
             String categoryName = (String) row[9];
             String primaryImage = (String) row[10];
+            String genero = (String) row[11];
 
             products.add(new ProductListDto(
                 id, name, slug, productBrand, basePrice, comparePrice,
-                stock, featured, primaryImage, categoryName, createdAt
+                stock, featured, primaryImage, categoryName, genero, createdAt
             ));
         }
 

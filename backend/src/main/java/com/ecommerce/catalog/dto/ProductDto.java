@@ -19,6 +19,7 @@ public record ProductDto(
     int stock,
     Product.Status status,
     boolean isFeatured,
+    String genero,
     List<ProductImageDto> images,
     CategorySummaryDto category,
     List<VariantDto> variants,

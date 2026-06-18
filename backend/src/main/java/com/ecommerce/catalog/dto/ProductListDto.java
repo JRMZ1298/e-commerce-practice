@@ -15,5 +15,6 @@ public record ProductListDto(
     boolean isFeatured,
     String primaryImage,
     String categoryName,
+    String genero,
     Instant createdAt
 ) {}

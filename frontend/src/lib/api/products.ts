@@ -14,6 +14,7 @@ export interface ProductsParams {
   tag?: string;
   inStock?: boolean;
   featured?: boolean;
+  genero?: string;
 }
 
 export const productsApi = {
