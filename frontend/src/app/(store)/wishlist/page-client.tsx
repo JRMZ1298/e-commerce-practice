@@ -118,7 +118,7 @@ export default function WishlistPageClient() {
           {wishlist.map((item) => (
             <div
               key={item.id}
-              className="group overflow-hidden rounded-3xl bg-background boty-shadow boty-transition hover:scale-[1.02]"
+              className="group flex flex-col overflow-hidden rounded-3xl bg-background boty-shadow boty-transition hover:scale-[1.02]"
             >
               <Link
                 href={`/products/${item.productSlug}`}
@@ -139,7 +139,7 @@ export default function WishlistPageClient() {
                 )}
               </Link>
 
-              <div className="p-4">
+              <div className="flex flex-1 flex-col p-4">
                 <Link
                   href={`/products/${item.productSlug}`}
                   className="text-[1.5rem] font-semibold text-foreground transition-colors hover:text-brand-accent"
@@ -149,7 +149,7 @@ export default function WishlistPageClient() {
                 <p className="mt-1 text-[1.3rem] text-muted-foreground">
                   Agregado {formatDate(item.addedAt)}
                 </p>
-                <div className="mt-4 flex items-center gap-2">
+                <div className="mt-auto flex items-center gap-2 pt-4">
                   <button
                     type="button"
                     className={cn("btn-primary flex-1 text-[1.2rem] py-[6px]")}
