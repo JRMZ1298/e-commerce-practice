@@ -37,7 +37,12 @@ export default function AdminLayout({
     redirect("/auth?mode=login");
   }
 
-  if (!isLoading && isAuthenticated && user?.role !== "ADMIN" && user?.role !== "SUPER_ADMIN") {
+  if (
+    !isLoading &&
+    isAuthenticated &&
+    user?.role !== "ADMIN" &&
+    user?.role !== "SUPER_ADMIN"
+  ) {
     redirect("/");
   }
 
@@ -71,7 +76,7 @@ export default function AdminLayout({
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 flex flex-col border-r border-border bg-white transition-all duration-300 lg:static",
+          "fixed inset-y-0 left-0 z-40 flex flex-col border-r border-border bg-cards transition-all duration-300 lg:static",
           sidebarOpen
             ? "w-72 translate-x-0"
             : "w-0 -translate-x-full lg:w-24 lg:translate-x-0",
@@ -178,7 +183,7 @@ export default function AdminLayout({
       {/* Main content */}
       <main
         className={cn(
-          "flex-1 overflow-auto pb-16 lg:pb-0",
+          "flex-1 overflow-auto pb-16 lg:pb-0 bg-background",
           sidebarOpen ? "" : "lg:ml-0",
         )}
       >

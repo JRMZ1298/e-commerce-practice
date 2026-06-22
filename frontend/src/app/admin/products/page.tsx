@@ -82,7 +82,7 @@ export default function AdminProductsPage() {
       ) : (
         <>
           {/* Desktop table */}
-          <div className="hidden overflow-hidden rounded-xl bg-white boty-shadow sm:block">
+          <div className="hidden overflow-hidden rounded-xl bg-cards boty-shadow sm:block">
             <table className="w-full text-left">
               <thead>
                 <tr className="border-b border-border text-[1.2rem] text-muted-foreground">
@@ -181,11 +181,17 @@ export default function AdminProductsPage() {
               <Link
                 key={product.id}
                 href={`/admin/products/${product.id}`}
-                className="flex items-center gap-3 rounded-xl bg-white p-4 boty-shadow transition-all hover:shadow-md"
+                className="flex items-center gap-3 rounded-xl bg-cards p-4 boty-shadow transition-all hover:shadow-md"
               >
                 <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg bg-muted">
                   {product.primaryImage ? (
-                    <Image src={product.primaryImage} alt="" fill className="object-cover" sizes="48px" />
+                    <Image
+                      src={product.primaryImage}
+                      alt=""
+                      fill
+                      className="object-cover"
+                      sizes="48px"
+                    />
                   ) : (
                     <div className="flex h-full items-center justify-center text-muted-foreground/20">
                       <ShoppingBag className="h-5 w-5" />
@@ -193,19 +199,33 @@ export default function AdminProductsPage() {
                   )}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate font-medium text-foreground">{product.name}</p>
+                  <p className="truncate font-medium text-foreground">
+                    {product.name}
+                  </p>
                   <div className="mt-1 flex items-center gap-2">
-                    <span className={cn(
-                      'text-[1.2rem] font-medium',
-                      product.stock === 0 ? 'text-red-500' : product.stock <= 5 ? 'text-yellow-600' : 'text-foreground',
-                    )}>
+                    <span
+                      className={cn(
+                        "text-[1.2rem] font-medium",
+                        product.stock === 0
+                          ? "text-red-500"
+                          : product.stock <= 5
+                            ? "text-yellow-600"
+                            : "text-foreground",
+                      )}
+                    >
                       {formatPrice(product.basePrice)}
                     </span>
-                    <span className="text-[1.1rem] text-muted-foreground">·</span>
-                    <span className={cn(
-                      'text-[1.1rem]',
-                      product.stock === 0 ? 'text-red-500' : 'text-muted-foreground',
-                    )}>
+                    <span className="text-[1.1rem] text-muted-foreground">
+                      ·
+                    </span>
+                    <span
+                      className={cn(
+                        "text-[1.1rem]",
+                        product.stock === 0
+                          ? "text-red-500"
+                          : "text-muted-foreground",
+                      )}
+                    >
                       {product.stock} en stock
                     </span>
                   </div>

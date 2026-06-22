@@ -79,13 +79,13 @@ export default function AdminUsersPage() {
         </div>
       ) : filtered.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12 text-center">
-          <Users className="mb-4 h-12 w-12 text-muted-foreground/30" />
+          <Users className="mb-4 h-12 w-12 text-muted-foreground" />
           <p className="text-[1.4rem] text-muted-foreground">No hay usuarios</p>
         </div>
       ) : (
         <>
           {/* Desktop table */}
-          <div className="hidden overflow-hidden rounded-xl bg-white boty-shadow sm:block">
+          <div className="hidden overflow-hidden rounded-xl bg-cards boty-shadow sm:block">
             <table className="w-full text-left">
               <thead>
                 <tr className="border-b border-border text-[1.2rem] text-muted-foreground">
@@ -186,7 +186,7 @@ export default function AdminUsersPage() {
               return (
                 <div
                   key={user.id}
-                  className="rounded-xl bg-white p-4 boty-shadow"
+                  className="rounded-xl bg-cards p-4 boty-shadow"
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-accent/10 text-[1.4rem] font-bold text-brand-accent">
