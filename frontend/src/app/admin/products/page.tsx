@@ -237,7 +237,7 @@ export default function AdminProductsPage() {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="mt-6 flex items-center justify-center gap-2">
+            <div className="mt-6 flex items-center justify-center gap-2 flex-wrap">
               <button
                 type="button"
                 onClick={() => setPage(Math.max(0, page - 1))}

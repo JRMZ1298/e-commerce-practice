@@ -242,7 +242,7 @@ export default function ProductDetailPageClient() {
             Colección
           </Link>
           <ChevronLeft className="h-3 w-3 rotate-180" />
-          <span className="text-foreground truncate">{product.name}</span>
+          <span className="text-foreground truncate min-w-0">{product.name}</span>
         </nav>
 
         <div className="grid grid-cols-1 gap-8 pb-12 lg:grid-cols-12 lg:gap-12">
@@ -517,7 +517,7 @@ function AddToCartSection({
   onWishlistToggle: () => void;
 }) {
   return (
-    <div className="mt-8 flex items-center gap-4">
+    <div className="mt-8 flex items-center gap-4 flex-wrap">
       <div className="flex items-center rounded-full border border-border">
         <button
           type="button"

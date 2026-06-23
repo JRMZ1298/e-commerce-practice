@@ -69,7 +69,7 @@ function ImageManager({ product }: { product: Product }) {
   const images = product.images ?? [];
 
   return (
-    <div className="rounded-xl bg-white p-6 boty-shadow">
+    <div className="rounded-xl bg-cards p-6 boty-shadow">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="font-serif text-[1.8rem] font-semibold text-foreground">
           Imágenes
@@ -85,7 +85,7 @@ function ImageManager({ product }: { product: Product }) {
       </div>
 
       {showUrlInput && (
-        <div className="mb-4 flex gap-2">
+        <div className="mb-4 flex flex-col sm:flex-row gap-2">
           <input
             type="text"
             value={url}
@@ -138,7 +138,7 @@ function ImageManager({ product }: { product: Product }) {
                   sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 />
               </div>
-              <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/0 opacity-0 group-hover:bg-black/30 group-hover:opacity-100 transition-all">
+              <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/30 sm:bg-black/0 opacity-100 sm:opacity-0 sm:group-hover:bg-black/30 sm:group-hover:opacity-100 transition-all">
                 <button
                   type="button"
                   onClick={() => setPrimaryMutation.mutate(img.id)}
@@ -570,11 +570,11 @@ export function ProductForm({ product }: ProductFormProps) {
         )}
 
         {/* Actions */}
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center gap-4">
           <button
             type="submit"
             disabled={mutation.isPending}
-            className="btn-primary flex items-center gap-2 px-6 py-3 text-[1.4rem] disabled:opacity-50"
+            className="btn-primary w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 text-[1.4rem] disabled:opacity-50"
           >
             {mutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {isEditing ? "Actualizar producto" : "Crear producto"}
@@ -582,7 +582,7 @@ export function ProductForm({ product }: ProductFormProps) {
           <button
             type="button"
             onClick={() => router.push("/admin/products")}
-            className="btn-outline px-6 py-3 text-[1.4rem]"
+            className="btn-outline w-full sm:w-auto text-center px-6 py-3 text-[1.4rem]"
           >
             Cancelar
           </button>

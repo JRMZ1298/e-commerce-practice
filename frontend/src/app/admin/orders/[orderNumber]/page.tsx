@@ -177,7 +177,7 @@ export default function AdminOrderDetailPage() {
                 </div>
                 <div className="flex flex-1 justify-between">
                   <div className="min-w-0">
-                    <p className="font-medium text-foreground">
+                    <p className="font-medium text-foreground truncate">
                       {item.productName}
                     </p>
                     {item.variantName && (
@@ -189,9 +189,9 @@ export default function AdminOrderDetailPage() {
                       Cant: {item.quantity} x {formatPrice(item.unitPrice)}
                     </p>
                   </div>
-                  <p className="flex-shrink-0 font-medium text-foreground">
-                    {formatPrice(item.totalPrice)}
-                  </p>
+                    <p className="flex-shrink-0 font-medium text-foreground whitespace-nowrap">
+                      {formatPrice(item.totalPrice)}
+                    </p>
                 </div>
               </div>
             ))}

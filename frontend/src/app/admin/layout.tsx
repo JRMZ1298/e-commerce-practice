@@ -31,7 +31,7 @@ export default function AdminLayout({
   const router = useRouter();
   const pathname = usePathname();
   const { user, isAuthenticated, isLoading, logout } = useAuth();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   if (!isLoading && !isAuthenticated) {
     redirect("/auth?mode=login");
@@ -65,18 +65,10 @@ export default function AdminLayout({
 
   return (
     <div className="flex min-h-screen bg-[#f5f5f0]">
-      {/* Mobile overlay */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-30 bg-black/20 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 flex flex-col border-r border-border bg-cards transition-all duration-300 lg:static",
+          "hidden lg:flex fixed inset-y-0 left-0 z-40 flex-col border-r border-border bg-cards transition-all duration-300 lg:static",
           sidebarOpen
             ? "w-72 translate-x-0"
             : "w-0 -translate-x-full lg:w-24 lg:translate-x-0",
@@ -160,21 +152,23 @@ export default function AdminLayout({
       </aside>
 
       {/* Mobile bottom bar */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around border-t border-border bg-white px-2 py-2 lg:hidden">
+      <nav className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around border-t border-border bg-cards px-1 py-1 lg:hidden">
         {[...navItems, { href: "/", label: "Tienda", icon: Store }].map(
           (item) => (
             <Link
               key={item.href}
               href={item.href}
               className={cn(
-                "flex flex-col items-center gap-0.5 rounded-lg px-3 py-1.5 transition-colors",
+                "flex flex-col items-center gap-0.5 rounded-lg px-1.5 py-1 transition-colors min-w-0",
                 isActive(item.href)
                   ? "text-brand-accent"
                   : "text-muted-foreground hover:text-foreground",
               )}
             >
               <item.icon className="h-5 w-5" />
-              <span className="text-[1rem] font-medium">{item.label}</span>
+              <span className="text-[0.85rem] font-medium truncate max-w-full">
+                {item.label}
+              </span>
             </Link>
           ),
         )}

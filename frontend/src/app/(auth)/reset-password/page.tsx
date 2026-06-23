@@ -5,11 +5,11 @@ export default function ResetPasswordPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-canvas px-4">
       <div className="w-full max-w-md">
-        <div className="rounded-card bg-white px-8 py-10 shadow-card">
+        <div className="rounded-card bg-white px-6 sm:px-8 py-8 sm:py-10 shadow-card">
           <div className="mb-8 text-center">
             <Link
               href="/"
-              className="mb-6 inline-block font-sans text-[2.6rem] font-bold tracking-tight text-brand-green"
+              className="mb-6 inline-block font-sans text-[2rem] sm:text-[2.6rem] font-bold tracking-tight text-brand-green"
             >
               MAISON
             </Link>

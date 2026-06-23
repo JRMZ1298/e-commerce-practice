@@ -173,7 +173,7 @@ export default function AdminOrdersPage() {
                   className="flex items-center justify-between rounded-xl bg-cards p-4 boty-shadow transition-all hover:shadow-md"
                 >
                   <div className="min-w-0 flex-1">
-                    <p className="font-mono font-medium text-foreground">
+                    <p className="font-mono font-medium text-foreground truncate">
                       {order.orderNumber}
                     </p>
                     <p className="mt-0.5 text-[1.2rem] text-muted-foreground">

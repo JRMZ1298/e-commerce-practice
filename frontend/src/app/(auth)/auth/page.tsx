@@ -16,7 +16,7 @@ function AuthContent() {
         <X className="h-5 w-5" />
       </Link>
       <div className="w-full max-w-[900px] bg-background rounded-2xl md:rounded-[2.5rem] shadow-2xl overflow-hidden">
-        <div className="grid lg:grid-cols-2 gap-0 min-h-[600px]">
+        <div className="grid lg:grid-cols-2 gap-0 min-h-0 lg:min-h-[600px]">
           {/* LEFT SIDE - FORM */}
           <div className="flex flex-col items-center justify-center p-6 lg:p-8">
             <Suspense
@@ -29,7 +29,7 @@ function AuthContent() {
           </div>
 
           {/* RIGHT SIDE - IMAGE PANEL */}
-          <div className="relative lg:rounded-[2rem] m-0 lg:m-4 overflow-hidden min-h-[300px] lg:min-h-0">
+          <div className="relative lg:rounded-[2rem] m-0 lg:m-4 overflow-hidden min-h-[200px] sm:min-h-[250px] lg:min-h-0">
             {/* Background Image Placeholder */}
             <div className="absolute inset-0 bg-gradient-to-br from-brand-house via-brand-uplift to-brand-house" />
 
@@ -41,7 +41,7 @@ function AuthContent() {
             </div>
 
             {/* Content overlay */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center text-white">
+            <div className="absolute inset-0 flex flex-col items-center justify-center p-6 md:p-8 pb-20 md:pb-8 text-center text-white">
               <h2 className="text-3xl md:text-4xl font-bold mb-3">MAISON</h2>
               <p className="text-[1.4rem] text-white/80 max-w-xs leading-relaxed">
                 Moda con elegancia y distinción. Descubre piezas únicas que
@@ -50,7 +50,7 @@ function AuthContent() {
             </div>
 
             {/* Bottom caption card */}
-            <div className="absolute bottom-4 left-4 right-4 bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-3">
+            <div className="hidden lg:block absolute bottom-4 left-4 right-4 bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-3">
               <p className="text-[1.2rem] text-white/90 leading-relaxed">
                 Prendas cuidadosamente seleccionadas para quienes valoran la
                 autenticidad y la calidad.

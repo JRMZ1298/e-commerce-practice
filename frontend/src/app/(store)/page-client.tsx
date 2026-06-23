@@ -21,7 +21,7 @@ export default function HomePageClient() {
   const products = featuredData?.content ?? [];
 
   return (
-    <main className="-mt-[100px]">
+    <main className="-mt-[80px] md:-mt-[100px]">
       <Hero />
       <TrustBadges />
 

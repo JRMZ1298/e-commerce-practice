@@ -333,7 +333,7 @@ function CatalogPageContent() {
       <div className="mx-auto max-w-full px-5">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-[3.2rem] font-bold text-foreground">Colección</h1>
+          <h1 className="text-[2.4rem] sm:text-[3.2rem] font-bold text-foreground">Colección</h1>
           <p className="mt-1 text-[1.4rem] text-muted-foreground">
             {totalElements} {totalElements === 1 ? "producto" : "productos"}
           </p>
@@ -591,7 +591,7 @@ function Pagination({
   onGoToPage: (page: number) => void;
 }) {
   return (
-    <div className="mt-12 flex items-center justify-center gap-2">
+    <div className="mt-12 flex items-center justify-center gap-2 flex-wrap">
       <button
         type="button"
         onClick={() => onGoToPage(currentPage - 1)}
@@ -612,7 +612,7 @@ function Pagination({
               type="button"
               onClick={() => onGoToPage(p)}
               className={cn(
-                "min-w-[3.6rem] rounded-lg px-3 py-2 text-[1.4rem] boty-transition",
+                  "min-w-[3.6rem] rounded-lg px-2 sm:px-3 py-2 text-[1.2rem] sm:text-[1.4rem] boty-transition",
                 p === currentPage
                   ? "bg-brand-accent text-white"
                   : "text-foreground hover:bg-muted",

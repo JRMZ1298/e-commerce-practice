@@ -123,7 +123,7 @@ export default function OrdersPageClient() {
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">
-                    <p className="font-mono text-[1.4rem] font-semibold text-foreground">
+                    <p className="font-mono text-[1.4rem] font-semibold text-foreground truncate min-w-0">
                       {order.orderNumber}
                     </p>
                     <span

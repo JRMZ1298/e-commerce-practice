@@ -123,7 +123,7 @@ export function Header() {
             <button
               type="button"
               onClick={toggleDark}
-              className="p-2 text-foreground hover:text-brand-accent boty-transition"
+              className="hidden sm:block p-2 text-foreground hover:text-brand-accent boty-transition"
               aria-label="Toggle dark mode"
             >
               {isDark ? (
@@ -191,10 +191,17 @@ export function Header() {
         <div
           className={cn(
             "lg:hidden overflow-hidden boty-transition",
-            mobileMenuOpen ? "max-h-80 pb-6" : "max-h-0",
+            mobileMenuOpen ? "max-h-screen pb-6" : "max-h-0",
           )}
         >
           <div className="flex flex-col gap-4 pt-4 border-t border-black/10">
+            <Link
+              href="/"
+              onClick={toggleMobileMenu}
+              className="text-[1.4rem] tracking-wide text-foreground hover:text-brand-accent boty-transition"
+            >
+              Home
+            </Link>
             <Link
               href="/products"
               onClick={toggleMobileMenu}
@@ -221,27 +228,63 @@ export function Header() {
                     Admin →
                   </Link>
                 )}
-                <span className="text-[1.4rem] text-foreground px-1">
-                  {user.firstName || user.email}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    logout();
-                    toggleMobileMenu();
-                  }}
-                  className="text-left text-[1.4rem] tracking-wide text-foreground hover:text-destructive boty-transition"
-                >
-                  Cerrar sesión
-                </button>
+            <button
+              type="button"
+              onClick={toggleDark}
+              className="flex items-center gap-2 text-[1.4rem] tracking-wide text-foreground hover:text-brand-accent boty-transition"
+            >
+              {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {isDark ? "Modo claro" : "Modo oscuro"}
+            </button>
+            <Link
+              href="/wishlist"
+              onClick={toggleMobileMenu}
+              className="flex items-center gap-2 text-[1.4rem] tracking-wide text-foreground hover:text-brand-accent boty-transition"
+            >
+              <Heart className="w-5 h-5" />
+              Favoritos
+            </Link>
+            <div className="border-t border-black/10 my-2" />
+            <span className="text-[1.4rem] text-foreground px-1">
+              {user.firstName || user.email}
+            </span>
+            <button
+              type="button"
+              onClick={() => {
+                logout();
+                toggleMobileMenu();
+              }}
+              className="flex items-center gap-2 text-left text-[1.4rem] tracking-wide text-foreground hover:text-destructive boty-transition"
+            >
+              <LogOut className="w-5 h-5" />
+              Cerrar sesión
+            </button>
               </>
             ) : (
               <>
+                <button
+                  type="button"
+                  onClick={toggleDark}
+                  className="flex items-center gap-2 text-[1.4rem] tracking-wide text-foreground hover:text-brand-accent boty-transition"
+                >
+                  {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                  {isDark ? "Modo claro" : "Modo oscuro"}
+                </button>
+                <Link
+                  href="/wishlist"
+                  onClick={toggleMobileMenu}
+                  className="flex items-center gap-2 text-[1.4rem] tracking-wide text-foreground hover:text-brand-accent boty-transition"
+                >
+                  <Heart className="w-5 h-5" />
+                  Favoritos
+                </Link>
+                <div className="border-t border-black/10 my-2" />
                 <Link
                   href="/login"
                   onClick={toggleMobileMenu}
-                  className="text-[1.4rem] tracking-wide text-foreground hover:text-brand-accent boty-transition"
+                  className="flex items-center gap-2 text-[1.4rem] tracking-wide text-foreground hover:text-brand-accent boty-transition"
                 >
+                  <User className="w-5 h-5" />
                   Ingresar
                 </Link>
                 <Link

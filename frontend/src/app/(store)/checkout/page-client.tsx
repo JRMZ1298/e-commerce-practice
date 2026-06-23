@@ -159,6 +159,14 @@ export default function CheckoutPageClient() {
           </div>
           <Link
             href="/cart"
+            className="flex items-center gap-2 text-[1.4rem] text-brand-accent hover:underline sm:hidden"
+            aria-label="Volver al carrito"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            <span className="hidden">Volver</span>
+          </Link>
+          <Link
+            href="/cart"
             className="hidden items-center gap-2 text-[1.4rem] text-brand-accent hover:underline sm:flex"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -349,7 +357,7 @@ function CheckoutItems({
             </div>
             <div className="flex flex-1 justify-between">
               <div className="min-w-0">
-                <p className="font-medium text-foreground">
+                <p className="font-medium text-foreground truncate">
                   {item.productName}
                 </p>
                 {item.variantName && (
@@ -615,7 +623,7 @@ function AddressForm({
           className="input-field mt-1 w-full"
         />
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="text-[1.3rem] font-medium text-foreground">
             Ciudad *
@@ -642,7 +650,7 @@ function AddressForm({
           />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="text-[1.3rem] font-medium text-foreground">
             Código postal *
@@ -669,18 +677,18 @@ function AddressForm({
           Establecer como dirección predeterminada
         </label>
       </div>
-      <div className="flex gap-3">
+      <div className="flex flex-col sm:flex-row gap-3">
         <button
           type="submit"
           disabled={isLoading}
-          className="btn-primary flex-1 py-3 text-[1.3rem]"
+          className="btn-primary w-full sm:flex-1 py-3 text-[1.3rem]"
         >
           {isLoading ? "Guardando..." : "Guardar dirección"}
         </button>
         <button
           type="button"
           onClick={onCancel}
-          className="btn-outline flex-1 py-3 text-[1.3rem]"
+          className="btn-outline w-full sm:flex-1 py-3 text-[1.3rem]"
         >
           Cancelar
         </button>

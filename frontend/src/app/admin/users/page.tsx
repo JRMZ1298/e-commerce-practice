@@ -210,8 +210,8 @@ export default function AdminUsersPage() {
                       {statusCfg.label}
                     </span>
                   </div>
-                  <div className="mt-3 flex items-center justify-between border-t border-border pt-3">
-                    <div className="flex items-center gap-2">
+                  <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-border pt-3">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span className="inline-flex items-center gap-1 rounded-full bg-brand-accent/5 px-2.5 py-0.5 text-[1rem] font-medium text-brand-accent">
                         <Shield className="h-3 w-3" />
                         {roleLabels[user.role] ?? user.role}
