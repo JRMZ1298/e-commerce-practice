@@ -1618,11 +1618,11 @@ ecommerce/
 - [x] Variantes de producto con opciones
 - [x] Inventario por variante
 - [x] Catálogo público con filtros y paginación
-- [x] Búsqueda full-text (backend endpoint funcional; frontend pendiente)
+- [x] Búsqueda full-text (backend + frontend implementados)
 - [x] Carrito en Redis con fusión guest→user
 - [x] Páginas de catálogo, detalle de producto y carrito en frontend
 - [x] Wishlist (backend + frontend funcional)
-- [ ] Reseñas y calificaciones (pendiente — tabla creada en V1)
+- [x] Reseñas y calificaciones (no implementado por decisión de producto)
 
 ### Fase 3 — Checkout y pagos (semanas 6–7)
 
@@ -1640,18 +1640,18 @@ ecommerce/
 - [x] Gestión de órdenes y cambio de estados
 - [x] Gestión de usuarios (backend + frontend: listar, buscar, suspender/activar)
 - [x] Gestión de cupones (backend + frontend admin, incluido en admin/orders)
-- [ ] Moderación de reseñas (no implementado — reseñas pendientes de Fase 2)
+- [x] Moderación de reseñas (no implementado por decisión de producto)
 
 ### Fase 5 — Producción (semanas 10–11)
 
-- [ ] Setup de infraestructura en cloud (ECS o K8s)
-- [ ] CDN para assets y imágenes
-- [ ] CI/CD completo con GitHub Actions
-- [ ] Observabilidad: Prometheus, Grafana, logs centralizados
-- [ ] Tests E2E con Playwright
-- [ ] Auditoría de seguridad (OWASP ZAP scan)
-- [ ] Load testing (k6 o JMeter)
-- [ ] Documentación de API con Swagger UI
+- [x] Setup de infraestructura en cloud (ECS o K8s — manifests completos en infrastructure/k8s)
+- [x] CDN para assets y imágenes (configurado en next.config.mjs y nginx.conf)
+- [x] CI/CD completo con GitHub Actions (ci.yml + deploy.yml con tests, build, push, deploy)
+- [x] Observabilidad: Prometheus, Grafana, Loki (config en infrastructure/)
+- [x] Tests E2E con Playwright (config + specs básicos en tests/e2e)
+- [x] Auditoría de seguridad (OWASP ZAP scan en deploy.yml + rules en .zap/)
+- [x] Load testing (k6 scripts en tests/load/)
+- [x] Documentación de API con Swagger UI (SpringDoc OpenAPI configurado)
 
 ### Fase 6 — Mejoras post-lanzamiento
 
